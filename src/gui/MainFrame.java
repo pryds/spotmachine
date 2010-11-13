@@ -6,19 +6,22 @@ import java.util.Vector;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
-import javax.swing.ScrollPaneConstants;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
-public class MainFrame extends JFrame {
+import main.Prefs;
+import main.SpotMachine;
+
+public class MainFrame extends JFrame implements ChangeListener {
 	public MainFrame(String title) {
 		super(title);
 		//setResizable(false);
@@ -32,14 +35,29 @@ public class MainFrame extends JFrame {
 		getContentPane().add(createLowerMainPanel());
 	}
 	
+	JTextField countdownTextField;
+	
 	private JPanel createCoundownPanel() {
 		JPanel panel = new JPanel();
 		panel.add(new JLabel("Tid til næste spot:"));
-		JTextField countdownTextField = new JTextField("5:00");
+		countdownTextField = new JTextField(
+				millisToMinsSecsString(Prefs.prefs.getLong(Prefs.MILLIS_BETWEEN_SPOTS, Prefs.MILLIS_BETWEEN_SPOTS_DEFAULT))
+				);
 		countdownTextField.setEditable(false);
 		panel.add(countdownTextField);
 		panel.add(new JLabel("(spot 2, \"Tekstil\")"));
 		return panel;
+	}
+	
+	public void setCountDownFieldValue(long millis) {
+		countdownTextField.setText(millisToMinsSecsString(millis));
+	}
+	
+	private String millisToMinsSecsString(long milliSeconds) {
+		long totalMinutes = milliSeconds / 1000;
+		int hours = (int)(totalMinutes / 60);
+		int minutes = (int)(totalMinutes % 60);
+		return hours + ":" + (minutes < 10 ? "0" + minutes : minutes);
 	}
 	
 	private JPanel createUpperMainPanel() {
@@ -97,6 +115,8 @@ public class MainFrame extends JFrame {
 		return panel;
 	}
 
+	private JSpinner minBetweenSpotsSpinner;
+	
 	private JPanel createActiveSpotsPanel() {
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
@@ -109,7 +129,11 @@ public class MainFrame extends JFrame {
 		
 		JPanel spinnerPanel = new JPanel();
 		//spinnerPanel.setLayout(new BoxLayout(spinnerPanel, BoxLayout.LINE_AXIS));
-		spinnerPanel.add(new JSpinner());
+		minBetweenSpotsSpinner = new JSpinner(new SpinnerNumberModel(
+				(double)Prefs.prefs.getLong(Prefs.MILLIS_BETWEEN_SPOTS, Prefs.MILLIS_BETWEEN_SPOTS_DEFAULT) / 1000 / 60,
+				0, 1000, 1));
+		minBetweenSpotsSpinner.addChangeListener(this);
+		spinnerPanel.add(minBetweenSpotsSpinner);
 		spinnerPanel.add(new JLabel("min mellem spots"));
 		panel.add(spinnerPanel);
 
@@ -123,4 +147,15 @@ public class MainFrame extends JFrame {
 		panel.add(new JButton("Flyt ned"));
 		return panel;
 	}
+
+	
+	public void stateChanged(ChangeEvent e) {
+		System.out.println("Value changed!");
+		JComponent source = (JComponent)e.getSource();
+		if (source == minBetweenSpotsSpinner) {
+			double readValue = (Double)((JSpinner)source).getValue();
+			SpotMachine.getSpotPlayer().setMillisBetweenSpots((int)Math.round(readValue * 60 * 1000));
+		}
+	}
+	
 }
