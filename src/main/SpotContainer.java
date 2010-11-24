@@ -37,4 +37,12 @@ public class SpotContainer {
 		Prefs.prefs.put(Prefs.SPOTLIST_ENTRY_NAME + type + "." + (playQueue.size()-1), spot.getName());
 		Prefs.prefs.put(Prefs.SPOTLIST_ENTRY_FILENAME + type + "." + (playQueue.size()-1), spot.getFile().getName());
 	}
+	
+	public Vector<String> getNames() {
+		Vector<String> names = new Vector<String>();
+		for (int i = 0; i < playQueue.size(); i++) {
+			names.add(playQueue.get(i).getName());
+		}
+		return names;
+	}
 }

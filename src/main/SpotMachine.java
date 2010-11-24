@@ -8,7 +8,8 @@ import javax.swing.JFrame;
 
 
 public class SpotMachine {
-	private static SpotPlayer spotPlayer;
+	private static SpotPlayer spotPlayer = null;
+	private static SpotContainer spotsAvailable = null;
 	private static MainFrame frame;
 	
 	public static void main(String[] args) {
@@ -22,6 +23,9 @@ public class SpotMachine {
 		//for (int i = 0; i<10; i++)
 		//	spotPlayer.addToEnd(new SpotEntry(new File("yes.wav"), "Yes!"));
 		spotPlayer.initializeFromPrefs();
+		
+		spotsAvailable = new SpotContainer(SpotPlayer.TYPE_AVAILABLE);
+		spotsAvailable.initializeFromPrefs();
 	}
 	
 	private static void createAndShowGUI() {
@@ -34,6 +38,10 @@ public class SpotMachine {
 	
 	public static SpotPlayer getSpotPlayer() {
 		return spotPlayer;
+	}
+	
+	public static SpotContainer getAvailableSpots() {
+		return spotsAvailable;
 	}
 	
 	public static MainFrame getMainFframe() {

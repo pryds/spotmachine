@@ -71,8 +71,6 @@ public class SpotPlayer extends SpotContainer implements Runnable {
 				    "Lydkortet er optaget af et andet program.\nHvis andre programmer kører, fx en internet browser, prøv da at lukke disse.",
 				    "Fejl ved lyd",
 				    JOptionPane.ERROR_MESSAGE);
-
-			System.err.print("Lydkortet er optaget af et andet program. Hvis andre programmer kører, fx en internet browser, prøv da at lukke disse.");
 			System.exit(1);
 		} catch(Exception e) {
 			e.printStackTrace(); System.exit(1);

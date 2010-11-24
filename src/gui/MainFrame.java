@@ -20,6 +20,7 @@ import javax.swing.event.ChangeListener;
 
 import main.Prefs;
 import main.SpotMachine;
+import main.SpotPlayer;
 
 public class MainFrame extends JFrame implements ChangeListener {
 	public MainFrame(String title) {
@@ -83,6 +84,7 @@ public class MainFrame extends JFrame implements ChangeListener {
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 		panel.add(new JLabel("Tilgængelige spots:"));
+		/**
 		Vector<String> s = new Vector<String>();
 		s.add("Kolonial");
 		s.add("Slagter");
@@ -94,7 +96,8 @@ public class MainFrame extends JFrame implements ChangeListener {
 		s.add("Sæson");
 		s.add("Tekstil");
 		s.add("Åbent på søndag");
-		panel.add(new SpotList(s).getContainingScrollPane());
+		**/
+		panel.add(new SpotList(SpotMachine.getAvailableSpots().getNames()).getContainingScrollPane());
 		
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new GridLayout(2, 0));
@@ -121,10 +124,18 @@ public class MainFrame extends JFrame implements ChangeListener {
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 		panel.add(new JLabel("Aktive spots:"));
-		Vector<String> s = new Vector<String>();
-		s.add("Frugt og grønt");
-		s.add("Tekstil");
-		panel.add(new SpotList(s).getContainingScrollPane());
+		
+		while(SpotMachine.getSpotPlayer() == null) {
+			System.out.println("SpotPlayer not initialized yet. Waiting a bit and then retrying.");
+			try {
+				Thread.sleep(500);
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		SpotPlayer spotPlayer = SpotMachine.getSpotPlayer();
+
+		panel.add(new SpotList(spotPlayer.getNames()).getContainingScrollPane());
 		panel.add(new JCheckBox("Gentag alle"));
 		
 		JPanel spinnerPanel = new JPanel();
