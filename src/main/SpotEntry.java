@@ -22,6 +22,8 @@ public class SpotEntry {
 		}
 		AudioFormat audioFormat = audioInputStream.getFormat();
 		//soundLength = (Long)audioFormat.getProperty("duration"); // microseconds
+		double lengthInSecs = audioInputStream.getFrameLength() / (double)audioFormat.getFrameRate();
+		soundLength = Math.round(lengthInSecs * 1000);
 	}
 	
 	public File getFile() {
@@ -30,5 +32,9 @@ public class SpotEntry {
 	
 	public String getName() {
 		return spotName;
+	}
+	
+	public long getLengthInMillis() {
+		return soundLength;
 	}
 }

@@ -7,6 +7,8 @@ public class SpotContainer {
 	public static final int TYPE_AVAILABLE = 0;
 	public static final int TYPE_ACTIVE = 1;
 	
+	public static final String[] columnNames = new String[] {"#" , "Navn" , "Varighed"};
+	
 	protected Vector<SpotEntry> playQueue;
 	protected int type;
 	
@@ -38,11 +40,14 @@ public class SpotContainer {
 		Prefs.prefs.put(Prefs.SPOTLIST_ENTRY_FILENAME + type + "." + (playQueue.size()-1), spot.getFile().getName());
 	}
 	
-	public Vector<String> getNames() {
-		Vector<String> names = new Vector<String>();
+	public Object[][] getData() {
+		Object[][] data = new Object[playQueue.size()][columnNames.length];
+		
 		for (int i = 0; i < playQueue.size(); i++) {
-			names.add(playQueue.get(i).getName());
+			data[i][0] = new Integer(i);
+			data[i][1] = playQueue.get(i).getName();
+			data[i][2] = Calculate.millisToMinsSecsString(playQueue.get(i).getLengthInMillis());
 		}
-		return names;
+		return data;
 	}
 }

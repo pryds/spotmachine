@@ -18,7 +18,9 @@ import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import main.Calculate;
 import main.Prefs;
+import main.SpotContainer;
 import main.SpotMachine;
 import main.SpotPlayer;
 
@@ -42,7 +44,7 @@ public class MainFrame extends JFrame implements ChangeListener {
 		JPanel panel = new JPanel();
 		panel.add(new JLabel("Tid til næste spot:"));
 		countdownTextField = new JTextField(
-				millisToMinsSecsString(Prefs.prefs.getLong(Prefs.MILLIS_BETWEEN_SPOTS, Prefs.MILLIS_BETWEEN_SPOTS_DEFAULT))
+				Calculate.millisToMinsSecsString(Prefs.prefs.getLong(Prefs.MILLIS_BETWEEN_SPOTS, Prefs.MILLIS_BETWEEN_SPOTS_DEFAULT))
 				);
 		countdownTextField.setEditable(false);
 		panel.add(countdownTextField);
@@ -51,14 +53,7 @@ public class MainFrame extends JFrame implements ChangeListener {
 	}
 	
 	public void setCountDownFieldValue(long millis) {
-		countdownTextField.setText(millisToMinsSecsString(millis));
-	}
-	
-	private String millisToMinsSecsString(long milliSeconds) {
-		long totalMinutes = milliSeconds / 1000;
-		int hours = (int)(totalMinutes / 60);
-		int minutes = (int)(totalMinutes % 60);
-		return hours + ":" + (minutes < 10 ? "0" + minutes : minutes);
+		countdownTextField.setText(Calculate.millisToMinsSecsString(millis));
 	}
 	
 	private JPanel createUpperMainPanel() {
@@ -84,20 +79,7 @@ public class MainFrame extends JFrame implements ChangeListener {
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 		panel.add(new JLabel("Tilgængelige spots:"));
-		/**
-		Vector<String> s = new Vector<String>();
-		s.add("Kolonial");
-		s.add("Slagter");
-		s.add("Frost");
-		s.add("Frugt og grønt");
-		s.add("Fisk");
-		s.add("Teknik");
-		s.add("Køkken/bord");
-		s.add("Sæson");
-		s.add("Tekstil");
-		s.add("Åbent på søndag");
-		**/
-		panel.add(new SpotList(SpotMachine.getAvailableSpots().getNames()).getContainingScrollPane());
+		panel.add(new SpotList(SpotMachine.getAvailableSpots().getData(), SpotContainer.columnNames).getContainingScrollPane());
 		
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new GridLayout(2, 0));
@@ -135,7 +117,7 @@ public class MainFrame extends JFrame implements ChangeListener {
 		}
 		SpotPlayer spotPlayer = SpotMachine.getSpotPlayer();
 
-		panel.add(new SpotList(spotPlayer.getNames()).getContainingScrollPane());
+		panel.add(new SpotList(spotPlayer.getData(), SpotContainer.columnNames).getContainingScrollPane());
 		panel.add(new JCheckBox("Gentag alle"));
 		
 		JPanel spinnerPanel = new JPanel();
