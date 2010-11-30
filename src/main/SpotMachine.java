@@ -1,11 +1,8 @@
 package main;
-import java.io.File;
 
 import gui.MainFrame;
 
 import javax.swing.JFrame;
-
-
 
 public class SpotMachine {
 	private static SpotPlayer spotPlayer = null;
@@ -44,7 +41,7 @@ public class SpotMachine {
 		return spotsAvailable;
 	}
 	
-	public static MainFrame getMainFframe() {
+	public static MainFrame getMainFrame() {
 		return frame;
 	}
 

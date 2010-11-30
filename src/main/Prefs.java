@@ -14,4 +14,10 @@ public class Prefs {
 	public static final String SPOTLIST_ENTRY_NAME = "SpotListEntryName";
 	public static final String SPOTLIST_ENTRY_FILENAME = "SpotListEntryFilename";
 	
+	public static final String NEXT_SPOT_TO_PLAY = "NextSpotToPlay";
+	public static final int    NEXT_SPOT_TO_PLAY_DEFAULT = 0;
+	
+	public static final String  REPEAT_ALL = "RepeatAll";
+	public static final boolean REPEAT_ALL_DEFAULT = true;
+	
 }

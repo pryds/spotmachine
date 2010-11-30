@@ -2,7 +2,6 @@ package main;
 
 import java.io.File;
 import java.util.Calendar;
-import java.util.Date;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
@@ -19,24 +18,34 @@ public class SpotPlayer extends SpotContainer implements Runnable {
 	private boolean paused;
 	private long millisBetweenSpots;
 	private int nextSpotToPlay;
+	private boolean repeatAll;
 	
 	private static final int BUFFER_SIZE = 128000;
 
 	public SpotPlayer(int type) {
 		super(type);
-		paused = false;
+		paused = true;
 		millisBetweenSpots = Prefs.prefs.getLong(Prefs.MILLIS_BETWEEN_SPOTS, Prefs.MILLIS_BETWEEN_SPOTS_DEFAULT);
-		nextSpotToPlay = 0;
+		nextSpotToPlay = Prefs.prefs.getInt(Prefs.NEXT_SPOT_TO_PLAY, Prefs.NEXT_SPOT_TO_PLAY_DEFAULT);
+		repeatAll = Prefs.prefs.getBoolean(Prefs.REPEAT_ALL, Prefs.REPEAT_ALL_DEFAULT);
 	}
 	
 	public void run() { // invoke with start()
 		while(true) {
 			if (!paused && playQueue.size() > 0) {
 				play(playQueue.get(nextSpotToPlay).getFile());
-				nextSpotToPlay++;
-				if (nextSpotToPlay >= playQueue.size())
-					nextSpotToPlay = 0;
-				waitForMilliseconds(millisBetweenSpots);
+				
+				if (nextSpotToPlay+1 < playQueue.size())
+					setNextSpotToPlayAndUpdateGUI(nextSpotToPlay + 1);
+				else
+					setNextSpotToPlayAndUpdateGUI(0);
+				
+				if (nextSpotToPlay == 0 && !repeatAll) {
+					setPaused(true);
+					SpotMachine.getMainFrame().setGUIPaused(true);
+				} else {
+					waitForMilliseconds(millisBetweenSpots);
+				}
 			} else {
 				try {
 					Thread.sleep(1000);
@@ -67,10 +76,12 @@ public class SpotPlayer extends SpotContainer implements Runnable {
 			line = (SourceDataLine)AudioSystem.getLine(info);
 			line.open(audioFormat);
 		} catch(LineUnavailableException e) {
-			JOptionPane.showMessageDialog(SpotMachine.getMainFframe(),
-				    "Lydkortet er optaget af et andet program.\nHvis andre programmer kører, fx en internet browser, prøv da at lukke disse.",
+			JOptionPane.showMessageDialog(SpotMachine.getMainFrame(),
+				    "Lydkortet er optaget af et andet program.\nHvis andre programmer kører, fx en "
+					+ "musik/videoafspiller, internet browser, prøv da at lukke disse.",
 				    "Fejl ved lyd",
 				    JOptionPane.ERROR_MESSAGE);
+			System.err.println(e);
 			System.exit(1);
 		} catch(Exception e) {
 			e.printStackTrace(); System.exit(1);
@@ -92,25 +103,41 @@ public class SpotPlayer extends SpotContainer implements Runnable {
 			if (nBytesRead >= 0) {
 				line.write(dataBuffer, 0, nBytesRead); 
 			}
+			if (paused)
+				break;
 		}
+		System.out.println("Draining line...");
 		line.drain(); //wait till sound has finished playing
 		line.close();
 	}
 	
 	private void waitForMilliseconds(long millis) {
 		System.out.println("Waiting for " + (millis/(float)1000/60) + " minutes.");
-		Date waitStart = Calendar.getInstance().getTime();
-		Date waitNow = Calendar.getInstance().getTime();
+		long waitStart = Calendar.getInstance().getTime().getTime();
+		long waitNow = Calendar.getInstance().getTime().getTime();
 		
-		while (waitNow.getTime() - waitStart.getTime() < millis) {
-			long millisLeft = millis - (waitNow.getTime() - waitStart.getTime());
-			SpotMachine.getMainFframe().setCountDownFieldValue(millisLeft);
+		while (waitNow - waitStart < millis) {
+			long millisLeft = millis - (waitNow - waitStart);
+			SpotMachine.getMainFrame().setCountDownFieldValue(millisLeft);
 			try {
 				Thread.sleep(200);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			waitNow = Calendar.getInstance().getTime();
+			if (paused) {
+				long pauseStart;
+				while (paused) {
+					pauseStart = Calendar.getInstance().getTime().getTime();
+					try {
+						Thread.sleep(200);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					long pauseNow = Calendar.getInstance().getTime().getTime();
+					waitStart = waitStart + (pauseNow - pauseStart);
+				}
+			}
+			waitNow = Calendar.getInstance().getTime().getTime();
 		}
 	}
 		
@@ -120,17 +147,51 @@ public class SpotPlayer extends SpotContainer implements Runnable {
 	
 	public void setPaused(boolean paused) {
 		this.paused = paused;
+		System.out.println("Pause set to " + paused);
 	}
-	
-	/**
-	public long getMillisBetweenSpots() {
-		return millisBetweenSpots;
-	}
-	**/
-	
+
 	public void setMillisBetweenSpots(long millis) {
 		this.millisBetweenSpots = millis;
 		Prefs.prefs.putLong(Prefs.MILLIS_BETWEEN_SPOTS, millis);
+	}
+	
+	public int getNextSpotToPlayIndex() {
+		return nextSpotToPlay;
+	}
+	
+	public SpotEntry getNextSpotToPlay() {
+		return getSpotAt(nextSpotToPlay);
+	}
+	
+	private void setNextSpotToPlayAndUpdateGUI(int index) {
+		setNextSpotToPlay(index);
+		SpotMachine.getMainFrame().getActiveSpotList().setNextSpot(index);
+		SpotMachine.getMainFrame().setNextSpotLabel(index, getNextSpotToPlay().getName());
+	}
+	
+	public int setNextSpotToPlay(int index) {
+		nextSpotToPlay = index;
+		Prefs.prefs.putInt(Prefs.NEXT_SPOT_TO_PLAY, index);
+		return nextSpotToPlay;
+	}
+	
+	public int setNextSpotToPlayOneForward() {
+		int nextSpot = nextSpotToPlay + 1;
+		if (nextSpot >= playQueue.size())
+			nextSpot = 0;
+		return setNextSpotToPlay(nextSpot);
+	}
+	
+	public int setNextSpotToPlayOneBackward() {
+		int nextSpot = nextSpotToPlay - 1;
+		if (nextSpot < 0)
+			nextSpot = playQueue.size() - 1;
+		return setNextSpotToPlay(nextSpot);
+	}
+	
+	public void setRepeatAll(boolean state) {
+		this.repeatAll = state;
+		Prefs.prefs.putBoolean(Prefs.REPEAT_ALL, state);
 	}
 
 }
