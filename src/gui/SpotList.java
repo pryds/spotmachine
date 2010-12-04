@@ -4,6 +4,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 import main.SpotContainer;
 
@@ -12,16 +14,12 @@ public class SpotList extends JTable {
 
 	private JScrollPane containingScrollPane;
 	
-	private int type; // j.f. SpotContainer.TYPE_*
-	
-	public SpotList(Object[][] data, String[] columnNames, int type) {
-		super(data, columnNames);
-		this.type = type;
+	public SpotList(TableModel tm) {
+		super(tm);
 		initialize();
 	}
 	
 	private void initialize() {
-		//setModel(new SpotListTableModel());
 		setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		getSelectionModel().setSelectionInterval(0, 0);
 		//setPreferredSize(new Dimension(200, 0));
@@ -29,7 +27,7 @@ public class SpotList extends JTable {
 		containingScrollPane = new JScrollPane(this);
 		this.setFillsViewportHeight(true);
 		containingScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		if (type == SpotContainer.TYPE_ACTIVE) {
+		if (getModel().getType() == SpotContainer.TYPE_ACTIVE) {
 			getColumnModel().getColumn(0).setMaxWidth(30); // spot number
 			getColumnModel().getColumn(0).setResizable(false);
 
@@ -51,7 +49,7 @@ public class SpotList extends JTable {
 	
 	public void setNextSpot(int index) {
 		int numRows = this.getModel().getRowCount();
-		if (type == SpotContainer.TYPE_ACTIVE) {
+		if (getModel().getType() == SpotContainer.TYPE_ACTIVE) {
 			for (int i = 0; i < numRows; i++) {
 				this.getModel().setValueAt(
 						(i == index ? "*" : ""), //value
@@ -85,5 +83,17 @@ public class SpotList extends JTable {
 		Object[] temp = getRow(index1);
 		setRow(index1, getRow(index2));
 		setRow(index2, temp);
+	}
+	
+	public void addToEnd(String spotName, long durationInMillis) {
+		// TODO
+	}
+	
+	public boolean isCellEditable(int row, int column){
+		return false;
+	}
+	
+	public SpotListModel getModel() {
+		return (SpotListModel)super.getModel();
 	}
 }

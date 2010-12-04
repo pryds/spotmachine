@@ -32,10 +32,10 @@ public class SpotPlayer extends SpotContainer implements Runnable {
 	
 	public void run() { // invoke with start()
 		while(true) {
-			if (!paused && playQueue.size() > 0) {
-				play(playQueue.get(nextSpotToPlay).getFile());
+			if (!paused && spotList.size() > 0) {
+				play(spotList.get(nextSpotToPlay).getFile());
 				
-				if (nextSpotToPlay+1 < playQueue.size())
+				if (nextSpotToPlay+1 < spotList.size())
 					setNextSpotToPlayAndUpdateGUI(nextSpotToPlay + 1);
 				else
 					setNextSpotToPlayAndUpdateGUI(0);
@@ -177,7 +177,7 @@ public class SpotPlayer extends SpotContainer implements Runnable {
 	
 	public int setNextSpotToPlayOneForward() {
 		int nextSpot = nextSpotToPlay + 1;
-		if (nextSpot >= playQueue.size())
+		if (nextSpot >= spotList.size())
 			nextSpot = 0;
 		return setNextSpotToPlay(nextSpot);
 	}
@@ -185,7 +185,7 @@ public class SpotPlayer extends SpotContainer implements Runnable {
 	public int setNextSpotToPlayOneBackward() {
 		int nextSpot = nextSpotToPlay - 1;
 		if (nextSpot < 0)
-			nextSpot = playQueue.size() - 1;
+			nextSpot = spotList.size() - 1;
 		return setNextSpotToPlay(nextSpot);
 	}
 	

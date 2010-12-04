@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
+import javax.swing.AbstractButton;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -29,6 +30,8 @@ import main.SpotPlayer;
 
 public class MainFrame extends JFrame implements ChangeListener, ActionListener, ItemListener {
 	private static final long serialVersionUID = 6219825567861104713L;
+	
+	// Icons from http://java.sun.com/developer/techDocs/hi/repository/
 
 	public MainFrame(String title) {
 		super(title);
@@ -73,24 +76,32 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 	private JPanel createUpperMainPanel() {
 		JPanel panel = new JPanel();
 		
-		playButton = new JButton("Afspil");
+		playButton = new JButton("Afspil", Calculate.createImageIcon("../resources/Play24.gif"));
+		playButton.setVerticalTextPosition(AbstractButton.BOTTOM);
+	    playButton.setHorizontalTextPosition(AbstractButton.CENTER);
 		playButton.addActionListener(this);
 		playButton.setActionCommand("play");
 		panel.add(playButton);
 		
-		pauseButton = new JButton("Pause");
+		pauseButton = new JButton("Pause", Calculate.createImageIcon("../resources/Pause24.gif"));
+		pauseButton.setVerticalTextPosition(AbstractButton.BOTTOM);
+	    pauseButton.setHorizontalTextPosition(AbstractButton.CENTER);
 		pauseButton.addActionListener(this);
 		pauseButton.setActionCommand("pause");
 		pauseButton.setEnabled(false);
 		panel.add(pauseButton);
 		
-		JButton previousButton = new JButton("Forrige");
-		previousButton.addActionListener(this);
+		JButton previousButton = new JButton("Forrige", Calculate.createImageIcon("../resources/StepBack24.gif"));
+		previousButton.setVerticalTextPosition(AbstractButton.BOTTOM);
+	    previousButton.setHorizontalTextPosition(AbstractButton.CENTER);
+	    previousButton.addActionListener(this);
 		previousButton.setActionCommand("previous");
 		panel.add(previousButton);
 		
-		JButton nextButton = new JButton("Næste");
-		nextButton.addActionListener(this);
+		JButton nextButton = new JButton("Næste", Calculate.createImageIcon("../resources/StepForward24.gif"));
+		nextButton.setVerticalTextPosition(AbstractButton.BOTTOM);
+	    nextButton.setHorizontalTextPosition(AbstractButton.CENTER);
+	    nextButton.addActionListener(this);
 		nextButton.setActionCommand("next");
 		panel.add(nextButton);
 		
@@ -121,12 +132,8 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 		panel.add(new JLabel("Tilgængelige spots:"));
 		
 		SpotContainer availableSpots = SpotMachine.getAvailableSpots();
-		availableSpotList = new SpotList(availableSpots.getData(), availableSpots.getColumnNames(), SpotContainer.TYPE_AVAILABLE) {
-			private static final long serialVersionUID = 6882050480728309992L;
-			public boolean isCellEditable(int row, int column){
-				return false;
-			}
-		};
+		availableSpotList = new SpotList(new SpotListModel(SpotContainer.TYPE_AVAILABLE));
+		availableSpotList.getModel().replaceData(availableSpots.getDataCopy());
 		panel.add(availableSpotList.getContainingScrollPane());
 		
 		JPanel buttonPanel = new JPanel();
@@ -143,8 +150,17 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 	private JPanel createSpotTransferPanel() {
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-		panel.add(new JButton("->"));
-		panel.add(new JButton("<-"));
+		
+		JButton copyToActiveButton = new JButton(Calculate.createImageIcon("../resources/Forward24.gif"));
+		copyToActiveButton.addActionListener(this);
+		copyToActiveButton.setActionCommand("copytoactive");
+		panel.add(copyToActiveButton);
+	    
+		JButton removeFromActiveButton = new JButton(Calculate.createImageIcon("../resources/Back24.gif"));
+		removeFromActiveButton.addActionListener(this);
+		removeFromActiveButton.setActionCommand("removefromactive");
+		panel.add(removeFromActiveButton);
+		
 		return panel;
 	}
 
@@ -168,12 +184,8 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 		}
 		
 		SpotPlayer activeSpots = SpotMachine.getSpotPlayer();
-		activeSpotList = new SpotList(activeSpots.getData(), activeSpots.getColumnNames(), SpotContainer.TYPE_ACTIVE) {
-			private static final long serialVersionUID = 7721297301307563517L;
-			public boolean isCellEditable(int row, int column){
-				return false;
-			}
-		};
+		activeSpotList = new SpotList(new SpotListModel(SpotContainer.TYPE_ACTIVE));
+		activeSpotList.getModel().replaceData(activeSpots.getDataCopy());
 		activeSpotList.setNextSpot(activeSpots.getNextSpotToPlayIndex());
 		setNextSpotLabel(activeSpots.getNextSpotToPlayIndex(), activeSpots.getNextSpotToPlay().getName());
 		panel.add(activeSpotList.getContainingScrollPane());
@@ -207,12 +219,12 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 		
-		JButton upButton = new JButton("Flyt op");
+		JButton upButton = new JButton("Flyt op", Calculate.createImageIcon("../resources/Up24.gif"));
 		upButton.addActionListener(this);
 		upButton.setActionCommand("moveup");
 		panel.add(upButton);
 		
-		JButton downButton = new JButton("Flyt ned");
+		JButton downButton = new JButton("Flyt ned", Calculate.createImageIcon("../resources/Down24.gif"));
 		downButton.addActionListener(this);
 		downButton.setActionCommand("movedown");
 		panel.add(downButton);
@@ -265,6 +277,9 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 			int next = SpotMachine.getSpotPlayer().setNextSpotToPlayOneForward();
 			activeSpotList.setNextSpot(next);
 			setNextSpotLabel(next, SpotMachine.getSpotPlayer().getSpotAt(next).getName());
+		} else if (action.equals("copytoactive")) {
+			activeSpotList.addToEnd("test", 10000);
+		} else if (action.equals("removefromactive")) {
 		}
 	}
 
