@@ -4,7 +4,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 import main.SpotContainer;
@@ -83,14 +82,6 @@ public class SpotList extends JTable {
 		Object[] temp = getRow(index1);
 		setRow(index1, getRow(index2));
 		setRow(index2, temp);
-	}
-	
-	public void addToEnd(String spotName, long durationInMillis) {
-		// TODO
-	}
-	
-	public boolean isCellEditable(int row, int column){
-		return false;
 	}
 	
 	public SpotListModel getModel() {

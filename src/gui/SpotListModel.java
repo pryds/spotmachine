@@ -45,10 +45,46 @@ public class SpotListModel extends AbstractTableModel {
 		}
 	}
 	
-    public String getColumnName(int col) {
-        return columnNames[col];
-    }
-
+	public void addToEnd(SpotEntry spot) {
+		if (type == SpotContainer.TYPE_ACTIVE) {
+			data.add(new Object[] {
+					data.size(),
+					spot.getName(),
+					Calculate.millisToMinsSecsString(spot.getLengthInMillis()),
+					""
+			});
+		} else {
+			data.add(new Object[] {
+					spot.getName(),
+					Calculate.millisToMinsSecsString(spot.getLengthInMillis())
+			});
+		}
+		fireTableRowsInserted(data.size() - 1, data.size() - 1);
+	}
+	
+	public void rename(int row, String newName) {
+		setValueAt(newName, row, (type == SpotContainer.TYPE_ACTIVE ? 1 : 0) );
+	}
+	
+	public void remove(int row) {
+		data.remove(row);
+		updateSpotNumbersFrom(row);
+		// TODO: if active spots, update spot numbers
+		fireTableDataChanged();
+	}
+	
+	private void updateSpotNumbersFrom(int index) {
+		if (type == SpotContainer.TYPE_ACTIVE) {
+			for (int i = index; i < getRowCount(); i++) {
+				setValueAt(i, i, 0);
+			}
+		}
+	}
+	
+	public String getColumnName(int col) {
+		return columnNames[col];
+	}
+	
 	public int getColumnCount() {
 		return columnNames.length;
 	}

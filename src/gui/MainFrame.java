@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.File;
 
 import javax.swing.AbstractButton;
 import javax.swing.BoxLayout;
@@ -13,6 +14,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JSpinner;
@@ -25,6 +27,7 @@ import javax.swing.event.ChangeListener;
 import main.Calculate;
 import main.Prefs;
 import main.SpotContainer;
+import main.SpotEntry;
 import main.SpotMachine;
 import main.SpotPlayer;
 
@@ -111,6 +114,7 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 	public void setGUIPaused(boolean paused) {
 		playButton.setEnabled(paused);
 		pauseButton.setEnabled(!paused);
+		recordNewButton.setEnabled(paused);
 	
 	}
 	
@@ -125,6 +129,7 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 	}
 	
 	private SpotList availableSpotList;
+	private JButton recordNewButton;
 	
 	private JPanel createAvailableSpotsPanel() {
 		JPanel panel = new JPanel();
@@ -138,10 +143,28 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 		
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new GridLayout(2, 0));
-		buttonPanel.add(new JButton("Optag nyt"));
-		buttonPanel.add(new JButton("Slet"));
-		buttonPanel.add(new JButton("Afspil"));
-		buttonPanel.add(new JButton("Omdøb"));
+		
+		recordNewButton = new JButton("Optag nyt");
+		recordNewButton.addActionListener(this);
+		recordNewButton.setActionCommand("record");
+		buttonPanel.add(recordNewButton);
+		
+		JButton removeFromAvailableButton = new JButton("Slet");
+		removeFromAvailableButton.addActionListener(this);
+		removeFromAvailableButton.setActionCommand("removefromavailable");
+		buttonPanel.add(removeFromAvailableButton);
+		
+		JButton playAvailableButton = new JButton("Afspil");
+		playAvailableButton.setEnabled(false); //TODO
+		playAvailableButton.addActionListener(this);
+		playAvailableButton.setActionCommand("playavailablespot");
+		buttonPanel.add(playAvailableButton);
+		
+		JButton renameButton = new JButton("Omdøb");
+		renameButton.addActionListener(this);
+		renameButton.setActionCommand("rename");
+		buttonPanel.add(renameButton);
+		
 		panel.add(buttonPanel);
 		
 		return panel;
@@ -278,8 +301,72 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 			activeSpotList.setNextSpot(next);
 			setNextSpotLabel(next, SpotMachine.getSpotPlayer().getSpotAt(next).getName());
 		} else if (action.equals("copytoactive")) {
-			activeSpotList.addToEnd("test", 10000);
+			int selectedAvailable = availableSpotList.getSelectedRow();
+			if (selectedAvailable != -1) {
+				int selectedActive = activeSpotList.getSelectedRow();
+				SpotEntry source = SpotMachine.getAvailableSpots().getSpotAt(selectedAvailable);
+				SpotMachine.getSpotPlayer().addToEnd(source);
+				activeSpotList.getModel().addToEnd(source);
+				activeSpotList.getSelectionModel().setSelectionInterval(selectedActive, selectedActive);
+			}
 		} else if (action.equals("removefromactive")) {
+			int selectedActive = activeSpotList.getSelectedRow();
+			if (selectedActive != -1) {
+				SpotMachine.getSpotPlayer().remove(selectedActive);
+				activeSpotList.getModel().remove(selectedActive);
+				int newSelection = (selectedActive-1 >= 0) ? selectedActive-1 : 0;
+				activeSpotList.getSelectionModel().setSelectionInterval(newSelection, newSelection);
+			}
+		} else if (action.equals("removefromavailable")) {
+			int selectedAvailable = availableSpotList.getSelectedRow();
+			if (selectedAvailable != -1) {
+				Object[] options = {"Ja, slet spot!", "Nej"};
+				int selection = JOptionPane.showOptionDialog(
+						this,
+						"Er du sikker på, at du vil slette spot permanent?\n"
+						+ "Du kan ikke fortryde denne handling.",
+						"Slet spot", // headline
+						JOptionPane.OK_CANCEL_OPTION,
+						JOptionPane.WARNING_MESSAGE,
+						null, // icon
+						options,
+						options[1]
+				);
+				
+				if (selection == 0) {
+					SpotMachine.getAvailableSpots().remove(selectedAvailable);
+					availableSpotList.getModel().remove(selectedAvailable);
+					int newSelection = (selectedAvailable-1 >= 0) ? selectedAvailable-1 : 0;
+					availableSpotList.getSelectionModel().setSelectionInterval(newSelection, newSelection);
+				}
+			}
+		} else if (action.equals("record")) {
+			// TODO
+		} else if (action.equals("rename")) {
+			int selectedAvailable = availableSpotList.getSelectedRow();
+			if (selectedAvailable != -1) {
+				SpotEntry spot = SpotMachine.getAvailableSpots().getSpotAt(selectedAvailable);
+				
+				String newName = null;
+				do {
+					newName = (String)JOptionPane.showInputDialog(
+							this,
+							"Skriv nyt navn for spot:",
+							"Omdøb spot",
+							JOptionPane.PLAIN_MESSAGE,
+							null, // icon
+							null, // possibilities, null gives text field
+							spot.getName()
+					);
+					if (newName != null)
+						newName = newName.trim();
+				} while (newName != null && newName.length() == 0);
+				
+				if (newName != null) {
+					SpotMachine.getAvailableSpots().renameSpot(selectedAvailable, newName);
+					availableSpotList.getModel().rename(selectedAvailable, newName);
+				}
+			}
 		}
 	}
 

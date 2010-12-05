@@ -35,6 +35,17 @@ public class SpotContainer {
 		saveSpotToPrefs(spotList.size() - 1, spot);
 	}
 	
+	public void remove(int index) {
+		spotList.remove(index);
+		saveAllSpotsToPrefs();
+	}
+	
+	private void saveAllSpotsToPrefs() {
+		for (int i = 0; i < spotList.size(); i++) {
+			saveSpotToPrefs(i, spotList.get(i));
+		}
+	}
+	
 	private void saveSpotToPrefs(int position, SpotEntry spot) {
 		/**
 		 * To be called after spot is added to container.
@@ -58,6 +69,11 @@ public class SpotContainer {
 		saveSpotToPrefs(index2, spotList.get(index2));
 	}
 	
+	public void renameSpot(int index, String newName) {
+		spotList.get(index).setName(newName);
+		saveSpotToPrefs(index, spotList.get(index));
+	}
+	
 	public Vector<SpotEntry> getDataCopy() {
 		Vector<SpotEntry> data = new Vector<SpotEntry>();
 		
@@ -67,8 +83,4 @@ public class SpotContainer {
 		
 		return data;
 	}
-	
-	/**public String[] getColumnNames() {
-		return columnNames[type];
-	}**/
 }
