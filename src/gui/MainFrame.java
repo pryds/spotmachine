@@ -155,7 +155,7 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 		buttonPanel.add(removeFromAvailableButton);
 		
 		JButton playAvailableButton = new JButton("Afspil");
-		playAvailableButton.setEnabled(false); //TODO
+		playAvailableButton.setEnabled(false);
 		playAvailableButton.addActionListener(this);
 		playAvailableButton.setActionCommand("playavailablespot");
 		buttonPanel.add(playAvailableButton);
@@ -269,23 +269,23 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 		System.out.println("Action performed! " + e.getActionCommand());
 		String action = e.getActionCommand();
 		if (action.equals("moveup") || action.equals("movedown")) {
-			int oldPos;
-			int newPos;
-			if (action.equals("moveup")) {
-				oldPos = activeSpotList.getSelectedRow();
-				newPos = oldPos - 1;
-			} else {
-				oldPos = activeSpotList.getSelectedRow();
-				newPos = oldPos + 1;
+			int oldPos = activeSpotList.getSelectedRow();
+			if (oldPos != -1) {
+				int newPos;
+				if (action.equals("moveup")) {
+					newPos = oldPos - 1;
+				} else {
+					newPos = oldPos + 1;
+				}
+				if (newPos < 0 || newPos > activeSpotList.getRowCount() - 1) {
+					System.err.println("Trying to move a spot off-range. Ignored.");
+					return;
+				}
+				activeSpotList.swapRows(newPos, oldPos);
+				activeSpotList.getSelectionModel().setSelectionInterval(newPos, newPos);
+				SpotMachine.getSpotPlayer().swapSpots(newPos, oldPos);
+				setNextSpotLabel(SpotMachine.getSpotPlayer().getNextSpotToPlayIndex(), SpotMachine.getSpotPlayer().getNextSpotToPlay().getName());
 			}
-			if (newPos < 0 || newPos > activeSpotList.getRowCount() - 1) {
-				System.err.println("Trying to move a spot off-range. Ignored.");
-				return;
-			}
-			activeSpotList.swapRows(newPos, oldPos);
-			activeSpotList.getSelectionModel().setSelectionInterval(newPos, newPos);
-			SpotMachine.getSpotPlayer().swapSpots(newPos, oldPos);
-			setNextSpotLabel(SpotMachine.getSpotPlayer().getNextSpotToPlayIndex(), SpotMachine.getSpotPlayer().getNextSpotToPlay().getName());
 		} else if (action.equals("play")) {
 			SpotMachine.getSpotPlayer().setPaused(false);
 			setGUIPaused(false);
@@ -341,6 +341,9 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 				}
 			}
 		} else if (action.equals("record")) {
+			// TODO
+			new RecordDialogue().setVisible(true);
+		} else if (action.equals("playavailablespot")) {
 			// TODO
 		} else if (action.equals("rename")) {
 			int selectedAvailable = availableSpotList.getSelectedRow();

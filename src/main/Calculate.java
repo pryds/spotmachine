@@ -1,6 +1,7 @@
 package main;
 
 import java.net.URL;
+import java.util.Random;
 
 import gui.MainFrame;
 
@@ -21,5 +22,19 @@ public class Calculate {
 			System.exit(1);
 		}
 		return new ImageIcon(url);
+	}
+	
+	public static String createLowerCaseRandomWAVFilename() {
+		Random rand = new Random();
+		StringBuffer str = new StringBuffer();
+		int nameLength = 16;
+		int firstChar = 97; // 'a'
+		int lastChar = 122; // 'z'
+		
+		for (int i = 0; i < nameLength; i++) {
+			str.append((char)(rand.nextInt(lastChar - firstChar + 1) + firstChar));
+		}
+		str.append(".wav");
+		return str.toString();
 	}
 }
