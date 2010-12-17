@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.io.File;
 
 import javax.swing.AbstractButton;
 import javax.swing.BoxLayout;
@@ -35,6 +34,8 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 	private static final long serialVersionUID = 6219825567861104713L;
 	
 	// Icons from http://java.sun.com/developer/techDocs/hi/repository/
+	
+	// TODO: Add tool tips at various places (also on recording window)
 
 	public MainFrame(String title) {
 		super(title);
@@ -154,11 +155,11 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 		removeFromAvailableButton.setActionCommand("removefromavailable");
 		buttonPanel.add(removeFromAvailableButton);
 		
-		JButton playAvailableButton = new JButton("Afspil");
-		playAvailableButton.setEnabled(false);
-		playAvailableButton.addActionListener(this);
-		playAvailableButton.setActionCommand("playavailablespot");
-		buttonPanel.add(playAvailableButton);
+		JButton importButton = new JButton("Importér");
+		importButton.setEnabled(false);
+		importButton.addActionListener(this);
+		importButton.setActionCommand("importspot");
+		buttonPanel.add(importButton);
 		
 		JButton renameButton = new JButton("Omdøb");
 		renameButton.addActionListener(this);
@@ -175,11 +176,13 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 		
 		JButton copyToActiveButton = new JButton(Calculate.createImageIcon("../resources/Forward24.gif"));
+		copyToActiveButton.setToolTipText("Indsæt det valgte tilgængelige spot i listen over aktive spots");
 		copyToActiveButton.addActionListener(this);
 		copyToActiveButton.setActionCommand("copytoactive");
 		panel.add(copyToActiveButton);
 	    
 		JButton removeFromActiveButton = new JButton(Calculate.createImageIcon("../resources/Back24.gif"));
+		removeFromActiveButton.setToolTipText("Fjern spot fra listen over aktive spots");
 		removeFromActiveButton.addActionListener(this);
 		removeFromActiveButton.setActionCommand("removefromactive");
 		panel.add(removeFromActiveButton);
@@ -213,6 +216,7 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 		setNextSpotLabel(activeSpots.getNextSpotToPlayIndex(), activeSpots.getNextSpotToPlay().getName());
 		panel.add(activeSpotList.getContainingScrollPane());
 		repeatAllCheckBox = new JCheckBox("Gentag alle");
+		repeatAllCheckBox.setToolTipText("Start afspilningen af spots forfra, når sidste spot er afspillet");
 		repeatAllCheckBox.setSelected(Prefs.prefs.getBoolean(Prefs.REPEAT_ALL, Prefs.REPEAT_ALL_DEFAULT));
 		repeatAllCheckBox.addItemListener(this);
 		panel.add(repeatAllCheckBox);
@@ -343,7 +347,8 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 		} else if (action.equals("record")) {
 			// TODO
 			new RecordDialogue().setVisible(true);
-		} else if (action.equals("playavailablespot")) {
+			this.setEnabled(false);
+		} else if (action.equals("importspot")) {
 			// TODO
 		} else if (action.equals("rename")) {
 			int selectedAvailable = availableSpotList.getSelectedRow();

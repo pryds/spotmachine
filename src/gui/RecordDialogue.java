@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -10,10 +11,11 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import main.Calculate;
-import main.Prefs;
+import main.SpotMachine;
 import main.SpotRecorder;
 
 public class RecordDialogue extends JFrame implements ActionListener {
@@ -34,12 +36,16 @@ public class RecordDialogue extends JFrame implements ActionListener {
 		panel.add(new JTextField());
 		panel.add(createCurrentLengthPanel());
 		panel.add(createControlButtonsPanel());
+		
+		panel.add(createNoteTextArea());
+		
 		panel.add(createOKCancelButtonPanel());
 		
 		pack(); 
 	}
 	
 	private JTextField currentLengthTextField;
+	private JLabel statusTextField;
 	
 	private JPanel createCurrentLengthPanel() {
 		JPanel panel = new JPanel();
@@ -48,6 +54,9 @@ public class RecordDialogue extends JFrame implements ActionListener {
 		currentLengthTextField = new JTextField("0:00");
 		currentLengthTextField.setEditable(false);
 		panel.add(currentLengthTextField);
+		
+		statusTextField = new JLabel("stoppet");
+		panel.add(statusTextField);
 		
 		return panel;
 	}
@@ -68,6 +77,7 @@ public class RecordDialogue extends JFrame implements ActionListener {
 		panel.add(recordButton);
 		
 		pauseButton = new JButton("Pause", Calculate.createImageIcon("../resources/Pause24.gif"));
+		pauseButton.setEnabled(false);
 		pauseButton.setVerticalTextPosition(AbstractButton.BOTTOM);
 	    pauseButton.setHorizontalTextPosition(AbstractButton.CENTER);
 		pauseButton.addActionListener(this);
@@ -75,6 +85,7 @@ public class RecordDialogue extends JFrame implements ActionListener {
 		panel.add(pauseButton);
 		
 		stopButton = new JButton("Stop", Calculate.createImageIcon("../resources/Stop24.gif"));
+		stopButton.setEnabled(false);
 		stopButton.setVerticalTextPosition(AbstractButton.BOTTOM);
 	    stopButton.setHorizontalTextPosition(AbstractButton.CENTER);
 		stopButton.addActionListener(this);
@@ -82,6 +93,21 @@ public class RecordDialogue extends JFrame implements ActionListener {
 		panel.add(stopButton);
 		
 		return panel;
+	}
+	
+	private JTextArea createNoteTextArea() {
+		JTextArea note = new JTextArea("Husk at afbryde lydudgang, tilsluttet forstærker\n"
+				+ "eller lignende inden optagelse begyndes, da det\n"
+				+ "optagede afspilles umiddelbart efter optagelse.");
+		note.setEditable(false);
+		
+		Color textColour = new Color(255, 0, 0); // red text
+		Color bgColour = new Color(255, 255, 255, 0); // "invisible" white, i.e. alpha value of 0
+		note.setBackground(bgColour); 
+		note.setForeground(textColour);
+		note.setSelectionColor(bgColour);
+		note.setSelectedTextColor(textColour);
+		return note;
 	}
 	
 	private JPanel createOKCancelButtonPanel() {
@@ -107,16 +133,31 @@ public class RecordDialogue extends JFrame implements ActionListener {
 		String action = e.getActionCommand();
 		if (action.equals("ok")) {
 		} else if (action.equals("cancel")) {
+			SpotMachine.getMainFrame().setEnabled(true);
 			this.dispose();
 		} else if (action.equals("record")) {
+			recordButton.setEnabled(false);
+			stopButton.setEnabled(true);
+			pauseButton.setEnabled(true);
 			rec = new SpotRecorder();
 			new Thread(rec).start();
+			statusTextField.setText("optager");
 		} else if (action.equals("pause")) {
+			// TODO: Detect if already paused and unpause instead if so
+			recordButton.setEnabled(true);
+			stopButton.setEnabled(true);
+			pauseButton.setEnabled(true);
+			statusTextField.setText("pause");
 		} else if (action.equals("stop")) {
+			recordButton.setEnabled(true);
+			stopButton.setEnabled(false);
+			pauseButton.setEnabled(false);
+			statusTextField.setText("stopper...");
 			if (rec != null) {
 				rec.stopRecoding();
 				rec = null;
 			}
+			statusTextField.setText("stoppet");
 		}
 	}
 }
