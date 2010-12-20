@@ -23,7 +23,7 @@ import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import main.Calculate;
+import main.Util;
 import main.Prefs;
 import main.SpotContainer;
 import main.SpotEntry;
@@ -35,8 +35,8 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 	
 	// Icons from http://java.sun.com/developer/techDocs/hi/repository/
 	
-	// TODO: Add tool tips at various places (also on recording window)
-
+	private RecordDialogue recordDialogue = null;
+	
 	public MainFrame(String title) {
 		super(title);
 		//setResizable(false);
@@ -57,7 +57,7 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 		JPanel panel = new JPanel();
 		panel.add(new JLabel("Tid til næste spot:"));
 		countdownTextField = new JTextField(
-				Calculate.millisToMinsSecsString(Prefs.prefs.getLong(Prefs.MILLIS_BETWEEN_SPOTS, Prefs.MILLIS_BETWEEN_SPOTS_DEFAULT))
+				Util.get().millisToMinsSecsString(Prefs.prefs.getLong(Prefs.MILLIS_BETWEEN_SPOTS, Prefs.MILLIS_BETWEEN_SPOTS_DEFAULT))
 				);
 		countdownTextField.setEditable(false);
 		panel.add(countdownTextField);
@@ -71,7 +71,7 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 	}
 	
 	public void setCountDownFieldValue(long millis) {
-		countdownTextField.setText(Calculate.millisToMinsSecsString(millis));
+		countdownTextField.setText(Util.get().millisToMinsSecsString(millis));
 	}
 	
 	private JButton playButton;
@@ -80,14 +80,14 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 	private JPanel createUpperMainPanel() {
 		JPanel panel = new JPanel();
 		
-		playButton = new JButton("Afspil", Calculate.createImageIcon("../resources/Play24.gif"));
+		playButton = new JButton("Afspil", Util.get().createImageIcon("../resources/Play24.gif"));
 		playButton.setVerticalTextPosition(AbstractButton.BOTTOM);
 	    playButton.setHorizontalTextPosition(AbstractButton.CENTER);
 		playButton.addActionListener(this);
 		playButton.setActionCommand("play");
 		panel.add(playButton);
 		
-		pauseButton = new JButton("Pause", Calculate.createImageIcon("../resources/Pause24.gif"));
+		pauseButton = new JButton("Pause", Util.get().createImageIcon("../resources/Pause24.gif"));
 		pauseButton.setVerticalTextPosition(AbstractButton.BOTTOM);
 	    pauseButton.setHorizontalTextPosition(AbstractButton.CENTER);
 		pauseButton.addActionListener(this);
@@ -95,14 +95,14 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 		pauseButton.setEnabled(false);
 		panel.add(pauseButton);
 		
-		JButton previousButton = new JButton("Forrige", Calculate.createImageIcon("../resources/StepBack24.gif"));
+		JButton previousButton = new JButton("Forrige", Util.get().createImageIcon("../resources/StepBack24.gif"));
 		previousButton.setVerticalTextPosition(AbstractButton.BOTTOM);
 	    previousButton.setHorizontalTextPosition(AbstractButton.CENTER);
 	    previousButton.addActionListener(this);
 		previousButton.setActionCommand("previous");
 		panel.add(previousButton);
 		
-		JButton nextButton = new JButton("Næste", Calculate.createImageIcon("../resources/StepForward24.gif"));
+		JButton nextButton = new JButton("Næste", Util.get().createImageIcon("../resources/StepForward24.gif"));
 		nextButton.setVerticalTextPosition(AbstractButton.BOTTOM);
 	    nextButton.setHorizontalTextPosition(AbstractButton.CENTER);
 	    nextButton.addActionListener(this);
@@ -175,13 +175,13 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 		
-		JButton copyToActiveButton = new JButton(Calculate.createImageIcon("../resources/Forward24.gif"));
+		JButton copyToActiveButton = new JButton(Util.get().createImageIcon("../resources/Forward24.gif"));
 		copyToActiveButton.setToolTipText("Indsæt det valgte tilgængelige spot i listen over aktive spots");
 		copyToActiveButton.addActionListener(this);
 		copyToActiveButton.setActionCommand("copytoactive");
 		panel.add(copyToActiveButton);
 	    
-		JButton removeFromActiveButton = new JButton(Calculate.createImageIcon("../resources/Back24.gif"));
+		JButton removeFromActiveButton = new JButton(Util.get().createImageIcon("../resources/Back24.gif"));
 		removeFromActiveButton.setToolTipText("Fjern spot fra listen over aktive spots");
 		removeFromActiveButton.addActionListener(this);
 		removeFromActiveButton.setActionCommand("removefromactive");
@@ -241,17 +241,25 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 	public SpotList getActiveSpotList() {
 		return activeSpotList;
 	}
+	
+	public RecordDialogue getRecordDialogue() {
+		return recordDialogue;
+	}
+	
+	public void setRecordDialogueNull() {
+		recordDialogue = null;
+	}
 
 	private JPanel createChangeOrderPanel() {
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 		
-		JButton upButton = new JButton("Flyt op", Calculate.createImageIcon("../resources/Up24.gif"));
+		JButton upButton = new JButton("Flyt op", Util.get().createImageIcon("../resources/Up24.gif"));
 		upButton.addActionListener(this);
 		upButton.setActionCommand("moveup");
 		panel.add(upButton);
 		
-		JButton downButton = new JButton("Flyt ned", Calculate.createImageIcon("../resources/Down24.gif"));
+		JButton downButton = new JButton("Flyt ned", Util.get().createImageIcon("../resources/Down24.gif"));
 		downButton.addActionListener(this);
 		downButton.setActionCommand("movedown");
 		panel.add(downButton);
@@ -338,15 +346,15 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 				);
 				
 				if (selection == 0) {
-					SpotMachine.getAvailableSpots().remove(selectedAvailable);
+					SpotEntry removedSpot = SpotMachine.getAvailableSpots().remove(selectedAvailable);
+					Util.get().deleteFile(removedSpot.getFile());
 					availableSpotList.getModel().remove(selectedAvailable);
 					int newSelection = (selectedAvailable-1 >= 0) ? selectedAvailable-1 : 0;
 					availableSpotList.getSelectionModel().setSelectionInterval(newSelection, newSelection);
 				}
 			}
 		} else if (action.equals("record")) {
-			// TODO
-			new RecordDialogue().setVisible(true);
+			(recordDialogue = new RecordDialogue()).setVisible(true);
 			this.setEnabled(false);
 		} else if (action.equals("importspot")) {
 			// TODO

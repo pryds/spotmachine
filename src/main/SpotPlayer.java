@@ -19,15 +19,23 @@ public class SpotPlayer extends SpotContainer implements Runnable {
 	private long millisBetweenSpots;
 	private int nextSpotToPlay;
 	private boolean repeatAll;
+	private boolean inPlayLoop = true;
 	
 	private static final int BUFFER_SIZE = 128000;
 
 	public SpotPlayer(int type) {
 		super(type);
-		paused = true;
-		millisBetweenSpots = Prefs.prefs.getLong(Prefs.MILLIS_BETWEEN_SPOTS, Prefs.MILLIS_BETWEEN_SPOTS_DEFAULT);
-		nextSpotToPlay = Prefs.prefs.getInt(Prefs.NEXT_SPOT_TO_PLAY, Prefs.NEXT_SPOT_TO_PLAY_DEFAULT);
-		repeatAll = Prefs.prefs.getBoolean(Prefs.REPEAT_ALL, Prefs.REPEAT_ALL_DEFAULT);
+		if (type != TYPE_TEMPORARY) {
+			paused = true;
+			millisBetweenSpots = Prefs.prefs.getLong(Prefs.MILLIS_BETWEEN_SPOTS, Prefs.MILLIS_BETWEEN_SPOTS_DEFAULT);
+			nextSpotToPlay = Prefs.prefs.getInt(Prefs.NEXT_SPOT_TO_PLAY, Prefs.NEXT_SPOT_TO_PLAY_DEFAULT);
+			repeatAll = Prefs.prefs.getBoolean(Prefs.REPEAT_ALL, Prefs.REPEAT_ALL_DEFAULT);
+		} else {
+			paused = false;
+			millisBetweenSpots = 2000;
+			nextSpotToPlay = 0;
+			repeatAll = false;
+		}
 	}
 	
 	public void run() { // invoke with start()
@@ -41,8 +49,14 @@ public class SpotPlayer extends SpotContainer implements Runnable {
 					setNextSpotToPlayAndUpdateGUI(0);
 				
 				if (nextSpotToPlay == 0 && !repeatAll) {
-					setPaused(true);
-					SpotMachine.getMainFrame().setGUIPaused(true);
+					if (type == TYPE_TEMPORARY) {
+						inPlayLoop = false;
+						System.out.println("Exiting spotPlayer thread. Type " + type);
+						return;
+					} else {
+						setPaused(true);
+						SpotMachine.getMainFrame().setGUIPaused(true);
+					}
 				} else {
 					waitForMilliseconds(millisBetweenSpots);
 				}
@@ -152,7 +166,8 @@ public class SpotPlayer extends SpotContainer implements Runnable {
 
 	public void setMillisBetweenSpots(long millis) {
 		this.millisBetweenSpots = millis;
-		Prefs.prefs.putLong(Prefs.MILLIS_BETWEEN_SPOTS, millis);
+		if (type != TYPE_TEMPORARY)
+			Prefs.prefs.putLong(Prefs.MILLIS_BETWEEN_SPOTS, millis);
 	}
 	
 	public int getNextSpotToPlayIndex() {
@@ -165,13 +180,16 @@ public class SpotPlayer extends SpotContainer implements Runnable {
 	
 	private void setNextSpotToPlayAndUpdateGUI(int index) {
 		setNextSpotToPlay(index);
-		SpotMachine.getMainFrame().getActiveSpotList().setNextSpot(index);
-		SpotMachine.getMainFrame().setNextSpotLabel(index, getNextSpotToPlay().getName());
+		if (type != TYPE_TEMPORARY) {
+			SpotMachine.getMainFrame().getActiveSpotList().setNextSpot(index);
+			SpotMachine.getMainFrame().setNextSpotLabel(index, getNextSpotToPlay().getName());
+		}
 	}
 	
 	public int setNextSpotToPlay(int index) {
 		nextSpotToPlay = index;
-		Prefs.prefs.putInt(Prefs.NEXT_SPOT_TO_PLAY, index);
+		if (type != TYPE_TEMPORARY)
+			Prefs.prefs.putInt(Prefs.NEXT_SPOT_TO_PLAY, index);
 		return nextSpotToPlay;
 	}
 	
@@ -191,7 +209,11 @@ public class SpotPlayer extends SpotContainer implements Runnable {
 	
 	public void setRepeatAll(boolean state) {
 		this.repeatAll = state;
-		Prefs.prefs.putBoolean(Prefs.REPEAT_ALL, state);
+		if (type != TYPE_TEMPORARY)
+			Prefs.prefs.putBoolean(Prefs.REPEAT_ALL, state);
 	}
-
+	
+	public boolean inPlayLoop() {
+		return inPlayLoop;
+	}
 }

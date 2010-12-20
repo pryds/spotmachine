@@ -4,7 +4,7 @@ import java.util.Vector;
 
 import javax.swing.table.AbstractTableModel;
 
-import main.Calculate;
+import main.Util;
 import main.SpotContainer;
 import main.SpotEntry;
 
@@ -29,9 +29,9 @@ public class SpotListModel extends AbstractTableModel {
 		if (type == SpotContainer.TYPE_ACTIVE) {
 			for (int i = 0; i < replacement.size(); i++) {
 				data.add(new Object[] {
-						i,
+						i + 1,
 						replacement.get(i).getName(),
-						Calculate.millisToMinsSecsString(replacement.get(i).getLengthInMillis()),
+						Util.get().millisToMinsSecsString(replacement.get(i).getLengthInMillis()),
 						""
 				});
 			}
@@ -39,7 +39,7 @@ public class SpotListModel extends AbstractTableModel {
 			for (int i = 0; i < replacement.size(); i++) {
 				data.add(new Object[] {
 						replacement.get(i).getName(),
-						Calculate.millisToMinsSecsString(replacement.get(i).getLengthInMillis())
+						Util.get().millisToMinsSecsString(replacement.get(i).getLengthInMillis())
 				});
 			}
 		}
@@ -48,15 +48,15 @@ public class SpotListModel extends AbstractTableModel {
 	public void addToEnd(SpotEntry spot) {
 		if (type == SpotContainer.TYPE_ACTIVE) {
 			data.add(new Object[] {
-					data.size(),
+					data.size() + 1,
 					spot.getName(),
-					Calculate.millisToMinsSecsString(spot.getLengthInMillis()),
+					Util.get().millisToMinsSecsString(spot.getLengthInMillis()),
 					""
 			});
 		} else {
 			data.add(new Object[] {
 					spot.getName(),
-					Calculate.millisToMinsSecsString(spot.getLengthInMillis())
+					Util.get().millisToMinsSecsString(spot.getLengthInMillis())
 			});
 		}
 		fireTableRowsInserted(data.size() - 1, data.size() - 1);
@@ -69,14 +69,13 @@ public class SpotListModel extends AbstractTableModel {
 	public void remove(int row) {
 		data.remove(row);
 		updateSpotNumbersFrom(row);
-		// TODO: if active spots, update spot numbers
 		fireTableDataChanged();
 	}
 	
 	private void updateSpotNumbersFrom(int index) {
 		if (type == SpotContainer.TYPE_ACTIVE) {
 			for (int i = index; i < getRowCount(); i++) {
-				setValueAt(i, i, 0);
+				setValueAt(i + 1, i, 0);
 			}
 		}
 	}

@@ -2,6 +2,7 @@ package main;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Calendar;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
@@ -23,7 +24,7 @@ public class SpotRecorder implements Runnable {
 		outFile = null;
 		targetDataLine = null;
 		while (outFile == null || outFile.exists()) { // make sure file doesn't already exist (though unlikely)
-			outFile = new File(Calculate.createLowerCaseRandomWAVFilename());
+			outFile = new File(Util.get().createLowerCaseRandomWAVFilename());
 		}
 		
 		AudioFormat audioFormat = new AudioFormat(
@@ -54,6 +55,28 @@ public class SpotRecorder implements Runnable {
 		System.out.println("Starting recording...");
 		targetDataLine.start();
 		
+		
+		
+		new Thread(new Runnable() {
+			public void run() {
+				long startTime = Calendar.getInstance().getTime().getTime();
+				while (targetDataLine.isActive()) {
+					long nowTime = Calendar.getInstance().getTime().getTime();
+					SpotMachine.getMainFrame().getRecordDialogue().setCurrentDurationTextField(nowTime - startTime);
+					
+					try {
+						Thread.sleep(200);
+					} catch (Exception ex) {
+						ex.printStackTrace();
+					}
+				}
+			}
+		}).start();
+
+		
+		
+		
+		
 		try {
 			AudioSystem.write(audioInputStream, targetType, outFile);
 		} catch (IOException e) {
@@ -66,5 +89,9 @@ public class SpotRecorder implements Runnable {
 		targetDataLine.stop();
 		targetDataLine.close();
 		System.out.println("Recording stopped.");
+	}
+	
+	public File getOutFile() {
+		return outFile;
 	}
 }

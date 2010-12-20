@@ -3,6 +3,7 @@ package gui;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
@@ -14,14 +15,22 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import main.Calculate;
+import main.SpotContainer;
+import main.SpotEntry;
+import main.SpotPlayer;
+import main.Util;
 import main.SpotMachine;
 import main.SpotRecorder;
 
 public class RecordDialogue extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 2437740287713575921L;
 	
+	private File lastFinishedRecording = null;
+	
 	// Icons from http://java.sun.com/developer/techDocs/hi/repository/
+	
+	
+	private JTextField spotNameTextField;
 	
 	public RecordDialogue() {
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -33,7 +42,10 @@ public class RecordDialogue extends JFrame implements ActionListener {
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 		
 		panel.add(new JLabel("Navn:"));
-		panel.add(new JTextField());
+		
+		spotNameTextField = new JTextField();
+		panel.add(spotNameTextField);
+		
 		panel.add(createCurrentLengthPanel());
 		panel.add(createControlButtonsPanel());
 		
@@ -61,6 +73,10 @@ public class RecordDialogue extends JFrame implements ActionListener {
 		return panel;
 	}
 	
+	public void setCurrentDurationTextField(long millis) {
+		currentLengthTextField.setText(Util.get().millisToMinsSecsString(millis));
+	}
+	
 	private JButton recordButton;
 	private JButton pauseButton;
 	private JButton stopButton;
@@ -69,22 +85,22 @@ public class RecordDialogue extends JFrame implements ActionListener {
 		JPanel panel = new JPanel();
 		panel.setBorder(BorderFactory.createTitledBorder("Optagelse"));
 		
-		recordButton = new JButton("Optag forfra", Calculate.createImageIcon("../resources/Record24.gif"));
+		recordButton = new JButton("Optag forfra", Util.get().createImageIcon("../resources/Record24.gif"));
 		recordButton.setVerticalTextPosition(AbstractButton.BOTTOM);
 	    recordButton.setHorizontalTextPosition(AbstractButton.CENTER);
 		recordButton.addActionListener(this);
 		recordButton.setActionCommand("record");
 		panel.add(recordButton);
 		
-		pauseButton = new JButton("Pause", Calculate.createImageIcon("../resources/Pause24.gif"));
+		pauseButton = new JButton("Pause", Util.get().createImageIcon("../resources/Pause24.gif"));
 		pauseButton.setEnabled(false);
 		pauseButton.setVerticalTextPosition(AbstractButton.BOTTOM);
 	    pauseButton.setHorizontalTextPosition(AbstractButton.CENTER);
 		pauseButton.addActionListener(this);
 		pauseButton.setActionCommand("pause");
-		panel.add(pauseButton);
+		//panel.add(pauseButton);
 		
-		stopButton = new JButton("Stop", Calculate.createImageIcon("../resources/Stop24.gif"));
+		stopButton = new JButton("Stop", Util.get().createImageIcon("../resources/Stop24.gif"));
 		stopButton.setEnabled(false);
 		stopButton.setVerticalTextPosition(AbstractButton.BOTTOM);
 	    stopButton.setHorizontalTextPosition(AbstractButton.CENTER);
@@ -110,15 +126,20 @@ public class RecordDialogue extends JFrame implements ActionListener {
 		return note;
 	}
 	
+	private JButton okButton;
+	private JButton cancelButton;
+	
 	private JPanel createOKCancelButtonPanel() {
 		JPanel panel = new JPanel();
 		
-		JButton okButton = new JButton("OK");
+		okButton = new JButton("OK");
+		okButton.setToolTipText("Luk optagelsesvinduet og gem det optagede spot");
 		okButton.addActionListener(this);
 		okButton.setActionCommand("ok");
 		panel.add(okButton);
 		
-		JButton cancelButton = new JButton("Fortryd");
+		cancelButton = new JButton("Fortryd");
+		cancelButton.setToolTipText("Luk optagelsesvinduet uden at gemme");
 		cancelButton.addActionListener(this);
 		cancelButton.setActionCommand("cancel");
 		panel.add(cancelButton);
@@ -132,13 +153,37 @@ public class RecordDialogue extends JFrame implements ActionListener {
 		System.out.println("Record window action performed! " + e.getActionCommand());
 		String action = e.getActionCommand();
 		if (action.equals("ok")) {
+			String spotName = spotNameTextField.getText().trim();
+			if (lastFinishedRecording == null) {
+				System.err.println("Nothing recorded yet. Ignoring ok request.");
+			} else if (spotName.length() == 0) {
+				System.err.println("No spot name given. Ignoring ok request.");
+			} else {
+				SpotEntry newSpot = new SpotEntry(lastFinishedRecording, spotName);
+				SpotMachine.getAvailableSpots().addToEnd(newSpot);
+				SpotMachine.getMainFrame().getAvailableSpotList().getModel().addToEnd(newSpot);
+				SpotMachine.getMainFrame().setEnabled(true);
+				SpotMachine.getMainFrame().setRecordDialogueNull();
+				this.dispose();
+			}
 		} else if (action.equals("cancel")) {
+			if (lastFinishedRecording != null) {
+				Util.get().deleteFile(lastFinishedRecording);
+				lastFinishedRecording = null;
+			}
 			SpotMachine.getMainFrame().setEnabled(true);
+			SpotMachine.getMainFrame().setRecordDialogueNull();
 			this.dispose();
 		} else if (action.equals("record")) {
+			if (lastFinishedRecording != null) {
+				Util.get().deleteFile(lastFinishedRecording);
+				lastFinishedRecording = null;
+			}
 			recordButton.setEnabled(false);
 			stopButton.setEnabled(true);
 			pauseButton.setEnabled(true);
+			okButton.setEnabled(false);
+			cancelButton.setEnabled(false);
 			rec = new SpotRecorder();
 			new Thread(rec).start();
 			statusTextField.setText("optager");
@@ -149,15 +194,46 @@ public class RecordDialogue extends JFrame implements ActionListener {
 			pauseButton.setEnabled(true);
 			statusTextField.setText("pause");
 		} else if (action.equals("stop")) {
-			recordButton.setEnabled(true);
 			stopButton.setEnabled(false);
-			pauseButton.setEnabled(false);
-			statusTextField.setText("stopper...");
+
+			statusTextField.setText("stopper optagelse...");
 			if (rec != null) {
 				rec.stopRecoding();
+				lastFinishedRecording = rec.getOutFile();
 				rec = null;
 			}
-			statusTextField.setText("stoppet");
+
+			statusTextField.setText("afspiller");
+
+			final SpotPlayer tempPlayer = new SpotPlayer(SpotContainer.TYPE_TEMPORARY); // final in order to be accessed from inner class below
+			tempPlayer.addToEnd(new SpotEntry(lastFinishedRecording, "Temporary"));
+			new Thread(tempPlayer).start();
+			
+			/**
+			 * The following thread will wait for the playback to finish,
+			 * and then reenable disabled buttons.
+			 * we can't just wait in the current thread, as it would halt
+			 * the GUI, making the impression that the program has stalled
+			 */
+			new Thread(new Runnable() {
+				public void run() {
+					while (tempPlayer.inPlayLoop()) {
+						try {
+							Thread.sleep(200);
+						} catch (Exception ex) {
+							ex.printStackTrace();
+						}
+					}
+					
+					statusTextField.setText("stoppet");
+					
+					recordButton.setEnabled(true);
+					pauseButton.setEnabled(false);
+					okButton.setEnabled(true);
+					cancelButton.setEnabled(true);
+				}
+			}).start();
+			
 		}
 	}
 }
