@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.Vector;
 
 import javax.swing.AbstractButton;
 import javax.swing.BoxLayout;
@@ -213,7 +214,10 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 		activeSpotList = new SpotList(new SpotListModel(SpotContainer.TYPE_ACTIVE));
 		activeSpotList.getModel().replaceData(activeSpots.getDataCopy());
 		activeSpotList.setNextSpot(activeSpots.getNextSpotToPlayIndex());
-		setNextSpotLabel(activeSpots.getNextSpotToPlayIndex(), activeSpots.getNextSpotToPlay().getName());
+		if (activeSpots.getNextSpotToPlayIndex() != -1)
+			setNextSpotLabel(activeSpots.getNextSpotToPlayIndex(), activeSpots.getNextSpotToPlay().getName());
+		else
+			setNextSpotLabel(0, "-");
 		panel.add(activeSpotList.getContainingScrollPane());
 		repeatAllCheckBox = new JCheckBox("Gentag alle");
 		repeatAllCheckBox.setToolTipText("Start afspilningen af spots forfra, når sidste spot er afspillet");
@@ -333,9 +337,10 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 			int selectedAvailable = availableSpotList.getSelectedRow();
 			if (selectedAvailable != -1) {
 				Object[] options = {"Ja, slet spot!", "Nej"};
-				int selection = JOptionPane.showOptionDialog(
+				int userChoise = JOptionPane.showOptionDialog(
 						this,
 						"Er du sikker på, at du vil slette spot permanent?\n"
+						+ "Spottet vil blive slettet fra begge lister.\n"
 						+ "Du kan ikke fortryde denne handling.",
 						"Slet spot", // headline
 						JOptionPane.OK_CANCEL_OPTION,
@@ -345,10 +350,15 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 						options[1]
 				);
 				
-				if (selection == 0) {
-					SpotEntry removedSpot = SpotMachine.getAvailableSpots().remove(selectedAvailable);
-					Util.get().deleteFile(removedSpot.getFile());
+				if (userChoise == 0) {
+					SpotEntry removedAvailableSpot = SpotMachine.getAvailableSpots().remove(selectedAvailable);
+					int[] removedActiveSpots = SpotMachine.getSpotPlayer().removeAllSpotsContaining(removedAvailableSpot);
+					
+					Util.get().deleteFile(removedAvailableSpot.getFile());
+					
 					availableSpotList.getModel().remove(selectedAvailable);
+					activeSpotList.getModel().remove(removedActiveSpots);
+					
 					int newSelection = (selectedAvailable-1 >= 0) ? selectedAvailable-1 : 0;
 					availableSpotList.getSelectionModel().setSelectionInterval(newSelection, newSelection);
 				}

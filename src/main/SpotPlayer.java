@@ -171,7 +171,10 @@ public class SpotPlayer extends SpotContainer implements Runnable {
 	}
 	
 	public int getNextSpotToPlayIndex() {
-		return nextSpotToPlay;
+		if (spotList.size() < 1)
+			return -1;
+		else
+			return nextSpotToPlay;
 	}
 	
 	public SpotEntry getNextSpotToPlay() {

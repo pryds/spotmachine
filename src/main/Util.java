@@ -2,7 +2,9 @@ package main;
 
 import java.io.File;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.Random;
+import java.util.Vector;
 
 import gui.MainFrame;
 
@@ -60,37 +62,68 @@ public class Util {
 	private File dataDir = null;
 	
 	public File getDataStoreDir() {
-		String sysName = System.getProperty("os.name").toLowerCase();
+		// If we already figured out the data store dir in this session, no need to do so again
 		if (dataDir != null)
 			return dataDir;
 		
+		// Get dir from preferences, if exists and is still valid
+		String prefsDirStr = Prefs.prefs.get(Prefs.DATA_DIR, null);
+		if (prefsDirStr != null) {
+			File prefsDir = new File(prefsDirStr);
+			if (prefsDir != null && prefsDir.exists() && prefsDir.isDirectory() && prefsDir.canWrite()) {
+				dataDir = prefsDir;
+				return dataDir;
+			}
+		}
+		
+		// Figure out where to store data
+		File appDataDir = null;
+		String sysName = System.getProperty("os.name").toLowerCase();
 		if (sysName.contains("windows")) { // Windows special case
 			String winDirStr = System.getenv("APPDATA");
 			if (winDirStr != null) {
 				File winDir = new File(winDirStr);
 				if (winDir != null && winDir.exists() && winDir.isDirectory() && winDir.canWrite()) {
-					dataDir = winDir;
+					appDataDir = winDir;
 				}
 			}
 		}
 		
-		if (dataDir == null) { // default: the current user's home directory
+		if (appDataDir == null) { // default: the current user's home directory
 			String homeDirStr = System.getProperty("user.home");
 			if (homeDirStr != null) {
 				File homeDir = new File(homeDirStr);
 				if (homeDir != null && homeDir.exists() && homeDir.isDirectory() && homeDir.canWrite()) {
-					dataDir = homeDir;
+					appDataDir = homeDir;
 				}
 			}
 		}
 		
-		if (dataDir == null) {
+		if (appDataDir == null) {
 			return null;
 		} else { // by now we have a writable dir in which we can make our own dir or use it if it already exists
-			File saveDir = new File(dataDir, ".spotmachine");
+			File saveDir = new File(appDataDir, ".spotmachine");
 			if (!saveDir.exists())
 				saveDir.mkdir();
+			Prefs.prefs.put(Prefs.DATA_DIR, saveDir.getAbsolutePath());
 			return saveDir;
+		}
+	}
+	
+	public int[] IntegerVectorToIntArray(Vector<Integer> source) {
+		int[] target = new int[source.size()];
+		for (int i = 0; i < source.size(); i++) {
+			target[i] = source.get(i).intValue();
+		}
+		return target;
+	}
+	
+	public void reverseSort(int[] intArray) {
+		Arrays.sort(intArray);
+		for(int i = 0; i < intArray.length / 2; i++) {
+		     int temp = intArray[i];
+		     intArray[i] = intArray[intArray.length - (i + 1)];
+		     intArray[intArray.length - (i + 1)] = temp;
 		}
 	}
 }

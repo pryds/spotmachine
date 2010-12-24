@@ -40,4 +40,8 @@ public class SpotEntry {
 	public long getLengthInMillis() {
 		return soundLength;
 	}
+	
+	public boolean pointsToSameFileAs(SpotEntry compare) {
+		return compare.getFile().getAbsolutePath() == this.getFile().getAbsolutePath();
+	}
 }

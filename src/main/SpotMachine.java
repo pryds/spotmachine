@@ -18,7 +18,7 @@ public class SpotMachine {
 		
 		(new Thread(spotPlayer = new SpotPlayer(SpotPlayer.TYPE_ACTIVE))).start();
 		//for (int i = 0; i<10; i++)
-		//	spotPlayer.addToEnd(new SpotEntry(new File("yes.wav"), "Yes!"));
+		//	spotPlayer.addToEnd(new SpotEntry(new File(Util.get().getDataStoreDir(), "yes.wav"), "Yes!"));
 		spotPlayer.initializeFromPrefs();
 		
 		spotsAvailable = new SpotContainer(SpotPlayer.TYPE_AVAILABLE);

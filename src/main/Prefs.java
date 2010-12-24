@@ -20,4 +20,6 @@ public class Prefs {
 	public static final String  REPEAT_ALL = "RepeatAll";
 	public static final boolean REPEAT_ALL_DEFAULT = true;
 	
+	public static final String DATA_DIR = "DataDir";
+	
 }

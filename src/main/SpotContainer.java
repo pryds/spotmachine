@@ -25,7 +25,7 @@ public class SpotContainer {
 			
 			for (int i = 0; i < size; i++) {
 				spotList.add(new SpotEntry(
-						new File(Prefs.prefs.get(Prefs.SPOTLIST_ENTRY_FILENAME + type + "." + i, "not.found")),
+						new File(Util.get().getDataStoreDir(), Prefs.prefs.get(Prefs.SPOTLIST_ENTRY_FILENAME + type + "." + i, "not.found")),
 						Prefs.prefs.get(Prefs.SPOTLIST_ENTRY_NAME + type + "." + i, "Not found!")
 						));
 				System.out.println("Added item " + i + " to spotContainer/player");
@@ -44,6 +44,24 @@ public class SpotContainer {
 		if (type != TYPE_TEMPORARY)
 			saveAllSpotsToPrefs();
 		return removedSpot;
+	}
+	
+	public int[] removeAllSpotsContaining(SpotEntry spot) {
+		/**
+		 *  Removes all spots in list, that point to the same file as 'spot'
+		 *  I.e. if a spot has another name than 'spot' it will still be
+		 *  removed if it points to the same file as 'spot'
+		 */
+		Vector<Integer> removedSpotsIndices = new Vector<Integer>();
+		
+		for (int i = spotList.size() - 1; i >= 0; i--) { // traverse spots backwards, as we very well might remove spots along the way
+			if (spot.pointsToSameFileAs(spotList.get(i))) {
+				spotList.remove(i);
+				removedSpotsIndices.add(i);
+			}
+		}
+		saveAllSpotsToPrefs();
+		return Util.get().IntegerVectorToIntArray(removedSpotsIndices);
 	}
 	
 	private void saveAllSpotsToPrefs() {
@@ -67,6 +85,8 @@ public class SpotContainer {
 	}
 	
 	public SpotEntry getSpotAt(int index) {
+		if (index < 0 || index >= spotList.size())
+			return null;
 		return spotList.get(index);
 	}
 	
