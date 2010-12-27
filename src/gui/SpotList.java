@@ -8,6 +8,8 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableModel;
 
 import main.SpotContainer;
+import main.SpotMachine;
+import main.Util;
 
 public class SpotList extends JTable {
 	private static final long serialVersionUID = 684901424002754701L;
@@ -59,7 +61,7 @@ public class SpotList extends JTable {
 		}
 	}
 	
-	public JScrollPane getContainingScrollPane() {
+public JScrollPane getContainingScrollPane() {
 		return containingScrollPane;
 	}
 	
@@ -101,11 +103,36 @@ public class SpotList extends JTable {
 		setRow(index2, temp);
 	}
 	
+	public void remove(int row) {
+		if (getModel().getType() == SpotContainer.TYPE_ACTIVE) {
+			int newNextSpot = SpotMachine.getSpotPlayer().getNextSpotToPlayIndex();
+			boolean rowHasStar = getModel().getValueAt(row, 3).equals("*");
+			getModel().remove(row);
+			if (rowHasStar) {
+				newNextSpot = SpotMachine.getSpotPlayer().getNextSpotToPlayIndex();
+				System.out.print("GUI: Removing spot that has been set as " +
+						" next spot. Setting next spot to " + newNextSpot);
+				setNextSpot(newNextSpot);
+			}
+			if (newNextSpot > -1 && newNextSpot < getModel().getRowCount())
+				SpotMachine.getMainFrame().setNextSpotLabel(newNextSpot, SpotMachine.getSpotPlayer().getSpotAt(newNextSpot).getName());
+			else
+				SpotMachine.getMainFrame().setNextSpotLabel(0, "-");
+		} else {
+			getModel().remove(row);
+		}
+	}
+	
+	public void removeAll(int[] rows) {
+		Util.get().reverseSort(rows);
+		for (int i = 0; i < rows.length; i++) {
+			remove(rows[i]);
+		}
+	}
+	
 	public SpotListModel getModel() {
 		return (SpotListModel)super.getModel();
 	}
-	
-	
 	
 	protected JTableHeader createDefaultTableHeader() { // override from JTable class to show tool tips at table headers
         return new JTableHeader(columnModel) {
@@ -119,5 +146,4 @@ public class SpotList extends JTable {
             }
         };
     }
-
 }

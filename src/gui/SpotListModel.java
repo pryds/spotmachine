@@ -1,7 +1,5 @@
 package gui;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Vector;
 
 import javax.swing.table.AbstractTableModel;
@@ -72,13 +70,6 @@ public class SpotListModel extends AbstractTableModel {
 		data.remove(row);
 		updateSpotNumbersFrom(row);
 		fireTableDataChanged();
-	}
-	
-	public void remove(int[] rows) {
-		Util.get().reverseSort(rows);
-		for (int i = 0; i < rows.length; i++) {
-			data.remove(rows[i]);
-		}
 	}
 	
 	private void updateSpotNumbersFrom(int index) {

@@ -69,6 +69,9 @@ public class SpotContainer {
 			for (int i = 0; i < spotList.size(); i++) {
 				saveSpotToPrefs(i, spotList.get(i));
 			}
+			if (spotList.size() == 0) {
+				Prefs.prefs.putInt(Prefs.SPOTLIST_SIZE + type, spotList.size());
+			}
 		}
 	}
 	
@@ -105,6 +108,10 @@ public class SpotContainer {
 		spotList.get(index).setName(newName);
 		if (type != TYPE_TEMPORARY)
 			saveSpotToPrefs(index, spotList.get(index));
+	}
+	
+	public int numberOfSpots() {
+		return spotList.size();
 	}
 	
 	public Vector<SpotEntry> getDataCopy() {

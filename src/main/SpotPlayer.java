@@ -219,4 +219,15 @@ public class SpotPlayer extends SpotContainer implements Runnable {
 	public boolean inPlayLoop() {
 		return inPlayLoop;
 	}
+	
+	public SpotEntry remove(int index) {
+		SpotEntry removedSpot = super.remove(index);
+		if (index < nextSpotToPlay) {
+			System.out.println("index < nextSpotToPlay  =>  nextSpotToPlay--");
+			setNextSpotToPlayOneBackward();
+		}
+		System.out.println("SpotPlayer: Removed spot index " + index + ". New NextSpotToPlay: " + nextSpotToPlay);
+		
+		return removedSpot;
+	}
 }

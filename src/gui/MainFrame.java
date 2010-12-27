@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.util.Vector;
+import java.util.Arrays;
 
 import javax.swing.AbstractButton;
 import javax.swing.BoxLayout;
@@ -156,7 +156,7 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 		removeFromAvailableButton.setActionCommand("removefromavailable");
 		buttonPanel.add(removeFromAvailableButton);
 		
-		JButton importButton = new JButton("Importér");
+		JButton importButton = new JButton(""); //"Importér"
 		importButton.setEnabled(false);
 		importButton.addActionListener(this);
 		importButton.setActionCommand("importspot");
@@ -214,8 +214,10 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 		activeSpotList = new SpotList(new SpotListModel(SpotContainer.TYPE_ACTIVE));
 		activeSpotList.getModel().replaceData(activeSpots.getDataCopy());
 		activeSpotList.setNextSpot(activeSpots.getNextSpotToPlayIndex());
-		if (activeSpots.getNextSpotToPlayIndex() != -1)
-			setNextSpotLabel(activeSpots.getNextSpotToPlayIndex(), activeSpots.getNextSpotToPlay().getName());
+		if (activeSpots.getNextSpotToPlayIndex() != -1 && activeSpots.getNextSpotToPlay() != null)
+			setNextSpotLabel(
+					activeSpots.getNextSpotToPlayIndex(), 
+					activeSpots.getNextSpotToPlay().getName());
 		else
 			setNextSpotLabel(0, "-");
 		panel.add(activeSpotList.getContainingScrollPane());
@@ -286,7 +288,7 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 		String action = e.getActionCommand();
 		if (action.equals("moveup") || action.equals("movedown")) {
 			int oldPos = activeSpotList.getSelectedRow();
-			if (oldPos != -1) {
+			if (oldPos != -1 && activeSpotList.getModel().getRowCount() > 0) {
 				int newPos;
 				if (action.equals("moveup")) {
 					newPos = oldPos - 1;
@@ -318,24 +320,30 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 			setNextSpotLabel(next, SpotMachine.getSpotPlayer().getSpotAt(next).getName());
 		} else if (action.equals("copytoactive")) {
 			int selectedAvailable = availableSpotList.getSelectedRow();
-			if (selectedAvailable != -1) {
+			if (selectedAvailable != -1 && availableSpotList.getModel().getRowCount() > 0) {
 				int selectedActive = activeSpotList.getSelectedRow();
 				SpotEntry source = SpotMachine.getAvailableSpots().getSpotAt(selectedAvailable);
 				SpotMachine.getSpotPlayer().addToEnd(source);
 				activeSpotList.getModel().addToEnd(source);
+				if (SpotMachine.getSpotPlayer().numberOfSpots() == 1) { // i.e., if this is the only spot
+					System.out.println("Added spot to empty list. Setting active spot to that spot.");
+					SpotMachine.getSpotPlayer().setNextSpotToPlay(0);
+					setNextSpotLabel(0, source.getName());
+					activeSpotList.setNextSpot(0);
+				}
 				activeSpotList.getSelectionModel().setSelectionInterval(selectedActive, selectedActive);
 			}
 		} else if (action.equals("removefromactive")) {
 			int selectedActive = activeSpotList.getSelectedRow();
-			if (selectedActive != -1) {
+			if (selectedActive != -1  && activeSpotList.getModel().getRowCount() > 0) {
 				SpotMachine.getSpotPlayer().remove(selectedActive);
-				activeSpotList.getModel().remove(selectedActive);
+				activeSpotList.remove(selectedActive);
 				int newSelection = (selectedActive-1 >= 0) ? selectedActive-1 : 0;
 				activeSpotList.getSelectionModel().setSelectionInterval(newSelection, newSelection);
 			}
 		} else if (action.equals("removefromavailable")) {
 			int selectedAvailable = availableSpotList.getSelectedRow();
-			if (selectedAvailable != -1) {
+			if (selectedAvailable != -1 && availableSpotList.getModel().getRowCount() > 0) {
 				Object[] options = {"Ja, slet spot!", "Nej"};
 				int userChoise = JOptionPane.showOptionDialog(
 						this,
@@ -353,11 +361,12 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 				if (userChoise == 0) {
 					SpotEntry removedAvailableSpot = SpotMachine.getAvailableSpots().remove(selectedAvailable);
 					int[] removedActiveSpots = SpotMachine.getSpotPlayer().removeAllSpotsContaining(removedAvailableSpot);
+					System.out.println("RemovedActiveSpots: " + Arrays.toString(removedActiveSpots));
 					
 					Util.get().deleteFile(removedAvailableSpot.getFile());
 					
-					availableSpotList.getModel().remove(selectedAvailable);
-					activeSpotList.getModel().remove(removedActiveSpots);
+					availableSpotList.remove(selectedAvailable);
+					activeSpotList.removeAll(removedActiveSpots);
 					
 					int newSelection = (selectedAvailable-1 >= 0) ? selectedAvailable-1 : 0;
 					availableSpotList.getSelectionModel().setSelectionInterval(newSelection, newSelection);
@@ -370,7 +379,7 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 			// TODO
 		} else if (action.equals("rename")) {
 			int selectedAvailable = availableSpotList.getSelectedRow();
-			if (selectedAvailable != -1) {
+			if (selectedAvailable != -1 && availableSpotList.getModel().getRowCount() > 0) {
 				SpotEntry spot = SpotMachine.getAvailableSpots().getSpotAt(selectedAvailable);
 				
 				String newName = null;

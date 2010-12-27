@@ -41,7 +41,8 @@ public class SpotEntry {
 		return soundLength;
 	}
 	
-	public boolean pointsToSameFileAs(SpotEntry compare) {
-		return compare.getFile().getAbsolutePath() == this.getFile().getAbsolutePath();
+	public boolean pointsToSameFileAs(SpotEntry candidate) {
+		System.out.println("Comparing " + candidate.getFile().getAbsolutePath() + "\nto        " + this.getFile().getAbsolutePath() + " RESULT: " + candidate.getFile().getAbsolutePath().equals(this.getFile().getAbsolutePath()));
+		return candidate.getFile().getAbsolutePath().equals(this.getFile().getAbsolutePath());
 	}
 }
