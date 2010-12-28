@@ -255,7 +255,7 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 	public void setRecordDialogueNull() {
 		recordDialogue = null;
 	}
-
+	
 	private JPanel createChangeOrderPanel() {
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));

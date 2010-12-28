@@ -11,6 +11,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -47,6 +48,7 @@ public class RecordDialogue extends JFrame implements ActionListener {
 		panel.add(spotNameTextField);
 		
 		panel.add(createCurrentLengthPanel());
+		panel.add(createStatusTextFieldPanel());
 		panel.add(createControlButtonsPanel());
 		
 		panel.add(createNoteTextArea());
@@ -67,7 +69,13 @@ public class RecordDialogue extends JFrame implements ActionListener {
 		currentLengthTextField.setEditable(false);
 		panel.add(currentLengthTextField);
 		
-		statusTextField = new JLabel("stoppet");
+		return panel;
+	}
+	
+	private JPanel createStatusTextFieldPanel() {
+		JPanel panel = new JPanel();
+		
+		statusTextField = new JLabel("STOPPET");
 		panel.add(statusTextField);
 		
 		return panel;
@@ -156,8 +164,16 @@ public class RecordDialogue extends JFrame implements ActionListener {
 			String spotName = spotNameTextField.getText().trim();
 			if (lastFinishedRecording == null) {
 				System.err.println("Nothing recorded yet. Ignoring ok request.");
+				JOptionPane.showMessageDialog(SpotMachine.getMainFrame().getRecordDialogue(),
+					    "Der er endnu ikke optaget et spot.",
+					    "Ingen optagelse",
+					    JOptionPane.WARNING_MESSAGE);
 			} else if (spotName.length() == 0) {
 				System.err.println("No spot name given. Ignoring ok request.");
+				JOptionPane.showMessageDialog(SpotMachine.getMainFrame().getRecordDialogue(),
+					    "Skriv et navn for det optagede spot.",
+					    "Intet navn for spot",
+					    JOptionPane.WARNING_MESSAGE);
 			} else {
 				SpotEntry newSpot = new SpotEntry(lastFinishedRecording, spotName);
 				SpotMachine.getAvailableSpots().addToEnd(newSpot);
@@ -186,7 +202,7 @@ public class RecordDialogue extends JFrame implements ActionListener {
 			cancelButton.setEnabled(false);
 			rec = new SpotRecorder();
 			new Thread(rec).start();
-			statusTextField.setText("optager");
+			statusTextField.setText("OPTAGER");
 		} else if (action.equals("pause")) {
 			// TODO: Detect if already paused and unpause instead if so
 			recordButton.setEnabled(true);
@@ -196,14 +212,14 @@ public class RecordDialogue extends JFrame implements ActionListener {
 		} else if (action.equals("stop")) {
 			stopButton.setEnabled(false);
 
-			statusTextField.setText("stopper optagelse...");
+			statusTextField.setText("STOPPER OPTAGELSE...");
 			if (rec != null) {
 				rec.stopRecoding();
 				lastFinishedRecording = rec.getOutFile();
 				rec = null;
 			}
 
-			statusTextField.setText("afspiller");
+			statusTextField.setText("AAFSPILLER");
 
 			final SpotPlayer tempPlayer = new SpotPlayer(SpotContainer.TYPE_TEMPORARY); // final in order to be accessed from inner class below
 			tempPlayer.addToEnd(new SpotEntry(lastFinishedRecording, "Temporary"));
@@ -225,7 +241,7 @@ public class RecordDialogue extends JFrame implements ActionListener {
 						}
 					}
 					
-					statusTextField.setText("stoppet");
+					statusTextField.setText("STOPPET");
 					
 					recordButton.setEnabled(true);
 					pauseButton.setEnabled(false);
