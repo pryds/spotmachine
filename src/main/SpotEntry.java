@@ -42,7 +42,11 @@ public class SpotEntry {
 	}
 	
 	public boolean pointsToSameFileAs(SpotEntry candidate) {
-		System.out.println("Comparing " + candidate.getFile().getAbsolutePath() + "\nto        " + this.getFile().getAbsolutePath() + " RESULT: " + candidate.getFile().getAbsolutePath().equals(this.getFile().getAbsolutePath()));
+		Util.get().out(
+				"Comparing " + candidate.getFile().getAbsolutePath() + 
+				"\nto        " + this.getFile().getAbsolutePath() + 
+				" RESULT: " + candidate.getFile().getAbsolutePath().equals(this.getFile().getAbsolutePath()),
+				Util.VERBOSITY_DETAILED_DEBUG_INFO);
 		return candidate.getFile().getAbsolutePath().equals(this.getFile().getAbsolutePath());
 	}
 }

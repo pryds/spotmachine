@@ -158,18 +158,18 @@ public class RecordDialogue extends JFrame implements ActionListener {
 	SpotRecorder rec = null;
 
 	public void actionPerformed(ActionEvent e) {
-		System.out.println("Record window action performed! " + e.getActionCommand());
+		Util.get().out("Record window action performed! " + e.getActionCommand(), Util.VERBOSITY_DEBUG_INFO);
 		String action = e.getActionCommand();
 		if (action.equals("ok")) {
 			String spotName = spotNameTextField.getText().trim();
 			if (lastFinishedRecording == null) {
-				System.err.println("Nothing recorded yet. Ignoring ok request.");
+				Util.get().out("Nothing recorded yet. Ignoring ok request.", Util.VERBOSITY_WARNING);
 				JOptionPane.showMessageDialog(SpotMachine.getMainFrame().getRecordDialogue(),
 					    "Der er endnu ikke optaget et spot.",
 					    "Ingen optagelse",
 					    JOptionPane.WARNING_MESSAGE);
 			} else if (spotName.length() == 0) {
-				System.err.println("No spot name given. Ignoring ok request.");
+				Util.get().out("No spot name given. Ignoring ok request.", Util.VERBOSITY_WARNING);
 				JOptionPane.showMessageDialog(SpotMachine.getMainFrame().getRecordDialogue(),
 					    "Skriv et navn for det optagede spot.",
 					    "Intet navn for spot",
@@ -219,7 +219,7 @@ public class RecordDialogue extends JFrame implements ActionListener {
 				rec = null;
 			}
 
-			statusTextField.setText("AAFSPILLER");
+			statusTextField.setText("AFSPILLER");
 
 			final SpotPlayer tempPlayer = new SpotPlayer(SpotContainer.TYPE_TEMPORARY); // final in order to be accessed from inner class below
 			tempPlayer.addToEnd(new SpotEntry(lastFinishedRecording, "Temporary"));

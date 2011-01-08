@@ -9,6 +9,8 @@ public class SpotMachine {
 	private static SpotContainer spotsAvailable = null;
 	private static MainFrame frame;
 	
+	public static int currentVerbosityLevel = Util.VERBOSITY_DEBUG_INFO; // level of debug info
+	
 	public static void main(String[] args) {
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			public void run() {

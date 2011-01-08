@@ -43,7 +43,7 @@ public class SpotRecorder implements Runnable {
 			targetDataLine = (TargetDataLine)AudioSystem.getLine(info);
 			targetDataLine.open(audioFormat);
 		} catch (LineUnavailableException e) {
-			System.err.println("Unable to get recording line. Exiting.");
+			Util.get().out("Unable to get recording line. Exiting.", Util.VERBOSITY_ERROR);
 			System.exit(1);
 		}
 		
@@ -53,13 +53,14 @@ public class SpotRecorder implements Runnable {
 	}
 
 	public void run() { // starts recording, will run as long as there is something to record
-		System.out.println("Starting recording...");
+		Util.get().out("Starting target data line...", Util.VERBOSITY_DEBUG_INFO);
 		targetDataLine.start();
 		
 		/**
 		 * Inner thread class to count and show in GUI how many seconds
 		 * has currently been recorded
 		 */
+		
 		new Thread(new Runnable() {
 			public void run() {
 				//Note: The measurement will only be an approximation, as the start time is measured
@@ -79,18 +80,20 @@ public class SpotRecorder implements Runnable {
 		
 		// Start actual recording
 		try {
+			Util.get().out("Starting recording...", Util.VERBOSITY_DEBUG_INFO);
 			AudioSystem.write(audioInputStream, targetType, outFile);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		recordingHasEnded = true;
+		Util.get().out("Record thread: Recording has ended.", Util.VERBOSITY_DEBUG_INFO);
 	}
 	
 	public void stopRecoding() {
-		System.out.println("Stopping recording...");
+		Util.get().out("Requesting recording to stop...", Util.VERBOSITY_DEBUG_INFO);
 		targetDataLine.stop();
 		targetDataLine.close();
-		System.out.println("Recording stopped.");
+		Util.get().out("Recording stopped.", Util.VERBOSITY_DEBUG_INFO);
 	}
 	
 	public File getOutFile() {

@@ -117,7 +117,7 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 		playButton.setEnabled(paused);
 		pauseButton.setEnabled(!paused);
 		recordNewButton.setEnabled(paused);
-	
+		removeFromAvailableButton.setEnabled(paused);
 	}
 	
 	private JPanel createLowerMainPanel() {
@@ -132,6 +132,7 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 	
 	private SpotList availableSpotList;
 	private JButton recordNewButton;
+	private JButton removeFromAvailableButton;
 	
 	private JPanel createAvailableSpotsPanel() {
 		JPanel panel = new JPanel();
@@ -151,7 +152,7 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 		recordNewButton.setActionCommand("record");
 		buttonPanel.add(recordNewButton);
 		
-		JButton removeFromAvailableButton = new JButton("Slet");
+		removeFromAvailableButton = new JButton("Slet");
 		removeFromAvailableButton.addActionListener(this);
 		removeFromAvailableButton.setActionCommand("removefromavailable");
 		buttonPanel.add(removeFromAvailableButton);
@@ -202,7 +203,7 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 		panel.add(new JLabel("Aktive spots:"));
 		
 		while(SpotMachine.getSpotPlayer() == null) {
-			System.out.println("SpotPlayer not initialized yet. Waiting a bit and then retrying.");
+			Util.get().out("SpotPlayer not initialized yet. Waiting a bit and then retrying.", Util.VERBOSITY_WARNING);
 			try {
 				Thread.sleep(500);
 			} catch(Exception e) {
@@ -275,7 +276,7 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 
 	
 	public void stateChanged(ChangeEvent e) {
-		System.out.println("State changed!");
+		Util.get().out("ChangeListener: State changed!", Util.VERBOSITY_DEBUG_INFO);
 		JComponent source = (JComponent)e.getSource();
 		if (source == minBetweenSpotsSpinner) {
 			double readValue = (Double)((JSpinner)source).getValue();
@@ -284,7 +285,7 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		System.out.println("Action performed! " + e.getActionCommand());
+		Util.get().out("ActionListener: Action performed! " + e.getActionCommand(), Util.VERBOSITY_DEBUG_INFO);
 		String action = e.getActionCommand();
 		if (action.equals("moveup") || action.equals("movedown")) {
 			int oldPos = activeSpotList.getSelectedRow();
@@ -296,7 +297,7 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 					newPos = oldPos + 1;
 				}
 				if (newPos < 0 || newPos > activeSpotList.getRowCount() - 1) {
-					System.err.println("Trying to move a spot off-range. Ignored.");
+					Util.get().out("Trying to move a spot off-range. Ignored.", Util.VERBOSITY_WARNING);
 					return;
 				}
 				activeSpotList.swapRows(newPos, oldPos);
@@ -326,7 +327,7 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 				SpotMachine.getSpotPlayer().addToEnd(source);
 				activeSpotList.getModel().addToEnd(source);
 				if (SpotMachine.getSpotPlayer().numberOfSpots() == 1) { // i.e., if this is the only spot
-					System.out.println("Added spot to empty list. Setting active spot to that spot.");
+					Util.get().out("Added spot to empty list. Setting active spot to that spot.", Util.VERBOSITY_DEBUG_INFO);
 					SpotMachine.getSpotPlayer().setNextSpotToPlay(0);
 					setNextSpotLabel(0, source.getName());
 					activeSpotList.setNextSpot(0);
@@ -361,7 +362,7 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 				if (userChoise == 0) {
 					SpotEntry removedAvailableSpot = SpotMachine.getAvailableSpots().remove(selectedAvailable);
 					int[] removedActiveSpots = SpotMachine.getSpotPlayer().removeAllSpotsContaining(removedAvailableSpot);
-					System.out.println("RemovedActiveSpots: " + Arrays.toString(removedActiveSpots));
+					Util.get().out("RemovedActiveSpots: " + Arrays.toString(removedActiveSpots), Util.VERBOSITY_DEBUG_INFO);
 					
 					Util.get().deleteFile(removedAvailableSpot.getFile());
 					
@@ -406,12 +407,10 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 	}
 
 	public void itemStateChanged(ItemEvent e) {
-		System.out.println("Item state changed!");
+		Util.get().out("ItemListener: Item state changed!", Util.VERBOSITY_DEBUG_INFO);
 		Object source = e.getItemSelectable();
 		if (source == repeatAllCheckBox) {
 			SpotMachine.getSpotPlayer().setRepeatAll(repeatAllCheckBox.isSelected());
 		}
-
 	}
-	
 }

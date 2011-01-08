@@ -20,8 +20,12 @@ public class Util {
 	public static Util get() {
 		return UtilSingletonHolder.INSTANCE;
 	}
-
-
+	
+	public static final int VERBOSITY_ERROR = 0;
+	public static final int VERBOSITY_WARNING = 1;
+	public static final int VERBOSITY_DEBUG_INFO = 2;
+	public static final int VERBOSITY_DETAILED_DEBUG_INFO = 3;
+	
 	public String millisToMinsSecsString(long milliSeconds) {
 		long totalMinutes = milliSeconds / 1000;
 		int hours = (int)(totalMinutes / 60);
@@ -32,7 +36,7 @@ public class Util {
 	public ImageIcon createImageIcon(String relativePath) {
 		URL url = MainFrame.class.getResource(relativePath);
 		if (url == null) {
-			System.err.println("Resource not found: " + relativePath);
+			out("Resource not found: " + relativePath, VERBOSITY_ERROR);
 			System.exit(1);
 		}
 		return new ImageIcon(url);
@@ -55,7 +59,7 @@ public class Util {
 	public void deleteFile(File file) {
 		if (file.exists() && !file.isDirectory() && file.canWrite()) {
 			file.delete();
-			System.out.println("Deleting file " + file.getName());
+			out("Deleting file " + file.getName(), VERBOSITY_DEBUG_INFO);
 		}
 	}
 	
@@ -103,8 +107,10 @@ public class Util {
 			return null;
 		} else { // by now we have a writable dir in which we can make our own dir or use it if it already exists
 			File saveDir = new File(appDataDir, ".spotmachine");
-			if (!saveDir.exists())
+			if (!saveDir.exists()) {
+				out("Creating data directory " + saveDir.getAbsolutePath(), VERBOSITY_DEBUG_INFO);
 				saveDir.mkdir();
+			}
 			Prefs.prefs.put(Prefs.DATA_DIR, saveDir.getAbsolutePath());
 			return saveDir;
 		}
@@ -124,6 +130,23 @@ public class Util {
 		     int temp = intArray[i];
 		     intArray[i] = intArray[intArray.length - (i + 1)];
 		     intArray[intArray.length - (i + 1)] = temp;
+		}
+	}
+	
+	public void out(String text, int verbosityLevel) {
+		/**
+		 * verbosityLevel
+		 * 0 = Error
+		 * 1 = Warning
+		 * 2 = Debug info
+		 * 3 = Detailed debug info
+		 */
+		
+		if (verbosityLevel <= SpotMachine.currentVerbosityLevel) {
+			if (verbosityLevel <= 1)
+				System.err.println(text);
+			else
+				System.out.println(text);
 		}
 	}
 }

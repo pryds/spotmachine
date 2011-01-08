@@ -20,7 +20,7 @@ public class SpotContainer {
 	public void initializeFromPrefs() {
 		if (type != TYPE_TEMPORARY) {
 			int size = Prefs.prefs.getInt(Prefs.SPOTLIST_SIZE + type, Prefs.SPOTLIST_SIZE_DEFAULT);
-			System.out.println("Reading " + size + " stored spot entries");
+			Util.get().out("Initializing: Reading " + size + " stored spot entries", Util.VERBOSITY_DEBUG_INFO);
 			spotList.removeAllElements();
 			
 			for (int i = 0; i < size; i++) {
@@ -28,7 +28,7 @@ public class SpotContainer {
 						new File(Util.get().getDataStoreDir(), Prefs.prefs.get(Prefs.SPOTLIST_ENTRY_FILENAME + type + "." + i, "not.found")),
 						Prefs.prefs.get(Prefs.SPOTLIST_ENTRY_NAME + type + "." + i, "Not found!")
 						));
-				System.out.println("Added item " + i + " to spotContainer/player");
+				Util.get().out("Initializing: Added item " + i + " to spotContainer/player", Util.VERBOSITY_DEBUG_INFO);
 			}
 		}
 	}

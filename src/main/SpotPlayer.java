@@ -51,7 +51,7 @@ public class SpotPlayer extends SpotContainer implements Runnable {
 				if (nextSpotToPlay == 0 && !repeatAll) {
 					if (type == TYPE_TEMPORARY) {
 						inPlayLoop = false;
-						System.out.println("Exiting spotPlayer thread. Type " + type);
+						Util.get().out("Exiting spotPlayer thread. Type " + type, Util.VERBOSITY_DEBUG_INFO);
 						return;
 					} else {
 						setPaused(true);
@@ -95,7 +95,7 @@ public class SpotPlayer extends SpotContainer implements Runnable {
 					+ "musik/videoafspiller, internet browser, prøv da at lukke disse.",
 				    "Fejl ved lyd",
 				    JOptionPane.ERROR_MESSAGE);
-			System.err.println(e);
+			Util.get().out(e.toString(), Util.VERBOSITY_ERROR);
 			System.exit(1);
 		} catch(Exception e) {
 			e.printStackTrace(); System.exit(1);
@@ -105,7 +105,7 @@ public class SpotPlayer extends SpotContainer implements Runnable {
 		/**
 		 * Read from file into buffer and write to sound card
 		 */
-		System.out.println("Playing file " + file.getName());
+		Util.get().out("Playing file " + file.getName(), Util.VERBOSITY_DEBUG_INFO);
 		int nBytesRead = 0;
 		byte[] dataBuffer = new byte[BUFFER_SIZE];
 		while(nBytesRead != -1) {
@@ -120,13 +120,13 @@ public class SpotPlayer extends SpotContainer implements Runnable {
 			if (paused)
 				break;
 		}
-		System.out.println("Draining line...");
+		Util.get().out("Draining line...", Util.VERBOSITY_DEBUG_INFO);
 		line.drain(); //wait till sound has finished playing
 		line.close();
 	}
 	
 	private void waitForMilliseconds(long millis) {
-		System.out.println("Waiting for " + (millis/(float)1000/60) + " minutes.");
+		Util.get().out("Waiting for " + (millis/(float)1000/60) + " minutes.", Util.VERBOSITY_DEBUG_INFO);
 		long waitStart = Calendar.getInstance().getTime().getTime();
 		long waitNow = Calendar.getInstance().getTime().getTime();
 		
@@ -161,7 +161,7 @@ public class SpotPlayer extends SpotContainer implements Runnable {
 	
 	public void setPaused(boolean paused) {
 		this.paused = paused;
-		System.out.println("Pause set to " + paused);
+		Util.get().out("Pause set to " + paused, Util.VERBOSITY_DEBUG_INFO);
 	}
 
 	public void setMillisBetweenSpots(long millis) {
@@ -223,10 +223,10 @@ public class SpotPlayer extends SpotContainer implements Runnable {
 	public SpotEntry remove(int index) {
 		SpotEntry removedSpot = super.remove(index);
 		if (index < nextSpotToPlay) {
-			System.out.println("index < nextSpotToPlay  =>  nextSpotToPlay--");
+			Util.get().out("index < nextSpotToPlay  =>  nextSpotToPlay--", Util.VERBOSITY_DEBUG_INFO);
 			setNextSpotToPlayOneBackward();
 		}
-		System.out.println("SpotPlayer: Removed spot index " + index + ". New NextSpotToPlay: " + nextSpotToPlay);
+		Util.get().out("SpotPlayer: Removed spot index " + index + ". New NextSpotToPlay: " + nextSpotToPlay, Util.VERBOSITY_DEBUG_INFO);
 		
 		return removedSpot;
 	}

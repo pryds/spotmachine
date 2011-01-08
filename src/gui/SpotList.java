@@ -75,7 +75,7 @@ public JScrollPane getContainingScrollPane() {
 			}
 		} else {
 			// do nothing; we ought not end up here...
-			System.err.println("Tried to set next spot marking of a list of available spots. This should not happen. Ignored.");
+			Util.get().out("Tried to set next spot marking of a list of available spots. This should not happen. Ignored.", Util.VERBOSITY_WARNING);
 		}
 	}
 	
@@ -89,7 +89,7 @@ public JScrollPane getContainingScrollPane() {
 	
 	public void setRow(int index, Object[] data) { // except first column
 		if (data.length != this.getColumnCount() - 1) {
-			System.err.println("Trying to insert data with more or less columns than destination into JTable. This should not happen. Ignoring.");
+			Util.get().out("Trying to insert data with more or less columns than destination into JTable. This should not happen. Ignoring.", Util.VERBOSITY_WARNING);
 			return;
 		}
 		for (int i = 1; i < data.length; i++) {
@@ -110,8 +110,8 @@ public JScrollPane getContainingScrollPane() {
 			getModel().remove(row);
 			if (rowHasStar) {
 				newNextSpot = SpotMachine.getSpotPlayer().getNextSpotToPlayIndex();
-				System.out.print("GUI: Removing spot that has been set as " +
-						" next spot. Setting next spot to " + newNextSpot);
+				Util.get().out("GUI: Removing spot that has been set as " +
+						" next spot. Setting next spot to " + newNextSpot, Util.VERBOSITY_DEBUG_INFO);
 				setNextSpot(newNextSpot);
 			}
 			if (newNextSpot > -1 && newNextSpot < getModel().getRowCount())
