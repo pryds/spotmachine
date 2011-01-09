@@ -1,10 +1,12 @@
 package gui;
 
+import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.KeyEvent;
 import java.util.Arrays;
 
 import javax.swing.AbstractButton;
@@ -14,6 +16,9 @@ import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
@@ -41,14 +46,18 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 	public MainFrame(String title) {
 		super(title);
 		//setResizable(false);
-		
 		setContentPane(new JPanel());
-		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.PAGE_AXIS));
+		getContentPane().setLayout(new BorderLayout());
 		
-		getContentPane().add(createCountdownPanel());
-		getContentPane().add(createUpperMainPanel());
-		getContentPane().add(new JSeparator(SwingConstants.HORIZONTAL));
-		getContentPane().add(createLowerMainPanel());
+		getContentPane().add(createMenuBar(), BorderLayout.PAGE_START);
+		JPanel p = new JPanel();
+		getContentPane().add(p, BorderLayout.CENTER);
+		
+		p.setLayout(new BoxLayout(p, BoxLayout.PAGE_AXIS));
+		p.add(createCountdownPanel());
+		p.add(createUpperMainPanel());
+		p.add(new JSeparator(SwingConstants.HORIZONTAL));
+		p.add(createLowerMainPanel());
 	}
 	
 	private JTextField countdownTextField;
@@ -273,6 +282,22 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 		
 		return panel;
 	}
+	
+	private JMenuBar createMenuBar() {
+		JMenuBar menuBar = new JMenuBar();
+		
+		JMenu menu = new JMenu("Fil");
+		menu.setMnemonic(KeyEvent.VK_F);
+		menuBar.add(menu);
+		
+		JMenuItem menuItem = new JMenuItem("Om " + SpotMachine.PROGRAM_NAME);
+		menuItem.setMnemonic(KeyEvent.VK_O);
+		menuItem.addActionListener(this);
+		menuItem.setActionCommand("aboutprogram");
+		menu.add(menuItem);
+		
+		return menuBar;
+	}
 
 	
 	public void stateChanged(ChangeEvent e) {
@@ -403,6 +428,20 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 					availableSpotList.getModel().rename(selectedAvailable, newName);
 				}
 			}
+		} else if (action.equals("aboutprogram")) {
+			JOptionPane.showMessageDialog(this,
+				    SpotMachine.PROGRAM_NAME + " version " + SpotMachine.PROGRAM_VERSION + "\n" +
+				    "Af Thomas Pryds\n" +
+				    "http://pryds.eu/spotmachine\n" +
+				    "\n" +
+				    "Udgivet under GPL-licensen. Programmet kan bruges uden restriktioner.\n" +
+				    "Dette inkluderer videredistribution, med eller uden egne ændringer (fx\n" +
+				    "tilføjelser). Dog må videredistribution (inkl. ændringer) kun foregå\n" +
+				    "under samme licens. Den komplette licenstekst følger med dette program.\n" +
+				    "Den komplette kildekode til dette program kan findes på ovenstående\n" +
+				    "webside.",
+				    "Om " + SpotMachine.PROGRAM_NAME,
+				    JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 

@@ -9,6 +9,9 @@ public class SpotMachine {
 	private static SpotContainer spotsAvailable = null;
 	private static MainFrame frame;
 	
+	public static final String PROGRAM_NAME = "SpotMachine";
+	public static final String PROGRAM_VERSION = "0.1.1";
+	
 	public static int currentVerbosityLevel = Util.VERBOSITY_DEBUG_INFO; // level of debug info
 	
 	public static void main(String[] args) {
@@ -28,7 +31,7 @@ public class SpotMachine {
 	}
 	
 	private static void createAndShowGUI() {
-		frame = new MainFrame("SpotMachine");
+		frame = new MainFrame(PROGRAM_NAME);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		frame.pack();

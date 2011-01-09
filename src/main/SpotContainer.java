@@ -22,13 +22,23 @@ public class SpotContainer {
 			int size = Prefs.prefs.getInt(Prefs.SPOTLIST_SIZE + type, Prefs.SPOTLIST_SIZE_DEFAULT);
 			Util.get().out("Initializing: Reading " + size + " stored spot entries", Util.VERBOSITY_DEBUG_INFO);
 			spotList.removeAllElements();
+			boolean ignoredOneOrMoreSpots = false;
 			
 			for (int i = 0; i < size; i++) {
-				spotList.add(new SpotEntry(
-						new File(Util.get().getDataStoreDir(), Prefs.prefs.get(Prefs.SPOTLIST_ENTRY_FILENAME + type + "." + i, "not.found")),
-						Prefs.prefs.get(Prefs.SPOTLIST_ENTRY_NAME + type + "." + i, "Not found!")
-						));
-				Util.get().out("Initializing: Added item " + i + " to spotContainer/player", Util.VERBOSITY_DEBUG_INFO);
+				File spotFile = new File(Util.get().getDataStoreDir(), Prefs.prefs.get(Prefs.SPOTLIST_ENTRY_FILENAME + type + "." + i, "not.found"));
+				if (spotFile != null && spotFile.exists()) {
+					spotList.add(new SpotEntry(
+							spotFile,
+							Prefs.prefs.get(Prefs.SPOTLIST_ENTRY_NAME + type + "." + i, "Not found!")
+							));
+					Util.get().out("Initializing: Added item " + i + " to spotContainer/player", Util.VERBOSITY_DEBUG_INFO);
+				} else {
+					ignoredOneOrMoreSpots = true;
+					Util.get().out("Initializing: Ignored item " + i + " -- file I/O error.", Util.VERBOSITY_WARNING);
+				}
+			}
+			if (ignoredOneOrMoreSpots) {
+				saveAllSpotsToPrefs();
 			}
 		}
 	}

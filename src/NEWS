@@ -1,0 +1,11 @@
+Changes between 0.1 and 0.1.1
+=============================
+
+Major:
+- Missing sound file doesn't cause crash on program start anymore. Now, the spot in question
+  is just ignored instead.
+
+Minor:
+- "About" info window added.
+- Not possible anymore to remove a spot while play loop is active.
+- Code-related: centralized handling of stdout and stderr, including levels of debug info.
