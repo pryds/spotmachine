@@ -76,8 +76,15 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 		return panel;
 	}
 	
-	public void setNextSpotLabel(int index, String name) {
+	private void setNextSpotLabel(int index, String name) {
 		nextSpotLabel.setText("(nr. " + (index+1) + ", \"" + name + "\")");
+	}
+	
+	public void setNextSpotLabel(int index, SpotEntry spot) {
+		if (spot != null)
+			setNextSpotLabel(index, spot.getName());
+		else
+			setNextSpotLabel(0, "-");
 	}
 	
 	public void setCountDownFieldValue(long millis) {

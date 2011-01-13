@@ -1,4 +1,5 @@
 QUICK INSTALLATION INSTRUCTIONS FOR SPOTMACHINE
+===============================================
 
 Unfortunately, this program doesn't yet supply any installation scripts or
 likewise. However, here is a brief guide to installing, which should work on
@@ -18,16 +19,25 @@ both Linux, Windows, and probably other systems.
    suitable place on your system, either in your home directory (for one-user
    installation) or somewhere in the main directory tree (for all-users
    installation). On Windows systems, this would probably be under
-   C:\Program Files\ or similar.
+   C:\Program Files\ or similar. On Linux systems this would probably be
+   under /opt
 4. Add the complete path to the directory to your CLASSPATH.
 5. To start the program, execute the following command, either directly on a
    command line prompt, or via a start menu icon, or similar:
-   java main/SpotMachine
+   java main.SpotMachine
    (note, you need to use a forward slash (/) under all systems, including
    Windows, which normally uses backslashes.
+6. On Linux, you can (alternatively to step 4 and 5) make a new executable
+   file in e.g. /usr/bin called spotmachine with the following two lines:
+   export CLASSPATH=$CLASSPATH:/opt/spotmachine-0.1.1
+   java main/SpotMachine $1
+   (Replace the version number in the first line with the one from the actual
+   directory you copied). This enables you to start the program just by
+   typing spotmachine in any command prompt, or to create a menu item.
 
 
 MAKING A BACKUP OF PROGRAM DATA AND SETTINGS
+============================================
 
 The program keeps its data (e.g. audio files) and user settings in two
 different directories. If you copy these to e.g. a USB stick, you will be able

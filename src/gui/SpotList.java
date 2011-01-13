@@ -111,13 +111,10 @@ public JScrollPane getContainingScrollPane() {
 			if (rowHasStar) {
 				newNextSpot = SpotMachine.getSpotPlayer().getNextSpotToPlayIndex();
 				Util.get().out("GUI: Removing spot that has been set as " +
-						" next spot. Setting next spot to " + newNextSpot, Util.VERBOSITY_DEBUG_INFO);
+						"next spot. Setting next spot to " + newNextSpot, Util.VERBOSITY_DEBUG_INFO);
 				setNextSpot(newNextSpot);
 			}
-			if (newNextSpot > -1 && newNextSpot < getModel().getRowCount())
-				SpotMachine.getMainFrame().setNextSpotLabel(newNextSpot, SpotMachine.getSpotPlayer().getSpotAt(newNextSpot).getName());
-			else
-				SpotMachine.getMainFrame().setNextSpotLabel(0, "-");
+			SpotMachine.getMainFrame().setNextSpotLabel(newNextSpot, SpotMachine.getSpotPlayer().getSpotAt(newNextSpot));
 		} else {
 			getModel().remove(row);
 		}

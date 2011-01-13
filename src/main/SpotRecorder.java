@@ -32,8 +32,8 @@ public class SpotRecorder implements Runnable {
 				Encoding.PCM_SIGNED, // encoding
 				44100.0F, // sample rate
 				16, // sample size in bits
-				2, // channels
-				4, // frame size
+				1, // channels
+				2, // frame size
 				44100.0F, // frame rate
 				false // true = big endian
 		);

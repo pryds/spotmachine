@@ -185,7 +185,7 @@ public class SpotPlayer extends SpotContainer implements Runnable {
 		setNextSpotToPlay(index);
 		if (type != TYPE_TEMPORARY) {
 			SpotMachine.getMainFrame().getActiveSpotList().setNextSpot(index);
-			SpotMachine.getMainFrame().setNextSpotLabel(index, getNextSpotToPlay().getName());
+			SpotMachine.getMainFrame().setNextSpotLabel(index, getNextSpotToPlay());
 		}
 	}
 	
@@ -227,7 +227,12 @@ public class SpotPlayer extends SpotContainer implements Runnable {
 			setNextSpotToPlayOneBackward();
 		}
 		Util.get().out("SpotPlayer: Removed spot index " + index + ". New NextSpotToPlay: " + nextSpotToPlay, Util.VERBOSITY_DEBUG_INFO);
-		
+		if (numberOfSpots() == 0) {
+			setNextSpotToPlayAndUpdateGUI(0);
+			setPaused(true);
+			SpotMachine.getMainFrame().setGUIPaused(true);
+			Util.get().out("SpotPlayer: Since removed spot was the last one, pause has been set (even if it was already set) and next spot set to " + nextSpotToPlay, Util.VERBOSITY_DEBUG_INFO);
+		}
 		return removedSpot;
 	}
 }

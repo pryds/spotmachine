@@ -1,3 +1,14 @@
+Changes between 0.1.1 and 0.1.2
+===============================
+
+Major:
+
+Minor:
+- Now recording in mono instead of stereo.
+- When removing the last active spot, pause is set on (if not already on)
+- INSTALL file now explains how to make an executable file to start the program on Linux
+
+
 Changes between 0.1 and 0.1.1
 =============================
 
