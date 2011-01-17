@@ -1,5 +1,6 @@
 package main;
 
+import java.util.Locale;
 import java.util.prefs.Preferences;
 
 public class Prefs {
@@ -21,5 +22,11 @@ public class Prefs {
 	public static final boolean REPEAT_ALL_DEFAULT = true;
 	
 	public static final String DATA_DIR = "DataDir";
+	
+	public static final String LOCALE_COUNTRY = "LocaleCountry";
+	public static final String LOCALE_COUNTRY_DEFAULT = null;
+	
+	public static final String LOCALE_LANGUAGE = "LocaleLanguage";
+	public static final String LOCALE_LANGUAGE_DEFAULT = null; //Locale.getDefault().getLanguage();
 	
 }

@@ -44,10 +44,10 @@ public class SpotList extends JTable {
 			getColumnModel().getColumn(3).setResizable(false);
 			
 			columnToolTips = new String[] {
-				    "Afspilningsnummer",
+					Util.get().string("main-list-itemnumber-tooltip"),
 				    null, // "Name" assumed obvious
-				    "Varighed i minutter og sekunder",
-				    "* betyder, at dette spot afspilles næste gang"
+				    Util.get().string("main-list-duration-tooltip"),
+				    Util.get().string("main-list-nextspot-tooltip")
 			};
 			
 		} else {
@@ -56,7 +56,7 @@ public class SpotList extends JTable {
 
 			columnToolTips = new String[] {
 				    null, // "Name" assumed obvious
-				    "Varighed i minutter og sekunder"
+				    Util.get().string("main-list-duration-tooltip")
 			};
 		}
 	}

@@ -1,9 +1,14 @@
 package main;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Random;
+import java.util.ResourceBundle;
 import java.util.Vector;
 
 import gui.MainFrame;
@@ -132,6 +137,65 @@ public class Util {
 		     intArray[intArray.length - (i + 1)] = temp;
 		}
 	}
+	
+	private Locale savedLocale;
+	
+	public Locale getSavedLocale() {
+		String lang = Prefs.prefs.get(Prefs.LOCALE_LANGUAGE, Prefs.LOCALE_LANGUAGE_DEFAULT);
+		String coun = Prefs.prefs.get(Prefs.LOCALE_COUNTRY, Prefs.LOCALE_COUNTRY_DEFAULT);
+		
+		if (savedLocale == null && lang != null && coun != null) {
+			savedLocale = new Locale(lang, coun);
+			Locale.setDefault(savedLocale);
+		}
+		return savedLocale;
+	}
+	
+	public Locale getCurrentLocale() {
+		Locale locale = getSavedLocale();
+		if (locale == null) {
+			locale = Locale.getDefault();
+		}
+		return locale;
+	}
+	
+	public String string(String key) {
+		ResourceBundle bundle = ResourceBundle.getBundle("strings", getCurrentLocale());
+		return bundle.getString(key);
+	}
+	
+	public Locale[] getAvailableLocales() {
+		File localeListFile = new File(MainFrame.class.getResource("../strings.list").getFile());
+		BufferedReader reader;
+		Vector<String> localeStrings = new Vector<String>();
+		
+		try {
+			reader = new BufferedReader(new FileReader(localeListFile));
+			String readLine;
+			while ((readLine = reader.readLine()) != null && !readLine.trim().equals("")) {
+				localeStrings.add(readLine.trim());
+			}
+			reader.close();
+		} catch (IOException ioe) {
+			out(ioe.toString(), VERBOSITY_ERROR);
+			return new Locale[0];
+		}
+		
+		Locale[] locales = new Locale[localeStrings.size()];
+		for (int i = 0; i < locales.length; i++) {
+			String[] currentLocale = localeStrings.get(i).split("_");
+			if (currentLocale.length != 2) {
+				out("At least one line in the strings.list file is incorrect. The file must contain a list of locales, one locale per line, in the form ll_CC, where ll is a two-letter language code and CC is a two-letter country code. Ignoring all locales.", VERBOSITY_ERROR);
+				return new Locale[0];
+			}
+			locales[i] = new Locale(currentLocale[0], currentLocale[1]);
+		}
+		return locales;
+	}
+	
+	/**public String[] get(Locale[] input) {
+		
+	}**/
 	
 	public void out(String text, int verbosityLevel) {
 		/**

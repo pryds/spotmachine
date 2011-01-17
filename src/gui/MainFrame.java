@@ -65,7 +65,7 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 	
 	private JPanel createCountdownPanel() {
 		JPanel panel = new JPanel();
-		panel.add(new JLabel("Tid til næste spot:"));
+		panel.add(new JLabel(Util.get().string("main-timenextspot-label") + ":"));
 		countdownTextField = new JTextField(
 				Util.get().millisToMinsSecsString(Prefs.prefs.getLong(Prefs.MILLIS_BETWEEN_SPOTS, Prefs.MILLIS_BETWEEN_SPOTS_DEFAULT))
 				);
@@ -77,7 +77,7 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 	}
 	
 	private void setNextSpotLabel(int index, String name) {
-		nextSpotLabel.setText("(nr. " + (index+1) + ", \"" + name + "\")");
+		nextSpotLabel.setText("(" + Util.get().string("main-timenextspot-numberabbrev-label") + " " + (index+1) + ", \"" + name + "\")");
 	}
 	
 	public void setNextSpotLabel(int index, SpotEntry spot) {
@@ -97,14 +97,14 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 	private JPanel createUpperMainPanel() {
 		JPanel panel = new JPanel();
 		
-		playButton = new JButton("Afspil", Util.get().createImageIcon("../resources/Play24.gif"));
+		playButton = new JButton(Util.get().string("main-play-button"), Util.get().createImageIcon("../resources/Play24.gif"));
 		playButton.setVerticalTextPosition(AbstractButton.BOTTOM);
 	    playButton.setHorizontalTextPosition(AbstractButton.CENTER);
 		playButton.addActionListener(this);
 		playButton.setActionCommand("play");
 		panel.add(playButton);
 		
-		pauseButton = new JButton("Pause", Util.get().createImageIcon("../resources/Pause24.gif"));
+		pauseButton = new JButton(Util.get().string("main-pause-button"), Util.get().createImageIcon("../resources/Pause24.gif"));
 		pauseButton.setVerticalTextPosition(AbstractButton.BOTTOM);
 	    pauseButton.setHorizontalTextPosition(AbstractButton.CENTER);
 		pauseButton.addActionListener(this);
@@ -112,14 +112,14 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 		pauseButton.setEnabled(false);
 		panel.add(pauseButton);
 		
-		JButton previousButton = new JButton("Forrige", Util.get().createImageIcon("../resources/StepBack24.gif"));
+		JButton previousButton = new JButton(Util.get().string("main-previous-button"), Util.get().createImageIcon("../resources/StepBack24.gif"));
 		previousButton.setVerticalTextPosition(AbstractButton.BOTTOM);
 	    previousButton.setHorizontalTextPosition(AbstractButton.CENTER);
 	    previousButton.addActionListener(this);
 		previousButton.setActionCommand("previous");
 		panel.add(previousButton);
 		
-		JButton nextButton = new JButton("Næste", Util.get().createImageIcon("../resources/StepForward24.gif"));
+		JButton nextButton = new JButton(Util.get().string("main-next-button"), Util.get().createImageIcon("../resources/StepForward24.gif"));
 		nextButton.setVerticalTextPosition(AbstractButton.BOTTOM);
 	    nextButton.setHorizontalTextPosition(AbstractButton.CENTER);
 	    nextButton.addActionListener(this);
@@ -153,7 +153,7 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 	private JPanel createAvailableSpotsPanel() {
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-		panel.add(new JLabel("Tilgængelige spots:"));
+		panel.add(new JLabel(Util.get().string("main-availablespots-label") + ":"));
 		
 		SpotContainer availableSpots = SpotMachine.getAvailableSpots();
 		availableSpotList = new SpotList(new SpotListModel(SpotContainer.TYPE_AVAILABLE));
@@ -163,23 +163,23 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new GridLayout(2, 0));
 		
-		recordNewButton = new JButton("Optag nyt");
+		recordNewButton = new JButton(Util.get().string("main-recordnew-button"));
 		recordNewButton.addActionListener(this);
 		recordNewButton.setActionCommand("record");
 		buttonPanel.add(recordNewButton);
 		
-		removeFromAvailableButton = new JButton("Slet");
+		removeFromAvailableButton = new JButton(Util.get().string("main-delete-button"));
 		removeFromAvailableButton.addActionListener(this);
 		removeFromAvailableButton.setActionCommand("removefromavailable");
 		buttonPanel.add(removeFromAvailableButton);
 		
-		JButton importButton = new JButton(""); //"Importér"
+		JButton importButton = new JButton(""); //Util.get().string("main-import-button")
 		importButton.setEnabled(false);
 		importButton.addActionListener(this);
 		importButton.setActionCommand("importspot");
 		buttonPanel.add(importButton);
 		
-		JButton renameButton = new JButton("Omdøb");
+		JButton renameButton = new JButton(Util.get().string("main-rename-button"));
 		renameButton.addActionListener(this);
 		renameButton.setActionCommand("rename");
 		buttonPanel.add(renameButton);
@@ -194,13 +194,13 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 		
 		JButton copyToActiveButton = new JButton(Util.get().createImageIcon("../resources/Forward24.gif"));
-		copyToActiveButton.setToolTipText("Indsæt det valgte tilgængelige spot i listen over aktive spots");
+		copyToActiveButton.setToolTipText(Util.get().string("main-copytoactive-tooltip"));
 		copyToActiveButton.addActionListener(this);
 		copyToActiveButton.setActionCommand("copytoactive");
 		panel.add(copyToActiveButton);
 	    
 		JButton removeFromActiveButton = new JButton(Util.get().createImageIcon("../resources/Back24.gif"));
-		removeFromActiveButton.setToolTipText("Fjern spot fra listen over aktive spots");
+		removeFromActiveButton.setToolTipText(Util.get().string("main-removefromactive-tooltip"));
 		removeFromActiveButton.addActionListener(this);
 		removeFromActiveButton.setActionCommand("removefromactive");
 		panel.add(removeFromActiveButton);
@@ -216,7 +216,7 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 	private JPanel createActiveSpotsPanel() {
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-		panel.add(new JLabel("Aktive spots:"));
+		panel.add(new JLabel(Util.get().string("main-activespots-label") + ":"));
 		
 		while(SpotMachine.getSpotPlayer() == null) {
 			Util.get().out("SpotPlayer not initialized yet. Waiting a bit and then retrying.", Util.VERBOSITY_WARNING);
@@ -238,8 +238,8 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 		else
 			setNextSpotLabel(0, "-");
 		panel.add(activeSpotList.getContainingScrollPane());
-		repeatAllCheckBox = new JCheckBox("Gentag alle");
-		repeatAllCheckBox.setToolTipText("Start afspilningen af spots forfra, når sidste spot er afspillet");
+		repeatAllCheckBox = new JCheckBox(Util.get().string("main-repeatall-checkbox"));
+		repeatAllCheckBox.setToolTipText(Util.get().string("main-repeatall-tooltip"));
 		repeatAllCheckBox.setSelected(Prefs.prefs.getBoolean(Prefs.REPEAT_ALL, Prefs.REPEAT_ALL_DEFAULT));
 		repeatAllCheckBox.addItemListener(this);
 		panel.add(repeatAllCheckBox);
@@ -251,7 +251,7 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 				0, 1000, 1));
 		minBetweenSpotsSpinner.addChangeListener(this);
 		spinnerPanel.add(minBetweenSpotsSpinner);
-		spinnerPanel.add(new JLabel("min mellem spots"));
+		spinnerPanel.add(new JLabel(Util.get().string("main-minsbetweenspots-label")));
 		panel.add(spinnerPanel);
 
 		return panel;
@@ -277,12 +277,12 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 		
-		JButton upButton = new JButton("Flyt op", Util.get().createImageIcon("../resources/Up24.gif"));
+		JButton upButton = new JButton(Util.get().string("main-moveup-button"), Util.get().createImageIcon("../resources/Up24.gif"));
 		upButton.addActionListener(this);
 		upButton.setActionCommand("moveup");
 		panel.add(upButton);
 		
-		JButton downButton = new JButton("Flyt ned", Util.get().createImageIcon("../resources/Down24.gif"));
+		JButton downButton = new JButton(Util.get().string("main-movedown-button"), Util.get().createImageIcon("../resources/Down24.gif"));
 		downButton.addActionListener(this);
 		downButton.setActionCommand("movedown");
 		panel.add(downButton);
@@ -293,12 +293,18 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 	private JMenuBar createMenuBar() {
 		JMenuBar menuBar = new JMenuBar();
 		
-		JMenu menu = new JMenu("Fil");
+		JMenu menu = new JMenu(Util.get().string("main-menu-file"));
 		menu.setMnemonic(KeyEvent.VK_F);
 		menuBar.add(menu);
 		
-		JMenuItem menuItem = new JMenuItem("Om " + SpotMachine.PROGRAM_NAME);
-		menuItem.setMnemonic(KeyEvent.VK_O);
+		JMenuItem menuItem = new JMenuItem(Util.get().string("main-menu-file-prefs"));
+		menuItem.setMnemonic(KeyEvent.VK_P);
+		menuItem.addActionListener(this);
+		menuItem.setActionCommand("prefs");
+		menu.add(menuItem);
+		
+		menuItem = new JMenuItem(Util.get().string("main-menu-file-about") + " " + SpotMachine.PROGRAM_NAME);
+		menuItem.setMnemonic(KeyEvent.VK_A);
 		menuItem.addActionListener(this);
 		menuItem.setActionCommand("aboutprogram");
 		menu.add(menuItem);
@@ -377,13 +383,11 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 		} else if (action.equals("removefromavailable")) {
 			int selectedAvailable = availableSpotList.getSelectedRow();
 			if (selectedAvailable != -1 && availableSpotList.getModel().getRowCount() > 0) {
-				Object[] options = {"Ja, slet spot!", "Nej"};
+				Object[] options = {Util.get().string("remove-yes"), Util.get().string("remove-no")};
 				int userChoise = JOptionPane.showOptionDialog(
 						this,
-						"Er du sikker på, at du vil slette spot permanent?\n"
-						+ "Spottet vil blive slettet fra begge lister.\n"
-						+ "Du kan ikke fortryde denne handling.",
-						"Slet spot", // headline
+						Util.get().string("remove-text"),
+						Util.get().string("remove-headline"),
 						JOptionPane.OK_CANCEL_OPTION,
 						JOptionPane.WARNING_MESSAGE,
 						null, // icon
@@ -419,11 +423,11 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 				do {
 					newName = (String)JOptionPane.showInputDialog(
 							this,
-							"Skriv nyt navn for spot:",
-							"Omdøb spot",
+							Util.get().string("rename-text"),
+							Util.get().string("rename-headline"),
 							JOptionPane.PLAIN_MESSAGE,
 							null, // icon
-							null, // possibilities, null gives text field
+							null, // options, null gives text field
 							spot.getName()
 					);
 					if (newName != null)
@@ -437,18 +441,18 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 			}
 		} else if (action.equals("aboutprogram")) {
 			JOptionPane.showMessageDialog(this,
-				    SpotMachine.PROGRAM_NAME + " version " + SpotMachine.PROGRAM_VERSION + "\n" +
-				    "Af Thomas Pryds\n" +
+				    SpotMachine.PROGRAM_NAME + " " + Util.get().string("about-version") + " " + SpotMachine.PROGRAM_VERSION + "\n" +
+				    Util.get().string("about-author") + "\n" +
+				    (Util.get().string("about-translator").trim().equals("") ? "" : Util.get().string("about-translator") + "\n") +
 				    "http://pryds.eu/spotmachine\n" +
 				    "\n" +
-				    "Udgivet under GPL-licensen. Programmet kan bruges uden restriktioner.\n" +
-				    "Dette inkluderer videredistribution, med eller uden egne ændringer (fx\n" +
-				    "tilføjelser). Dog må videredistribution (inkl. ændringer) kun foregå\n" +
-				    "under samme licens. Den komplette licenstekst følger med dette program.\n" +
-				    "Den komplette kildekode til dette program kan findes på ovenstående\n" +
-				    "webside.",
-				    "Om " + SpotMachine.PROGRAM_NAME,
+				    Util.get().string("about-text"),
+				    Util.get().string("about-headline") + " " + SpotMachine.PROGRAM_NAME,
 				    JOptionPane.INFORMATION_MESSAGE);
+		} else if (action.equals("prefs")) {
+			PreferencesDialogue preferencesDialogue;
+			(preferencesDialogue = new PreferencesDialogue()).setVisible(true);
+			this.setEnabled(false);
 		}
 	}
 

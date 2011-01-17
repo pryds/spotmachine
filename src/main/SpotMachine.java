@@ -1,5 +1,7 @@
 package main;
 
+import java.util.Locale;
+
 import gui.MainFrame;
 
 import javax.swing.JFrame;
@@ -10,7 +12,7 @@ public class SpotMachine {
 	private static MainFrame frame;
 	
 	public static final String PROGRAM_NAME = "SpotMachine";
-	public static final String PROGRAM_VERSION = "0.1.2 svn";
+	public static final String PROGRAM_VERSION = "0.2 svn";
 	
 	public static int currentVerbosityLevel; // level of debug info
 	
@@ -30,7 +32,7 @@ public class SpotMachine {
 				System.out.println("Command line arguments:");
 				System.out.println("-version    Print version info and exit.");
 				System.out.println("-help       Show this list and exit.");
-				System.out.println("-nowarn     Suppress all command line messages, inclusive warnings.");
+				System.out.println("-nowarn     Suppress all command line messages, including warnings.");
 				System.out.println("-debug      In addition to errors and warnings, show debug info.");
 				System.out.println("-ddebug     In addition to errors and warnings, show detailled debug info.");
 				System.exit(0);

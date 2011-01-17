@@ -18,9 +18,17 @@ public class SpotListModel extends AbstractTableModel {
 	public SpotListModel(int type) {
 		this.type = type;
 		if (type == SpotContainer.TYPE_ACTIVE) {
-			columnNames = new String[] {"Nr." , "Navn" , "Varighed", "*"};
+			columnNames = new String[] {
+					Util.get().string("main-list-itemnumber-label"),
+					Util.get().string("main-list-name-label"),
+					Util.get().string("main-list-duration-label"),
+					"*"
+			};
 		} else {
-			columnNames = new String[] {"Navn" , "Varighed"};
+			columnNames = new String[] {
+					Util.get().string("main-list-name-label"),
+					Util.get().string("main-list-duration-label")
+			};
 		}
 	}
 	
