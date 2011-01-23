@@ -16,6 +16,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import main.AudioSamples;
+import main.Prefs;
 import main.SpotContainer;
 import main.SpotEntry;
 import main.SpotPlayer;
@@ -216,7 +218,34 @@ public class RecordDialogue extends JFrame implements ActionListener {
 				lastFinishedRecording = rec.getOutFile();
 				rec = null;
 			}
-
+			
+			//TODO: Check prefs, and (maybe) do normalization
+			boolean doDCOffset = Prefs.prefs.getBoolean(Prefs.RECORDING_DO_DC_OFFSET_REMOVAL, Prefs.RECORDING_DO_DC_OFFSET_REMOVAL_DEFAULT);
+			boolean doFade = Prefs.prefs.getBoolean(Prefs.RECORDING_DO_FADEIN_FADEOUT, Prefs.RECORDING_DO_FADEIN_FADEOUT_DEFAULT);
+			boolean doVolume = Prefs.prefs.getBoolean(Prefs.RECORDING_DO_VOLUME_NORMALIZATION, Prefs.RECORDING_DO_VOLUME_NORMALIZATION_DEFAULT);
+			
+			if (doDCOffset || doFade || doVolume) {
+				statusTextField.setText(Util.get().string("record-status-normalizing-label"));
+				AudioSamples spotSamples = new AudioSamples(lastFinishedRecording);
+				if (spotSamples.initializedOK()) {
+					if (doDCOffset)
+						spotSamples.removeDCOffset();
+					if (doFade)
+						spotSamples.makeFadeInFadeOut();
+					if (doVolume)
+						spotSamples.normalizeVolume();
+					File saveFile = Util.get().createUniqueLowerCaseRandomWAVFileInDataDir();
+					if (spotSamples.writeToFile(saveFile)) {
+						Util.get().deleteFile(lastFinishedRecording);
+						lastFinishedRecording = saveFile;
+					} else {
+						Util.get().out("Error on saving normalized spot. Keeping original spot.", Util.VERBOSITY_ERROR);
+					}
+				} else {
+					Util.get().out("Error on initializing normalization process. Ignoring all normalization.", Util.VERBOSITY_ERROR);
+				}
+			}
+			
 			statusTextField.setText(Util.get().string("record-status-playing-label"));
 
 			final SpotPlayer tempPlayer = new SpotPlayer(SpotContainer.TYPE_TEMPORARY); // final in order to be accessed from inner class below

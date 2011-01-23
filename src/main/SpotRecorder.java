@@ -22,11 +22,8 @@ public class SpotRecorder implements Runnable {
 	private boolean recordingHasEnded = false;
 	
 	public SpotRecorder() {
-		outFile = null;
+		outFile = Util.get().createUniqueLowerCaseRandomWAVFileInDataDir();
 		targetDataLine = null;
-		while (outFile == null || outFile.exists()) { // make sure file doesn't already exist (though unlikely)
-			outFile = new File(Util.get().getDataStoreDir(), Util.get().createLowerCaseRandomWAVFilename());
-		}
 		
 		AudioFormat audioFormat = new AudioFormat(
 				Encoding.PCM_SIGNED, // encoding

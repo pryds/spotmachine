@@ -8,6 +8,7 @@ import java.util.Locale;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -31,6 +32,7 @@ public class PreferencesDialogue extends JFrame implements ActionListener {
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 		
 		panel.add(createLanguageSelectionPanel());
+		panel.add(createNormalizationPanel());
 		panel.add(createOKCancelButtonPanel());
 		
 		pack();
@@ -42,7 +44,6 @@ public class PreferencesDialogue extends JFrame implements ActionListener {
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
 		mainPanel.setBorder(BorderFactory.createTitledBorder(Util.get().string("prefs-language-bordertitle")));
-		
 		
 		JPanel panel = new JPanel();
 		
@@ -80,7 +81,39 @@ public class PreferencesDialogue extends JFrame implements ActionListener {
 		//note.setSelectedTextColor(textColour);
 		return note;
 	}
-
+	
+	private JCheckBox dcCheckbox;
+	private JCheckBox fadeCheckbox;
+	private JCheckBox volumeCheckbox;
+	
+	private JPanel createNormalizationPanel() {
+		JPanel panel = new JPanel();
+		
+		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+		panel.setBorder(BorderFactory.createTitledBorder(Util.get().string("prefs-normalization-bordertitle")));
+		
+		panel.add(new JLabel(Util.get().string("prefs-normalization-pretext")));
+		
+		dcCheckbox = new JCheckBox(Util.get().string("prefs-normalization-dc-checkbox"));
+		dcCheckbox.setToolTipText(Util.get().string("prefs-normalization-dc-tooltip"));
+		dcCheckbox.setSelected(
+				Prefs.prefs.getBoolean(Prefs.RECORDING_DO_DC_OFFSET_REMOVAL, Prefs.RECORDING_DO_DC_OFFSET_REMOVAL_DEFAULT));
+		panel.add(dcCheckbox);
+		
+		fadeCheckbox = new JCheckBox(Util.get().string("prefs-normalization-fade-checkbox"));
+		fadeCheckbox.setToolTipText(Util.get().string("prefs-normalization-fade-tooltip"));
+		fadeCheckbox.setSelected(
+				Prefs.prefs.getBoolean(Prefs.RECORDING_DO_FADEIN_FADEOUT, Prefs.RECORDING_DO_FADEIN_FADEOUT_DEFAULT));
+		panel.add(fadeCheckbox);
+		
+		volumeCheckbox = new JCheckBox(Util.get().string("prefs-normalization-volume-checkbox"));
+		volumeCheckbox.setToolTipText(Util.get().string("prefs-normalization-volume-tooltip"));
+		volumeCheckbox.setSelected(
+				Prefs.prefs.getBoolean(Prefs.RECORDING_DO_VOLUME_NORMALIZATION, Prefs.RECORDING_DO_VOLUME_NORMALIZATION_DEFAULT));
+		panel.add(volumeCheckbox);
+		
+		return panel;
+	}
 	
 	private JPanel createOKCancelButtonPanel() {
 		JPanel panel = new JPanel();
@@ -99,6 +132,7 @@ public class PreferencesDialogue extends JFrame implements ActionListener {
 	}
 	
 	private void savePrefs() {
+		// Save language prefs
 		if (langSelect.getSelectedIndex() == 0) {
 			Util.get().out("Removing locale data from preferences file, if any.", Util.VERBOSITY_DEBUG_INFO);
 			Prefs.prefs.remove(Prefs.LOCALE_LANGUAGE);
@@ -118,6 +152,16 @@ public class PreferencesDialogue extends JFrame implements ActionListener {
 			Prefs.prefs.put(Prefs.LOCALE_LANGUAGE, userSelectedLocale.getLanguage());
 			Prefs.prefs.put(Prefs.LOCALE_COUNTRY, userSelectedLocale.getCountry());
 		}
+		
+		// Save normalization prefs
+		Util.get().out("Saving normalization prefs: " +
+				"DC " + dcCheckbox.isSelected() + ", " +
+				"fade " + fadeCheckbox.isSelected() + ", " +
+				"vol " + volumeCheckbox.isSelected(),
+				Util.VERBOSITY_DEBUG_INFO);
+		Prefs.prefs.putBoolean(Prefs.RECORDING_DO_DC_OFFSET_REMOVAL, dcCheckbox.isSelected());
+		Prefs.prefs.putBoolean(Prefs.RECORDING_DO_FADEIN_FADEOUT, fadeCheckbox.isSelected());
+		Prefs.prefs.putBoolean(Prefs.RECORDING_DO_VOLUME_NORMALIZATION, volumeCheckbox.isSelected());
 	}
 
 	public void actionPerformed(ActionEvent ae) {

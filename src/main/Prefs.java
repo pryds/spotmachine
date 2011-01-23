@@ -27,6 +27,15 @@ public class Prefs {
 	public static final String LOCALE_COUNTRY_DEFAULT = null;
 	
 	public static final String LOCALE_LANGUAGE = "LocaleLanguage";
-	public static final String LOCALE_LANGUAGE_DEFAULT = null; //Locale.getDefault().getLanguage();
+	public static final String LOCALE_LANGUAGE_DEFAULT = null;
+	
+	public static final String  RECORDING_DO_DC_OFFSET_REMOVAL = "RecordingDoDCOffsetRemoval";
+	public static final boolean RECORDING_DO_DC_OFFSET_REMOVAL_DEFAULT = true;
+	
+	public static final String  RECORDING_DO_FADEIN_FADEOUT = "RecordingDoFadeinFadeout";
+	public static final boolean RECORDING_DO_FADEIN_FADEOUT_DEFAULT = true;
+	
+	public static final String  RECORDING_DO_VOLUME_NORMALIZATION = "RecordingDoVolumeNormalization";
+	public static final boolean RECORDING_DO_VOLUME_NORMALIZATION_DEFAULT = true;
 	
 }

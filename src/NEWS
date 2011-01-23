@@ -6,6 +6,7 @@ Major:
 - Internationalisation,
      default language: System default, if applicable, otherwise English,
      additional language: Danish
+- Normalization of newly recorded spots: DC offset removal, fade-in/out, volume
 
 Minor:
 - Now recording in mono instead of stereo.

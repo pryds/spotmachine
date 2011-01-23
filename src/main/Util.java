@@ -61,6 +61,14 @@ public class Util {
 		return str.toString();
 	}
 	
+	public File createUniqueLowerCaseRandomWAVFileInDataDir() {
+		File outFile = null;
+		while (outFile == null || outFile.exists()) { // make sure file doesn't already exist (though unlikely)
+			outFile = new File(getDataStoreDir(), createLowerCaseRandomWAVFilename());
+		}
+		return outFile;
+	}
+	
 	public void deleteFile(File file) {
 		if (file.exists() && !file.isDirectory() && file.canWrite()) {
 			file.delete();
@@ -193,11 +201,11 @@ public class Util {
 		return locales;
 	}
 	
-	/**public String[] get(Locale[] input) {
-		
-	}**/
-	
 	public void out(String text, int verbosityLevel) {
+		outNoLN(text + "\n", verbosityLevel);
+	}
+	
+	public void outNoLN(String text, int verbosityLevel) {
 		/**
 		 * verbosityLevel
 		 * 0 = Error
@@ -208,9 +216,9 @@ public class Util {
 		
 		if (verbosityLevel <= SpotMachine.currentVerbosityLevel) {
 			if (verbosityLevel <= 1)
-				System.err.println(text);
+				System.err.print(text);
 			else
-				System.out.println(text);
+				System.out.print(text);
 		}
 	}
 }
