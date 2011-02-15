@@ -1,5 +1,7 @@
 package gui;
 
+import java.awt.Dimension;
+
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -26,14 +28,19 @@ public class SpotList extends JTable {
 	
 	private void initialize() {
 		setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		getSelectionModel().setSelectionInterval(0, 0);
 		//setPreferredSize(new Dimension(200, 0));
 		
 		containingScrollPane = new JScrollPane(this);
 		this.setFillsViewportHeight(true);
-		getTableHeader().setReorderingAllowed(false);
+		getTableHeader().setReorderingAllowed(false); // no user reordering of columns
 		containingScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		if (getModel().getType() == SpotContainer.TYPE_ACTIVE) {
+		
+		containingScrollPane.setMinimumSize(new Dimension(200, 200));
+        //containingScrollPane.setMaximumSize(new Dimension(400, 600));
+		int preferredHeight = (getModel().getType() == SpotContainer.TYPE_AVAILABLE) ? 400 : 200;
+		containingScrollPane.setPreferredSize(new Dimension(400, preferredHeight));
+        
+        if (getModel().getType() == SpotContainer.TYPE_INTERVALLED) {
 			getColumnModel().getColumn(0).setMaxWidth(30); // spot number
 			getColumnModel().getColumn(0).setResizable(false);
 
@@ -49,7 +56,18 @@ public class SpotList extends JTable {
 				    Util.get().string("main-list-duration-tooltip"),
 				    Util.get().string("main-list-nextspot-tooltip")
 			};
+		} else if (getModel().getType() == SpotContainer.TYPE_SCHEDULED) {
+			getColumnModel().getColumn(1).setMaxWidth(75); // length in min:sec
+			getColumnModel().getColumn(1).setResizable(false);
 			
+			getColumnModel().getColumn(2).setMaxWidth(75); // playtime
+            getColumnModel().getColumn(2).setResizable(false);
+            
+			columnToolTips = new String[] {
+					null, // "Name" assumed obvious
+					Util.get().string("main-list-duration-tooltip"),
+					Util.get().string("main-list-playat-tooltip")
+			};
 		} else {
 			getColumnModel().getColumn(1).setMaxWidth(75); // length in min:sec
 			getColumnModel().getColumn(1).setResizable(false);
@@ -61,13 +79,13 @@ public class SpotList extends JTable {
 		}
 	}
 	
-public JScrollPane getContainingScrollPane() {
+	public JScrollPane getContainingScrollPane() {
 		return containingScrollPane;
 	}
 	
 	public void setNextSpot(int index) {
 		int numRows = this.getModel().getRowCount();
-		if (getModel().getType() == SpotContainer.TYPE_ACTIVE) {
+		if (getModel().getType() == SpotContainer.TYPE_INTERVALLED) {
 			for (int i = 0; i < numRows; i++) {
 				this.getModel().setValueAt(
 						(i == index ? "*" : ""), //value
@@ -75,7 +93,7 @@ public JScrollPane getContainingScrollPane() {
 			}
 		} else {
 			// do nothing; we ought not end up here...
-			Util.get().out("Tried to set next spot marking of a list of available spots. This should not happen. Ignored.", Util.VERBOSITY_WARNING);
+			Util.get().out("Tried to set next spot marking of a list which is not of type INTERVALLED. This should not happen. Ignored.", Util.VERBOSITY_WARNING);
 		}
 	}
 	
@@ -104,17 +122,17 @@ public JScrollPane getContainingScrollPane() {
 	}
 	
 	public void remove(int row) {
-		if (getModel().getType() == SpotContainer.TYPE_ACTIVE) {
-			int newNextSpot = SpotMachine.getSpotPlayer().getNextSpotToPlayIndex();
+		if (getModel().getType() == SpotContainer.TYPE_INTERVALLED) {
+			int newNextSpot = SpotMachine.getIntervalledSpotPlayer().getNextSpotToPlayIndex();
 			boolean rowHasStar = getModel().getValueAt(row, 3).equals("*");
 			getModel().remove(row);
 			if (rowHasStar) {
-				newNextSpot = SpotMachine.getSpotPlayer().getNextSpotToPlayIndex();
+				newNextSpot = SpotMachine.getIntervalledSpotPlayer().getNextSpotToPlayIndex();
 				Util.get().out("GUI: Removing spot that has been set as " +
 						"next spot. Setting next spot to " + newNextSpot, Util.VERBOSITY_DEBUG_INFO);
 				setNextSpot(newNextSpot);
 			}
-			SpotMachine.getMainFrame().setNextSpotLabel(newNextSpot, SpotMachine.getSpotPlayer().getSpotAt(newNextSpot));
+			SpotMachine.getMainFrame().setNextSpotLabel(newNextSpot, SpotMachine.getIntervalledSpotPlayer().getSpotAt(newNextSpot));
 		} else {
 			getModel().remove(row);
 		}

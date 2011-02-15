@@ -1,6 +1,5 @@
 package main;
 
-import java.util.Locale;
 import java.util.prefs.Preferences;
 
 public class Prefs {
@@ -14,6 +13,13 @@ public class Prefs {
 	
 	public static final String SPOTLIST_ENTRY_NAME = "SpotListEntryName";
 	public static final String SPOTLIST_ENTRY_FILENAME = "SpotListEntryFilename";
+	public static final String SPOTLIST_ENTRY_HASSCHEDULE = "SpotListEntryHasSchedule";
+	public static final boolean SPOTLIST_ENTRY_HASSCHEDULE_DEFAULT = false;
+	public static final String SPOTLIST_ENTRY_SCHEDULE_MONTHS = "SpotListEntryScheduleMonths";
+	public static final String SPOTLIST_ENTRY_SCHEDULE_DAYS = "SpotListEntryScheduleDays";
+	public static final String SPOTLIST_ENTRY_SCHEDULE_WEEKDAYS = "SpotListEntryScheduleWeekdays";
+	public static final String SPOTLIST_ENTRY_SCHEDULE_HOUR = "SpotListEntryScheduleHour";
+	public static final String SPOTLIST_ENTRY_SCHEDULE_MINUTE = "SpotListEntryScheduleMinute";
 	
 	public static final String NEXT_SPOT_TO_PLAY = "NextSpotToPlay";
 	public static final int    NEXT_SPOT_TO_PLAY_DEFAULT = 0;

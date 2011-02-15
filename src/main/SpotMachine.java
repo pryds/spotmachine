@@ -1,18 +1,17 @@
 package main;
 
-import java.util.Locale;
-
 import gui.MainFrame;
 
 import javax.swing.JFrame;
 
 public class SpotMachine {
-	private static SpotPlayer spotPlayer = null;
+	private static IntervalledSpotPlayer intervalledSpotPlayer = null;
+	private static ScheduledSpotPlayer scheduledSpotPlayer = null;
 	private static SpotContainer spotsAvailable = null;
 	private static MainFrame frame;
 	
 	public static final String PROGRAM_NAME = "SpotMachine";
-	public static final String PROGRAM_VERSION = "0.2";
+	public static final String PROGRAM_VERSION = "0.3 svn";
 	
 	public static int currentVerbosityLevel; // level of debug info
 	
@@ -45,8 +44,24 @@ public class SpotMachine {
 			}
 		});
 		
-		(new Thread(spotPlayer = new SpotPlayer(SpotPlayer.TYPE_ACTIVE))).start();
-		spotPlayer.initializeFromPrefs();
+		(new Thread(intervalledSpotPlayer = new IntervalledSpotPlayer(SpotPlayer.TYPE_INTERVALLED))).start();
+		intervalledSpotPlayer.initializeFromPrefs();
+		
+		(new Thread(scheduledSpotPlayer = new ScheduledSpotPlayer(SpotPlayer.TYPE_SCHEDULED))).start();
+		scheduledSpotPlayer.initializeFromPrefs();
+		
+		
+		/*
+		PlaySchedule sch = new PlaySchedule();
+		sch.setTimeToPlay(14, 33);
+		scheduledSpotPlayer.addToEnd(new SpotEntry(new File("/home/thomas/.spotmachine/cheer.wav"), "test test", sch));
+		
+		sch = new PlaySchedule();
+		sch.setWeekdaysToPlay(new boolean[] {true, false, false, false, false, false, true});
+		sch.setTimeToPlay(14, 34);
+		scheduledSpotPlayer.addToEnd(new SpotEntry(new File("/home/thomas/.spotmachine/cheer.wav"), "test test 2", sch));
+		*/
+		
 		
 		spotsAvailable = new SpotContainer(SpotPlayer.TYPE_AVAILABLE);
 		spotsAvailable.initializeFromPrefs();
@@ -60,8 +75,12 @@ public class SpotMachine {
 		frame.setVisible(true);
 	}
 	
-	public static SpotPlayer getSpotPlayer() {
-		return spotPlayer;
+	public static IntervalledSpotPlayer getIntervalledSpotPlayer() {
+		return intervalledSpotPlayer;
+	}
+	
+	public static ScheduledSpotPlayer getScheduledSpotPlayer() {
+	    return scheduledSpotPlayer;
 	}
 	
 	public static SpotContainer getAvailableSpots() {

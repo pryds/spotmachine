@@ -20,7 +20,7 @@ import main.AudioSamples;
 import main.Prefs;
 import main.SpotContainer;
 import main.SpotEntry;
-import main.SpotPlayer;
+import main.IntervalledSpotPlayer;
 import main.Util;
 import main.SpotMachine;
 import main.SpotRecorder;
@@ -83,6 +83,11 @@ public class RecordDialogue extends JFrame implements ActionListener {
 		return panel;
 	}
 	
+	public void setStatusTextField(String text) {
+		statusTextField.setText(text.toUpperCase(Util.get().getCurrentLocale()));
+		Util.get().threadSleep(10);
+	}
+	
 	public void setCurrentDurationTextField(long millis) {
 		currentLengthTextField.setText(Util.get().millisToMinsSecsString(millis));
 	}
@@ -122,7 +127,7 @@ public class RecordDialogue extends JFrame implements ActionListener {
 	}
 	
 	private JTextArea createNoteTextArea() {
-		JTextArea note = new JTextArea(Util.get().string("record-disconnect-text"));
+		JTextArea note = new JTextArea(Util.get().wordWrap(Util.get().string("record-disconnect-text"), 50));
 		note.setEditable(false);
 		
 		Color textColour = new Color(255, 0, 0); // red text
@@ -155,7 +160,7 @@ public class RecordDialogue extends JFrame implements ActionListener {
 		return panel;
 	}
 	
-	SpotRecorder rec = null;
+	private SpotRecorder rec = null;
 
 	public void actionPerformed(ActionEvent e) {
 		Util.get().out("Record window action performed! " + e.getActionCommand(), Util.VERBOSITY_DEBUG_INFO);
@@ -202,30 +207,29 @@ public class RecordDialogue extends JFrame implements ActionListener {
 			cancelButton.setEnabled(false);
 			rec = new SpotRecorder();
 			new Thread(rec).start();
-			statusTextField.setText(Util.get().string("record-status-recording-label"));
+			setStatusTextField(Util.get().string("record-status-recording-label"));
 		} else if (action.equals("pause")) {
 			// TODO: Detect if already paused and unpause instead if so
 			recordButton.setEnabled(true);
 			stopButton.setEnabled(true);
 			pauseButton.setEnabled(true);
-			statusTextField.setText(Util.get().string("record-status-paused-label"));
+			setStatusTextField(Util.get().string("record-status-paused-label"));
 		} else if (action.equals("stop")) {
 			stopButton.setEnabled(false);
 
-			statusTextField.setText(Util.get().string("record-status-stopping-label"));
+			setStatusTextField(Util.get().string("record-status-stopping-label"));
 			if (rec != null) {
 				rec.stopRecoding();
 				lastFinishedRecording = rec.getOutFile();
 				rec = null;
 			}
 			
-			//TODO: Check prefs, and (maybe) do normalization
 			boolean doDCOffset = Prefs.prefs.getBoolean(Prefs.RECORDING_DO_DC_OFFSET_REMOVAL, Prefs.RECORDING_DO_DC_OFFSET_REMOVAL_DEFAULT);
 			boolean doFade = Prefs.prefs.getBoolean(Prefs.RECORDING_DO_FADEIN_FADEOUT, Prefs.RECORDING_DO_FADEIN_FADEOUT_DEFAULT);
 			boolean doVolume = Prefs.prefs.getBoolean(Prefs.RECORDING_DO_VOLUME_NORMALIZATION, Prefs.RECORDING_DO_VOLUME_NORMALIZATION_DEFAULT);
 			
 			if (doDCOffset || doFade || doVolume) {
-				statusTextField.setText(Util.get().string("record-status-normalizing-label"));
+				setStatusTextField(Util.get().string("record-status-normalizing-label"));
 				AudioSamples spotSamples = new AudioSamples(lastFinishedRecording);
 				if (spotSamples.initializedOK()) {
 					if (doDCOffset)
@@ -246,9 +250,9 @@ public class RecordDialogue extends JFrame implements ActionListener {
 				}
 			}
 			
-			statusTextField.setText(Util.get().string("record-status-playing-label"));
+			setStatusTextField(Util.get().string("record-status-playing-label"));
 
-			final SpotPlayer tempPlayer = new SpotPlayer(SpotContainer.TYPE_TEMPORARY); // final in order to be accessed from inner class below
+			final IntervalledSpotPlayer tempPlayer = new IntervalledSpotPlayer(SpotContainer.TYPE_TEMPORARY); // final in order to be accessed from inner class below
 			tempPlayer.addToEnd(new SpotEntry(lastFinishedRecording, "Temporary"));
 			new Thread(tempPlayer).start();
 			
@@ -261,14 +265,10 @@ public class RecordDialogue extends JFrame implements ActionListener {
 			new Thread(new Runnable() {
 				public void run() {
 					while (tempPlayer.inPlayLoop()) {
-						try {
-							Thread.sleep(200);
-						} catch (Exception ex) {
-							ex.printStackTrace();
-						}
+						Util.get().threadSleep(200);
 					}
 					
-					statusTextField.setText(Util.get().string("record-status-stopped-label"));
+					setStatusTextField(Util.get().string("record-status-stopped-label"));
 					
 					recordButton.setEnabled(true);
 					pauseButton.setEnabled(false);

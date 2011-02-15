@@ -1,7 +1,6 @@
 package main;
 
 import java.io.File;
-import java.util.Calendar;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
@@ -11,66 +10,20 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 import javax.swing.JOptionPane;
 
-public class SpotPlayer extends SpotContainer implements Runnable {
+public class SpotPlayer extends SpotContainer {
 	private AudioInputStream audioInputStream;
 	private AudioFormat audioFormat;
 	
-	private boolean paused;
-	private long millisBetweenSpots;
-	private int nextSpotToPlay;
-	private boolean repeatAll;
-	private boolean inPlayLoop = true;
-	
+	protected boolean paused;
+		
 	private static final int BUFFER_SIZE = 128000;
-
+	
 	public SpotPlayer(int type) {
 		super(type);
-		if (type != TYPE_TEMPORARY) {
-			paused = true;
-			millisBetweenSpots = Prefs.prefs.getLong(Prefs.MILLIS_BETWEEN_SPOTS, Prefs.MILLIS_BETWEEN_SPOTS_DEFAULT);
-			nextSpotToPlay = Prefs.prefs.getInt(Prefs.NEXT_SPOT_TO_PLAY, Prefs.NEXT_SPOT_TO_PLAY_DEFAULT);
-			repeatAll = Prefs.prefs.getBoolean(Prefs.REPEAT_ALL, Prefs.REPEAT_ALL_DEFAULT);
-		} else {
-			paused = false;
-			millisBetweenSpots = 2000;
-			nextSpotToPlay = 0;
-			repeatAll = false;
-		}
 	}
 	
-	public void run() { // invoke with start()
-		while(true) {
-			if (!paused && spotList.size() > 0) {
-				play(spotList.get(nextSpotToPlay).getFile());
-				
-				if (nextSpotToPlay+1 < spotList.size())
-					setNextSpotToPlayAndUpdateGUI(nextSpotToPlay + 1);
-				else
-					setNextSpotToPlayAndUpdateGUI(0);
-				
-				if (nextSpotToPlay == 0 && !repeatAll) {
-					if (type == TYPE_TEMPORARY) {
-						inPlayLoop = false;
-						Util.get().out("Exiting spotPlayer thread. Type " + type, Util.VERBOSITY_DEBUG_INFO);
-						return;
-					} else {
-						setPaused(true);
-						SpotMachine.getMainFrame().setGUIPaused(true);
-					}
-				} else {
-					waitForMilliseconds(millisBetweenSpots);
-				}
-			} else {
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
 	
-	private void play(File file) {
+	protected void play(File file) {
 		/**
 		 * Open file stream
 		 */
@@ -86,22 +39,34 @@ public class SpotPlayer extends SpotContainer implements Runnable {
 		 */
 		SourceDataLine line = null;
 		DataLine.Info info = new DataLine.Info(SourceDataLine.class, audioFormat);
-		try {
-			line = (SourceDataLine)AudioSystem.getLine(info);
-			line.open(audioFormat);
-		} catch(LineUnavailableException e) {
-			JOptionPane.showMessageDialog(SpotMachine.getMainFrame(),
-				    "Lydkortet er optaget af et andet program.\nHvis andre programmer kører, fx en "
-					+ "musik/videoafspiller, internet browser, prøv da at lukke disse.",
-				    "Fejl ved lyd",
-				    JOptionPane.ERROR_MESSAGE);
-			Util.get().out(e.toString(), Util.VERBOSITY_ERROR);
-			System.exit(1);
-		} catch(Exception e) {
-			e.printStackTrace(); System.exit(1);
+		boolean lineAvailable = true;
+		int currentTry = -1;
+		int totalTries = 10;
+		do {
+		    try {
+    			line = (SourceDataLine)AudioSystem.getLine(info);
+    			line.open(audioFormat);
+    			lineAvailable = true;
+    		} catch(LineUnavailableException e) {
+    			Util.get().out(e.toString(), Util.VERBOSITY_ERROR);
+    			lineAvailable = false;
+                Util.get().out("Warning: Line unavailable. Tris is try " + (currentTry+2) + " of " + totalTries, Util.VERBOSITY_WARNING);
+    			Util.get().threadSleep(2000);
+    		} catch(Exception e) {
+    			e.printStackTrace(); System.exit(1);
+    		}
+    		currentTry++;
+		} while (!lineAvailable && currentTry < totalTries);
+		if (!lineAvailable) {
+	        JOptionPane.showMessageDialog(SpotMachine.getMainFrame(),
+	                Util.get().string("main-soundboardbusy-errordialogue"),
+	                Util.get().string("main-soundboardbusy-errordialoguetitle"),
+	                JOptionPane.ERROR_MESSAGE);
+	        System.exit(1);
 		}
-		line.start();
 		
+		line.start();
+
 		/**
 		 * Read from file into buffer and write to sound card
 		 */
@@ -123,116 +88,5 @@ public class SpotPlayer extends SpotContainer implements Runnable {
 		Util.get().out("Draining line...", Util.VERBOSITY_DEBUG_INFO);
 		line.drain(); //wait till sound has finished playing
 		line.close();
-	}
-	
-	private void waitForMilliseconds(long millis) {
-		Util.get().out("Waiting for " + (millis/(float)1000/60) + " minutes.", Util.VERBOSITY_DEBUG_INFO);
-		long waitStart = Calendar.getInstance().getTime().getTime();
-		long waitNow = Calendar.getInstance().getTime().getTime();
-		
-		while (waitNow - waitStart < millis) {
-			long millisLeft = millis - (waitNow - waitStart);
-			SpotMachine.getMainFrame().setCountDownFieldValue(millisLeft);
-			try {
-				Thread.sleep(200);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			if (paused) {
-				long pauseStart;
-				while (paused) {
-					pauseStart = Calendar.getInstance().getTime().getTime();
-					try {
-						Thread.sleep(200);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-					long pauseNow = Calendar.getInstance().getTime().getTime();
-					waitStart = waitStart + (pauseNow - pauseStart);
-				}
-			}
-			waitNow = Calendar.getInstance().getTime().getTime();
-		}
-	}
-		
-	public boolean isPaused() {
-		return paused;
-	}
-	
-	public void setPaused(boolean paused) {
-		this.paused = paused;
-		Util.get().out("Pause set to " + paused, Util.VERBOSITY_DEBUG_INFO);
-	}
-
-	public void setMillisBetweenSpots(long millis) {
-		this.millisBetweenSpots = millis;
-		if (type != TYPE_TEMPORARY)
-			Prefs.prefs.putLong(Prefs.MILLIS_BETWEEN_SPOTS, millis);
-	}
-	
-	public int getNextSpotToPlayIndex() {
-		if (spotList.size() < 1)
-			return -1;
-		else
-			return nextSpotToPlay;
-	}
-	
-	public SpotEntry getNextSpotToPlay() {
-		return getSpotAt(nextSpotToPlay);
-	}
-	
-	private void setNextSpotToPlayAndUpdateGUI(int index) {
-		setNextSpotToPlay(index);
-		if (type != TYPE_TEMPORARY) {
-			SpotMachine.getMainFrame().getActiveSpotList().setNextSpot(index);
-			SpotMachine.getMainFrame().setNextSpotLabel(index, getNextSpotToPlay());
-		}
-	}
-	
-	public int setNextSpotToPlay(int index) {
-		nextSpotToPlay = index;
-		if (type != TYPE_TEMPORARY)
-			Prefs.prefs.putInt(Prefs.NEXT_SPOT_TO_PLAY, index);
-		return nextSpotToPlay;
-	}
-	
-	public int setNextSpotToPlayOneForward() {
-		int nextSpot = nextSpotToPlay + 1;
-		if (nextSpot >= spotList.size())
-			nextSpot = 0;
-		return setNextSpotToPlay(nextSpot);
-	}
-	
-	public int setNextSpotToPlayOneBackward() {
-		int nextSpot = nextSpotToPlay - 1;
-		if (nextSpot < 0)
-			nextSpot = spotList.size() - 1;
-		return setNextSpotToPlay(nextSpot);
-	}
-	
-	public void setRepeatAll(boolean state) {
-		this.repeatAll = state;
-		if (type != TYPE_TEMPORARY)
-			Prefs.prefs.putBoolean(Prefs.REPEAT_ALL, state);
-	}
-	
-	public boolean inPlayLoop() {
-		return inPlayLoop;
-	}
-	
-	public SpotEntry remove(int index) {
-		SpotEntry removedSpot = super.remove(index);
-		if (index < nextSpotToPlay) {
-			Util.get().out("index < nextSpotToPlay  =>  nextSpotToPlay--", Util.VERBOSITY_DEBUG_INFO);
-			setNextSpotToPlayOneBackward();
-		}
-		Util.get().out("SpotPlayer: Removed spot index " + index + ". New NextSpotToPlay: " + nextSpotToPlay, Util.VERBOSITY_DEBUG_INFO);
-		if (numberOfSpots() == 0) {
-			setNextSpotToPlayAndUpdateGUI(0);
-			setPaused(true);
-			SpotMachine.getMainFrame().setGUIPaused(true);
-			Util.get().out("SpotPlayer: Since removed spot was the last one, pause has been set (even if it was already set) and next spot set to " + nextSpotToPlay, Util.VERBOSITY_DEBUG_INFO);
-		}
-		return removedSpot;
 	}
 }

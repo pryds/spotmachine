@@ -5,7 +5,8 @@ import java.util.Vector;
 
 public class SpotContainer {
 	public static final int TYPE_AVAILABLE = 0;
-	public static final int TYPE_ACTIVE = 1;
+	public static final int TYPE_INTERVALLED = 1;
+	public static final int TYPE_SCHEDULED = 3;
 	public static final int TYPE_TEMPORARY = 2;
 	
 	protected Vector<SpotEntry> spotList;
@@ -20,17 +21,32 @@ public class SpotContainer {
 	public void initializeFromPrefs() {
 		if (type != TYPE_TEMPORARY) {
 			int size = Prefs.prefs.getInt(Prefs.SPOTLIST_SIZE + type, Prefs.SPOTLIST_SIZE_DEFAULT);
-			Util.get().out("Initializing: Reading " + size + " stored spot entries", Util.VERBOSITY_DEBUG_INFO);
+			Util.get().out("Initializing: Reading " + size + " stored spot entries (type " + type + ")", Util.VERBOSITY_DEBUG_INFO);
 			spotList.removeAllElements();
 			boolean ignoredOneOrMoreSpots = false;
 			
 			for (int i = 0; i < size; i++) {
 				File spotFile = new File(Util.get().getDataStoreDir(), Prefs.prefs.get(Prefs.SPOTLIST_ENTRY_FILENAME + type + "." + i, "not.found"));
 				if (spotFile != null && spotFile.exists()) {
-					spotList.add(new SpotEntry(
+					SpotEntry spot = new SpotEntry(
 							spotFile,
 							Prefs.prefs.get(Prefs.SPOTLIST_ENTRY_NAME + type + "." + i, "Not found!")
-							));
+					);
+					boolean hasSchedule = Prefs.prefs.getBoolean(Prefs.SPOTLIST_ENTRY_HASSCHEDULE + type + "." + i, Prefs.SPOTLIST_ENTRY_HASSCHEDULE_DEFAULT);
+                    if (hasSchedule) {
+						PlaySchedule schedule = new PlaySchedule();
+						boolean[] months = PlaySchedule.stringToArray(Prefs.prefs.get(Prefs.SPOTLIST_ENTRY_SCHEDULE_MONTHS + type + "." + i, ""));
+						schedule.setMonthsToPlay(months);
+						boolean[] days = PlaySchedule.stringToArray(Prefs.prefs.get(Prefs.SPOTLIST_ENTRY_SCHEDULE_DAYS + type + "." + i, ""));
+						schedule.setDaysToPlay(days);
+						boolean[] weekdays = PlaySchedule.stringToArray(Prefs.prefs.get(Prefs.SPOTLIST_ENTRY_SCHEDULE_WEEKDAYS + type + "." + i, ""));
+						schedule.setWeekdaysToPlay(weekdays);
+						int hour = Prefs.prefs.getInt(Prefs.SPOTLIST_ENTRY_SCHEDULE_HOUR + type + "." + i, 0);
+						int minute = Prefs.prefs.getInt(Prefs.SPOTLIST_ENTRY_SCHEDULE_MINUTE + type + "." + i, 0);
+						schedule.setTimeToPlay(hour, minute);
+						spot.setSchedule(schedule);
+					}
+					spotList.add(spot);
 					Util.get().out("Initializing: Added item " + i + " to spotContainer/player", Util.VERBOSITY_DEBUG_INFO);
 				} else {
 					ignoredOneOrMoreSpots = true;
@@ -88,13 +104,23 @@ public class SpotContainer {
 	private void saveSpotToPrefs(int position, SpotEntry spot) {
 		/**
 		 * To be called after spot is added to container.
+		 * (to ensure correct spotlist size is saved)
 		 * Overwrites if position exists already
 		 */
 		if (type != TYPE_TEMPORARY) {
 			Prefs.prefs.putInt(Prefs.SPOTLIST_SIZE + type, spotList.size());
 			Prefs.prefs.put(Prefs.SPOTLIST_ENTRY_NAME + type + "." + position, spot.getName());
 			Prefs.prefs.put(Prefs.SPOTLIST_ENTRY_FILENAME + type + "." + position, spot.getFile().getName());
+			Prefs.prefs.putBoolean(Prefs.SPOTLIST_ENTRY_HASSCHEDULE + type + "." + position, spot.hasSchedule());
+			if (spot.hasSchedule()) {
+				Prefs.prefs.put(Prefs.SPOTLIST_ENTRY_SCHEDULE_MONTHS + type + "." + position, PlaySchedule.arrayToString(spot.getSchedule().getMonthsToPlay()));
+				Prefs.prefs.put(Prefs.SPOTLIST_ENTRY_SCHEDULE_DAYS + type + "." + position, PlaySchedule.arrayToString(spot.getSchedule().getDaysToPlay()));
+				Prefs.prefs.put(Prefs.SPOTLIST_ENTRY_SCHEDULE_WEEKDAYS + type + "." + position, PlaySchedule.arrayToString(spot.getSchedule().getWeekdaysToPlay()));
+				Prefs.prefs.putInt(Prefs.SPOTLIST_ENTRY_SCHEDULE_HOUR + type + "." + position, spot.getSchedule().getHourToPlay());
+				Prefs.prefs.putInt(Prefs.SPOTLIST_ENTRY_SCHEDULE_MINUTE + type + "." + position, spot.getSchedule().getMinuteToPlay());
+			}
 		}
+		Util.get().out("Saved spot to pref file. Type: " + type + ", pos: " + position + ", name: \"" + spot.getName() + "\", hasSchedule: " + spot.hasSchedule(), Util.VERBOSITY_DEBUG_INFO);
 	}
 	
 	public SpotEntry getSpotAt(int index) {
@@ -120,11 +146,18 @@ public class SpotContainer {
 			saveSpotToPrefs(index, spotList.get(index));
 	}
 	
+	public void setNewScheduleForSpot(int index, PlaySchedule schedule) {
+	    spotList.get(index).setSchedule(schedule);
+	    if (type != TYPE_TEMPORARY)
+	        saveSpotToPrefs(index, spotList.get(index));
+	}
+	
 	public int numberOfSpots() {
 		return spotList.size();
 	}
 	
 	public Vector<SpotEntry> getDataCopy() {
+	    // Returns a new vector with references to the same SpotEntry instances as this SpotContainer.
 		Vector<SpotEntry> data = new Vector<SpotEntry>();
 		
 		for (int i = 0; i < spotList.size(); i++) {

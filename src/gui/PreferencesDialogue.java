@@ -70,7 +70,7 @@ public class PreferencesDialogue extends JFrame implements ActionListener {
 	}
 	
 	private JTextArea createLanguageNoteTextArea() {
-		JTextArea note = new JTextArea(Util.get().string("prefs-language-note-text"));
+		JTextArea note = new JTextArea(Util.get().wordWrap(Util.get().string("prefs-language-note-text"), 75));
 		note.setEditable(false);
 		
 		//Color textColour = new Color(255, 0, 0); // red text

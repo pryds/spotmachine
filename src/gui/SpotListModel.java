@@ -4,6 +4,7 @@ import java.util.Vector;
 
 import javax.swing.table.AbstractTableModel;
 
+import main.PlaySchedule;
 import main.Util;
 import main.SpotContainer;
 import main.SpotEntry;
@@ -17,13 +18,19 @@ public class SpotListModel extends AbstractTableModel {
 	
 	public SpotListModel(int type) {
 		this.type = type;
-		if (type == SpotContainer.TYPE_ACTIVE) {
+		if (type == SpotContainer.TYPE_INTERVALLED) {
 			columnNames = new String[] {
 					Util.get().string("main-list-itemnumber-label"),
 					Util.get().string("main-list-name-label"),
 					Util.get().string("main-list-duration-label"),
 					"*"
 			};
+		} else if (type == SpotContainer.TYPE_SCHEDULED) {
+		    columnNames = new String[] {
+		            Util.get().string("main-list-name-label"),
+		            Util.get().string("main-list-duration-label"),
+		            Util.get().string("main-list-playat-label")
+		    };
 		} else {
 			columnNames = new String[] {
 					Util.get().string("main-list-name-label"),
@@ -34,33 +41,26 @@ public class SpotListModel extends AbstractTableModel {
 	
 	public void replaceData(Vector<SpotEntry> replacement) {
 		data = new Vector<Object[]>();
-		if (type == SpotContainer.TYPE_ACTIVE) {
-			for (int i = 0; i < replacement.size(); i++) {
-				data.add(new Object[] {
-						i + 1,
-						replacement.get(i).getName(),
-						Util.get().millisToMinsSecsString(replacement.get(i).getLengthInMillis()),
-						""
-				});
-			}
-		} else {
-			for (int i = 0; i < replacement.size(); i++) {
-				data.add(new Object[] {
-						replacement.get(i).getName(),
-						Util.get().millisToMinsSecsString(replacement.get(i).getLengthInMillis())
-				});
-			}
+		
+		for (int i = 0; i < replacement.size(); i++) {
+		    addToEnd(replacement.get(i));
 		}
 	}
 	
 	public void addToEnd(SpotEntry spot) {
-		if (type == SpotContainer.TYPE_ACTIVE) {
+		if (type == SpotContainer.TYPE_INTERVALLED) {
 			data.add(new Object[] {
 					data.size() + 1,
 					spot.getName(),
 					Util.get().millisToMinsSecsString(spot.getLengthInMillis()),
 					""
 			});
+        } else if (type == SpotContainer.TYPE_SCHEDULED) {
+            data.add(new Object[] {
+                    spot.getName(),
+                    Util.get().millisToMinsSecsString(spot.getLengthInMillis()),
+                    spot.getSchedule().getTimeFormattedShortStringWithNotAllDaysIndication()
+            });
 		} else {
 			data.add(new Object[] {
 					spot.getName(),
@@ -71,8 +71,21 @@ public class SpotListModel extends AbstractTableModel {
 	}
 	
 	public void rename(int row, String newName) {
-		setValueAt(newName, row, (type == SpotContainer.TYPE_ACTIVE ? 1 : 0) );
+	    int columnNumber = (type == SpotContainer.TYPE_AVAILABLE ||
+	            type == SpotContainer.TYPE_SCHEDULED)
+	            ? 0 : 1;
+		setValueAt(newName, row, columnNumber);
 	}
+	
+	public void setPlayAt(int row, PlaySchedule schedule) {
+	    if (type == SpotContainer.TYPE_SCHEDULED) {
+	        setValueAt(schedule.getTimeFormattedShortStringWithNotAllDaysIndication(), row, 2);
+	    } else {
+	        // do nothing; we ought not end up here...
+            Util.get().out("Tried to set 'playAt' for a list which is not of type SCHEDULED. This should not happen. Ignored.", Util.VERBOSITY_WARNING);
+        }
+	}
+
 	
 	public void remove(int row) {
 		data.remove(row);
@@ -81,7 +94,7 @@ public class SpotListModel extends AbstractTableModel {
 	}
 	
 	private void updateSpotNumbersFrom(int index) {
-		if (type == SpotContainer.TYPE_ACTIVE) {
+		if (type == SpotContainer.TYPE_INTERVALLED) {
 			for (int i = index; i < getRowCount(); i++) {
 				setValueAt(i + 1, i, 0);
 			}

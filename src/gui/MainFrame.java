@@ -8,8 +8,10 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.util.Arrays;
+import java.util.Vector;
 
 import javax.swing.AbstractButton;
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -29,12 +31,13 @@ import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import main.IntervalledSpotPlayer;
+import main.ScheduledSpotPlayer;
 import main.Util;
 import main.Prefs;
 import main.SpotContainer;
 import main.SpotEntry;
 import main.SpotMachine;
-import main.SpotPlayer;
 
 public class MainFrame extends JFrame implements ChangeListener, ActionListener, ItemListener {
 	private static final long serialVersionUID = 6219825567861104713L;
@@ -70,6 +73,7 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 				Util.get().millisToMinsSecsString(Prefs.prefs.getLong(Prefs.MILLIS_BETWEEN_SPOTS, Prefs.MILLIS_BETWEEN_SPOTS_DEFAULT))
 				);
 		countdownTextField.setEditable(false);
+		countdownTextField.setColumns(5);
 		panel.add(countdownTextField);
 		nextSpotLabel = new JLabel();
 		panel.add(nextSpotLabel);
@@ -140,9 +144,23 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
 		panel.add(createAvailableSpotsPanel());
-		panel.add(createSpotTransferPanel());
-		panel.add(createActiveSpotsPanel());
-		panel.add(createChangeOrderPanel());
+		
+		JPanel activeSpotsPanel = new JPanel();
+		activeSpotsPanel.setLayout(new BoxLayout(activeSpotsPanel, BoxLayout.PAGE_AXIS));
+		panel.add(activeSpotsPanel);
+		
+		JPanel intervalledSpotsPanel = new JPanel();
+		intervalledSpotsPanel.setLayout(new BoxLayout(intervalledSpotsPanel, BoxLayout.LINE_AXIS));
+		intervalledSpotsPanel.add(createIntervalledSpotTransferPanel());
+		intervalledSpotsPanel.add(createIntervalledSpotsPanel());
+		activeSpotsPanel.add(intervalledSpotsPanel);
+		
+		JPanel scheduledSpotsPanel = new JPanel();
+		scheduledSpotsPanel.setLayout(new BoxLayout(scheduledSpotsPanel, BoxLayout.LINE_AXIS));
+		scheduledSpotsPanel.add(createScheduledSpotsTransferPanel());
+		scheduledSpotsPanel.add(createScheduledSpotsPanel());
+		activeSpotsPanel.add(scheduledSpotsPanel);
+		
 		return panel;
 	}
 	
@@ -152,8 +170,9 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 	
 	private JPanel createAvailableSpotsPanel() {
 		JPanel panel = new JPanel();
+		panel.setBorder(BorderFactory.createTitledBorder(Util.get().string("main-availablespots-label")));
+		
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-		panel.add(new JLabel(Util.get().string("main-availablespots-label") + ":"));
 		
 		SpotContainer availableSpots = SpotMachine.getAvailableSpots();
 		availableSpotList = new SpotList(new SpotListModel(SpotContainer.TYPE_AVAILABLE));
@@ -189,55 +208,53 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 		return panel;
 	}
 	
-	private JPanel createSpotTransferPanel() {
+	private JPanel createIntervalledSpotTransferPanel() {
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 		
-		JButton copyToActiveButton = new JButton(Util.get().createImageIcon("../resources/Forward24.gif"));
-		copyToActiveButton.setToolTipText(Util.get().string("main-copytoactive-tooltip"));
-		copyToActiveButton.addActionListener(this);
-		copyToActiveButton.setActionCommand("copytoactive");
-		panel.add(copyToActiveButton);
+		JButton copyToIntervalledButton = new JButton(Util.get().createImageIcon("../resources/Forward24.gif"));
+		copyToIntervalledButton.setToolTipText(Util.get().string("main-copytointervalled-tooltip"));
+		copyToIntervalledButton.addActionListener(this);
+		copyToIntervalledButton.setActionCommand("copytointervalled");
+		panel.add(copyToIntervalledButton);
 	    
-		JButton removeFromActiveButton = new JButton(Util.get().createImageIcon("../resources/Back24.gif"));
-		removeFromActiveButton.setToolTipText(Util.get().string("main-removefromactive-tooltip"));
-		removeFromActiveButton.addActionListener(this);
-		removeFromActiveButton.setActionCommand("removefromactive");
-		panel.add(removeFromActiveButton);
+		JButton removeFromIntervalledButton = new JButton(Util.get().createImageIcon("../resources/Back24.gif"));
+		removeFromIntervalledButton.setToolTipText(Util.get().string("main-removefromintervalled-tooltip"));
+		removeFromIntervalledButton.addActionListener(this);
+		removeFromIntervalledButton.setActionCommand("removefromintervalled");
+		panel.add(removeFromIntervalledButton);
 		
 		return panel;
 	}
 
 	private JSpinner minBetweenSpotsSpinner;
 	
-	private SpotList activeSpotList;
+	private SpotList intervalledSpotList;
 	private JCheckBox repeatAllCheckBox;
 	
-	private JPanel createActiveSpotsPanel() {
+	private JPanel createIntervalledSpotsPanel() {
+		JPanel mainPanel = new JPanel();
+		mainPanel.setBorder(BorderFactory.createTitledBorder(Util.get().string("main-intervalledspots-label")));
+		
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-		panel.add(new JLabel(Util.get().string("main-activespots-label") + ":"));
 		
-		while(SpotMachine.getSpotPlayer() == null) {
-			Util.get().out("SpotPlayer not initialized yet. Waiting a bit and then retrying.", Util.VERBOSITY_WARNING);
-			try {
-				Thread.sleep(500);
-			} catch(Exception e) {
-				e.printStackTrace();
-			}
+		while(SpotMachine.getIntervalledSpotPlayer() == null) {
+			Util.get().out("GUI; IntervalledSpotPlayer not initialized yet. Waiting a bit and then retrying.", Util.VERBOSITY_WARNING);
+			Util.get().threadSleep(500);
 		}
 		
-		SpotPlayer activeSpots = SpotMachine.getSpotPlayer();
-		activeSpotList = new SpotList(new SpotListModel(SpotContainer.TYPE_ACTIVE));
-		activeSpotList.getModel().replaceData(activeSpots.getDataCopy());
-		activeSpotList.setNextSpot(activeSpots.getNextSpotToPlayIndex());
-		if (activeSpots.getNextSpotToPlayIndex() != -1 && activeSpots.getNextSpotToPlay() != null)
+		IntervalledSpotPlayer intervalSpots = SpotMachine.getIntervalledSpotPlayer();
+		intervalledSpotList = new SpotList(new SpotListModel(SpotContainer.TYPE_INTERVALLED));
+		intervalledSpotList.getModel().replaceData(intervalSpots.getDataCopy());
+		intervalledSpotList.setNextSpot(intervalSpots.getNextSpotToPlayIndex());
+		if (intervalSpots.getNextSpotToPlayIndex() != -1 && intervalSpots.getNextSpotToPlay() != null)
 			setNextSpotLabel(
-					activeSpots.getNextSpotToPlayIndex(), 
-					activeSpots.getNextSpotToPlay().getName());
+					intervalSpots.getNextSpotToPlayIndex(), 
+					intervalSpots.getNextSpotToPlay().getName());
 		else
 			setNextSpotLabel(0, "-");
-		panel.add(activeSpotList.getContainingScrollPane());
+		panel.add(intervalledSpotList.getContainingScrollPane());
 		repeatAllCheckBox = new JCheckBox(Util.get().string("main-repeatall-checkbox"));
 		repeatAllCheckBox.setToolTipText(Util.get().string("main-repeatall-tooltip"));
 		repeatAllCheckBox.setSelected(Prefs.prefs.getBoolean(Prefs.REPEAT_ALL, Prefs.REPEAT_ALL_DEFAULT));
@@ -253,16 +270,64 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 		spinnerPanel.add(minBetweenSpotsSpinner);
 		spinnerPanel.add(new JLabel(Util.get().string("main-minsbetweenspots-label")));
 		panel.add(spinnerPanel);
-
-		return panel;
+		
+		mainPanel.add(panel);
+		mainPanel.add(createChangeOrderIntervalledPanel());
+		
+		return mainPanel;
+	}
+	
+	private JPanel createScheduledSpotsTransferPanel() {
+	    JPanel panel = new JPanel();
+	    panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+	    
+	    JButton copyToScheduledButton = new JButton(Util.get().createImageIcon("../resources/Forward24.gif"));
+	    copyToScheduledButton.setToolTipText("main-copytoscheduled-tooltip");
+	    copyToScheduledButton.addActionListener(this);
+	    copyToScheduledButton.setActionCommand("copytoscheduled");
+	    panel.add(copyToScheduledButton);
+	    
+	    JButton removeFromScheduledButton = new JButton(Util.get().createImageIcon("../resources/Back24.gif"));
+	    removeFromScheduledButton.setToolTipText("main-removefromscheduled-tooltip");
+	    removeFromScheduledButton.addActionListener(this);
+	    removeFromScheduledButton.setActionCommand("removefromscheduled");
+	    panel.add(removeFromScheduledButton);
+	    
+	    return panel;
+	}
+	
+	private SpotList scheduledSpotList;
+	
+	private JPanel createScheduledSpotsPanel() {
+	    JPanel panel = new JPanel();
+	    panel.setBorder(BorderFactory.createTitledBorder(Util.get().string("main-scheduledspots-label")));
+	    
+	    while(SpotMachine.getScheduledSpotPlayer() == null) {
+	        Util.get().out("GUI: ScheduledSpotPlayer not initialized yet. Waiting a bit and then retrying.", Util.VERBOSITY_WARNING);
+	        Util.get().threadSleep(500);
+	    }
+	    
+	    ScheduledSpotPlayer scheduledSpots = SpotMachine.getScheduledSpotPlayer();
+	    scheduledSpotList = new SpotList(new SpotListModel(SpotContainer.TYPE_SCHEDULED));
+	    Vector<SpotEntry> v = scheduledSpots.getDataCopy();
+	    scheduledSpotList.getModel().replaceData(v);
+	    panel.add(scheduledSpotList.getContainingScrollPane());
+	    
+	    panel.add(createEditScheduledPanel());
+	    
+	    return panel;
 	}
 	
 	public SpotList getAvailableSpotList() {
 		return availableSpotList;
 	}
 	
-	public SpotList getActiveSpotList() {
-		return activeSpotList;
+	public SpotList getIntervalledSpotList() {
+		return intervalledSpotList;
+	}
+	
+	public SpotList getScheduledSpotList() {
+	    return scheduledSpotList;
 	}
 	
 	public RecordDialogue getRecordDialogue() {
@@ -273,21 +338,33 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 		recordDialogue = null;
 	}
 	
-	private JPanel createChangeOrderPanel() {
+	private JPanel createChangeOrderIntervalledPanel() {
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 		
 		JButton upButton = new JButton(Util.get().string("main-moveup-button"), Util.get().createImageIcon("../resources/Up24.gif"));
 		upButton.addActionListener(this);
-		upButton.setActionCommand("moveup");
+		upButton.setActionCommand("intervalledmoveup");
 		panel.add(upButton);
 		
 		JButton downButton = new JButton(Util.get().string("main-movedown-button"), Util.get().createImageIcon("../resources/Down24.gif"));
 		downButton.addActionListener(this);
-		downButton.setActionCommand("movedown");
+		downButton.setActionCommand("intervalledmovedown");
 		panel.add(downButton);
 		
 		return panel;
+	}
+	
+	private JPanel createEditScheduledPanel() {
+	    JPanel panel = new JPanel();
+	    panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+	    
+	    JButton editButton = new JButton(Util.get().string("main-editscheduled-button"), Util.get().createImageIcon("../resources/Edit24.gif"));
+	    editButton.addActionListener(this);
+	    editButton.setActionCommand("editscheduled");
+	    panel.add(editButton);
+	    
+	    return panel;
 	}
 	
 	private JMenuBar createMenuBar() {
@@ -318,67 +395,67 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 		JComponent source = (JComponent)e.getSource();
 		if (source == minBetweenSpotsSpinner) {
 			double readValue = (Double)((JSpinner)source).getValue();
-			SpotMachine.getSpotPlayer().setMillisBetweenSpots((int)Math.round(readValue * 60 * 1000));
+			SpotMachine.getIntervalledSpotPlayer().setMillisBetweenSpots((int)Math.round(readValue * 60 * 1000));
 		}
 	}
 
 	public void actionPerformed(ActionEvent e) {
 		Util.get().out("ActionListener: Action performed! " + e.getActionCommand(), Util.VERBOSITY_DEBUG_INFO);
 		String action = e.getActionCommand();
-		if (action.equals("moveup") || action.equals("movedown")) {
-			int oldPos = activeSpotList.getSelectedRow();
-			if (oldPos != -1 && activeSpotList.getModel().getRowCount() > 0) {
+		if (action.equals("intervalledmoveup") || action.equals("intervalledmovedown")) {
+			int oldPos = intervalledSpotList.getSelectedRow();
+			if (oldPos != -1 && intervalledSpotList.getModel().getRowCount() > 0) {
 				int newPos;
-				if (action.equals("moveup")) {
+				if (action.equals("intervalledmoveup")) {
 					newPos = oldPos - 1;
 				} else {
 					newPos = oldPos + 1;
 				}
-				if (newPos < 0 || newPos > activeSpotList.getRowCount() - 1) {
-					Util.get().out("Trying to move a spot off-range. Ignored.", Util.VERBOSITY_WARNING);
+				if (newPos < 0 || newPos > intervalledSpotList.getRowCount() - 1) {
+					Util.get().out("Trying to move an intervalled spot off-range. Ignored.", Util.VERBOSITY_WARNING);
 					return;
 				}
-				activeSpotList.swapRows(newPos, oldPos);
-				activeSpotList.getSelectionModel().setSelectionInterval(newPos, newPos);
-				SpotMachine.getSpotPlayer().swapSpots(newPos, oldPos);
-				setNextSpotLabel(SpotMachine.getSpotPlayer().getNextSpotToPlayIndex(), SpotMachine.getSpotPlayer().getNextSpotToPlay().getName());
+				intervalledSpotList.swapRows(newPos, oldPos);
+				intervalledSpotList.getSelectionModel().setSelectionInterval(newPos, newPos);
+				SpotMachine.getIntervalledSpotPlayer().swapSpots(newPos, oldPos);
+				setNextSpotLabel(SpotMachine.getIntervalledSpotPlayer().getNextSpotToPlayIndex(), SpotMachine.getIntervalledSpotPlayer().getNextSpotToPlay().getName());
 			}
 		} else if (action.equals("play")) {
-			SpotMachine.getSpotPlayer().setPaused(false);
+			SpotMachine.getIntervalledSpotPlayer().setPaused(false);
 			setGUIPaused(false);
 		} else if (action.equals("pause")) {
-			SpotMachine.getSpotPlayer().setPaused(true);
+			SpotMachine.getIntervalledSpotPlayer().setPaused(true);
 			setGUIPaused(true);
 		} else if (action.equals("previous")) {
-			int prev = SpotMachine.getSpotPlayer().setNextSpotToPlayOneBackward();
-			activeSpotList.setNextSpot(prev);
-			setNextSpotLabel(prev, SpotMachine.getSpotPlayer().getSpotAt(prev).getName());
+			int prev = SpotMachine.getIntervalledSpotPlayer().setNextSpotToPlayOneBackward();
+			intervalledSpotList.setNextSpot(prev);
+			setNextSpotLabel(prev, SpotMachine.getIntervalledSpotPlayer().getSpotAt(prev).getName());
 		} else if (action.equals("next")) {
-			int next = SpotMachine.getSpotPlayer().setNextSpotToPlayOneForward();
-			activeSpotList.setNextSpot(next);
-			setNextSpotLabel(next, SpotMachine.getSpotPlayer().getSpotAt(next).getName());
-		} else if (action.equals("copytoactive")) {
+			int next = SpotMachine.getIntervalledSpotPlayer().setNextSpotToPlayOneForward();
+			intervalledSpotList.setNextSpot(next);
+			setNextSpotLabel(next, SpotMachine.getIntervalledSpotPlayer().getSpotAt(next).getName());
+		} else if (action.equals("copytointervalled")) {
 			int selectedAvailable = availableSpotList.getSelectedRow();
 			if (selectedAvailable != -1 && availableSpotList.getModel().getRowCount() > 0) {
-				int selectedActive = activeSpotList.getSelectedRow();
+				int selectedIntervalled = intervalledSpotList.getSelectedRow();
 				SpotEntry source = SpotMachine.getAvailableSpots().getSpotAt(selectedAvailable);
-				SpotMachine.getSpotPlayer().addToEnd(source);
-				activeSpotList.getModel().addToEnd(source);
-				if (SpotMachine.getSpotPlayer().numberOfSpots() == 1) { // i.e., if this is the only spot
-					Util.get().out("Added spot to empty list. Setting active spot to that spot.", Util.VERBOSITY_DEBUG_INFO);
-					SpotMachine.getSpotPlayer().setNextSpotToPlay(0);
+				SpotMachine.getIntervalledSpotPlayer().addToEnd(source);
+				intervalledSpotList.getModel().addToEnd(source);
+				if (SpotMachine.getIntervalledSpotPlayer().numberOfSpots() == 1) { // i.e., if this is the only spot
+					Util.get().out("Added spot to empty list. Setting next spot to that spot.", Util.VERBOSITY_DEBUG_INFO);
+					SpotMachine.getIntervalledSpotPlayer().setNextSpotToPlay(0);
 					setNextSpotLabel(0, source.getName());
-					activeSpotList.setNextSpot(0);
+					intervalledSpotList.setNextSpot(0);
 				}
-				activeSpotList.getSelectionModel().setSelectionInterval(selectedActive, selectedActive);
+				intervalledSpotList.getSelectionModel().setSelectionInterval(selectedIntervalled, selectedIntervalled);
 			}
-		} else if (action.equals("removefromactive")) {
-			int selectedActive = activeSpotList.getSelectedRow();
-			if (selectedActive != -1  && activeSpotList.getModel().getRowCount() > 0) {
-				SpotMachine.getSpotPlayer().remove(selectedActive);
-				activeSpotList.remove(selectedActive);
-				int newSelection = (selectedActive-1 >= 0) ? selectedActive-1 : 0;
-				activeSpotList.getSelectionModel().setSelectionInterval(newSelection, newSelection);
+		} else if (action.equals("removefromintervalled")) {
+			int selectedIntervalled = intervalledSpotList.getSelectedRow();
+			if (selectedIntervalled != -1  && intervalledSpotList.getModel().getRowCount() > 0) {
+				SpotMachine.getIntervalledSpotPlayer().remove(selectedIntervalled);
+				intervalledSpotList.remove(selectedIntervalled);
+				int newSelection = (selectedIntervalled-1 >= 0) ? selectedIntervalled-1 : 0;
+				intervalledSpotList.getSelectionModel().setSelectionInterval(newSelection, newSelection);
 			}
 		} else if (action.equals("removefromavailable")) {
 			int selectedAvailable = availableSpotList.getSelectedRow();
@@ -397,13 +474,13 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 				
 				if (userChoise == 0) {
 					SpotEntry removedAvailableSpot = SpotMachine.getAvailableSpots().remove(selectedAvailable);
-					int[] removedActiveSpots = SpotMachine.getSpotPlayer().removeAllSpotsContaining(removedAvailableSpot);
-					Util.get().out("RemovedActiveSpots: " + Arrays.toString(removedActiveSpots), Util.VERBOSITY_DEBUG_INFO);
+					int[] removedIntervalSpots = SpotMachine.getIntervalledSpotPlayer().removeAllSpotsContaining(removedAvailableSpot);
+					Util.get().out("RemovedIntervalSpots: " + Arrays.toString(removedIntervalSpots), Util.VERBOSITY_DEBUG_INFO);
 					
 					Util.get().deleteFile(removedAvailableSpot.getFile());
 					
 					availableSpotList.remove(selectedAvailable);
-					activeSpotList.removeAll(removedActiveSpots);
+					intervalledSpotList.removeAll(removedIntervalSpots);
 					
 					int newSelection = (selectedAvailable-1 >= 0) ? selectedAvailable-1 : 0;
 					availableSpotList.getSelectionModel().setSelectionInterval(newSelection, newSelection);
@@ -439,6 +516,70 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 					availableSpotList.getModel().rename(selectedAvailable, newName);
 				}
 			}
+        } else if (action.equals("copytoscheduled")) {
+            int selectedAvailable = availableSpotList.getSelectedRow();
+            if (selectedAvailable != -1 && availableSpotList.getModel().getRowCount() > 0) {
+                final SpotEntry source = SpotMachine.getAvailableSpots().getSpotAt(selectedAvailable);
+                final SchedulePropertiesDialogue spd = new SchedulePropertiesDialogue();
+                spd.setVisible(true);
+                this.setEnabled(false);
+                
+                /**
+                 * The following thread will wait for the user to click ok
+                 * in the properties dialogue, and then do the appropriate
+                 * changes, followed by reenabling the main window.
+                 * We can't just wait in the current thread, as it would halt
+                 * the GUI, making the impression that the program has stalled
+                 */
+                new Thread(new Runnable() {
+                    public void run() {
+                        while (spd.isVisible()) {
+                            Util.get().threadSleep(200);
+                        }
+                        if (spd.isOkClicked()) {
+                            SpotEntry addedSpot = SpotMachine.getScheduledSpotPlayer().addToEnd(source, spd.getSchedule());
+                            SpotMachine.getMainFrame().getScheduledSpotList().getModel().addToEnd(addedSpot);
+                        }
+                        SpotMachine.getMainFrame().setEnabled(true);
+                    }
+                }).start();
+            }
+        } else if (action.equals("removefromscheduled")) {
+            int selectedScheduledSpot = scheduledSpotList.getSelectedRow();
+            if (selectedScheduledSpot != -1  && scheduledSpotList.getModel().getRowCount() > 0) {
+                SpotMachine.getScheduledSpotPlayer().remove(selectedScheduledSpot);
+                scheduledSpotList.remove(selectedScheduledSpot);
+                int newSelection = (selectedScheduledSpot-1 >= 0) ? selectedScheduledSpot-1 : 0;
+                scheduledSpotList.getSelectionModel().setSelectionInterval(newSelection, newSelection);
+            }
+        } else if (action.equals("editscheduled")) {
+            final int selectedScheduledSpot = scheduledSpotList.getSelectedRow();
+            if (selectedScheduledSpot != -1 && scheduledSpotList.getModel().getRowCount() > 0) {
+                SpotEntry selectedSpot = SpotMachine.getScheduledSpotPlayer().getSpotAt(selectedScheduledSpot);
+                final SchedulePropertiesDialogue spd = new SchedulePropertiesDialogue(selectedSpot.getSchedule());
+    		    spd.setVisible(true);
+                this.setEnabled(false);
+                
+                /**
+                 * The following thread will wait for the user to click ok
+                 * in the properties dialogue, and then do the appropriate
+                 * changes, followed by reenabling the main window.
+                 * We can't just wait in the current thread, as it would halt
+                 * the GUI, making the impression that the program has stalled
+                 */
+                new Thread(new Runnable() {
+                    public void run() {
+                        while (spd.isVisible()) {
+                            Util.get().threadSleep(200);
+                        }
+                        if (spd.isOkClicked()) {
+                            SpotMachine.getScheduledSpotPlayer().setNewScheduleForSpot(selectedScheduledSpot, spd.getSchedule());
+                            SpotMachine.getMainFrame().getScheduledSpotList().getModel().setPlayAt(selectedScheduledSpot, spd.getSchedule());
+                        }
+                        SpotMachine.getMainFrame().setEnabled(true);
+                    }
+                }).start();
+            }
 		} else if (action.equals("aboutprogram")) {
 			JOptionPane.showMessageDialog(this,
 				    SpotMachine.PROGRAM_NAME + " " + Util.get().string("about-version") + " " + SpotMachine.PROGRAM_VERSION + "\n" +
@@ -446,12 +587,12 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 				    (Util.get().string("about-translator").trim().equals("") ? "" : Util.get().string("about-translator") + "\n") +
 				    "http://pryds.eu/spotmachine\n" +
 				    "\n" +
-				    Util.get().string("about-text"),
+				    Util.get().wordWrap(Util.get().string("about-text"), 70),
 				    Util.get().string("about-headline") + " " + SpotMachine.PROGRAM_NAME,
 				    JOptionPane.INFORMATION_MESSAGE);
 		} else if (action.equals("prefs")) {
-			PreferencesDialogue preferencesDialogue;
-			(preferencesDialogue = new PreferencesDialogue()).setVisible(true);
+			PreferencesDialogue preferencesDialogue = new PreferencesDialogue();
+			preferencesDialogue.setVisible(true);
 			this.setEnabled(false);
 		}
 	}
@@ -460,7 +601,7 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 		Util.get().out("ItemListener: Item state changed!", Util.VERBOSITY_DEBUG_INFO);
 		Object source = e.getItemSelectable();
 		if (source == repeatAllCheckBox) {
-			SpotMachine.getSpotPlayer().setRepeatAll(repeatAllCheckBox.isSelected());
+			SpotMachine.getIntervalledSpotPlayer().setRepeatAll(repeatAllCheckBox.isSelected());
 		}
 	}
 }

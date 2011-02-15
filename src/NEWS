@@ -1,3 +1,15 @@
+Changes between 0.2 and 0.3
+===========================
+
+Major:
+- Scheduled spots, in addition to spots played by interval (which is their new name,
+  in stead of just "active" spots).
+- NSIS script added, for compiling Windows installer (and uninstaller)
+
+Minor:
+- Long output lines are now automatically wrapped, so no need to put line ends in
+  translation files, other than forced ones.
+
 Changes between 0.1.1 and 0.2
 =============================
 

@@ -66,11 +66,7 @@ public class SpotRecorder implements Runnable {
 				while (!recordingHasEnded) {
 					long nowTime = Calendar.getInstance().getTime().getTime();
 					SpotMachine.getMainFrame().getRecordDialogue().setCurrentDurationTextField(nowTime - startTime);
-					try {
-						Thread.sleep(200);
-					} catch (Exception ex) {
-						ex.printStackTrace();
-					}
+					Util.get().threadSleep(200);
 				}
 			}
 		}).start();

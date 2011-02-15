@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Locale;
 import java.util.Random;
 import java.util.ResourceBundle;
@@ -215,10 +216,53 @@ public class Util {
 		 */
 		
 		if (verbosityLevel <= SpotMachine.currentVerbosityLevel) {
+			Calendar now = Calendar.getInstance();
+			int hour = now.get(Calendar.HOUR_OF_DAY);
+			int minute = now.get(Calendar.MINUTE);
+			int second = now.get(Calendar.SECOND);
+			    // (minutes < 10 ? "0" + minutes : minutes)
+			String time = "[" + (hour < 10 ? "0" + hour : hour) + ":" +
+			        (minute < 10 ? "0" + minute : minute) + ":" +
+			        (second < 10 ? "0" + second : second) + "] ";
 			if (verbosityLevel <= 1)
-				System.err.print(text);
+				System.err.print(time + text);
 			else
-				System.out.print(text);
+				System.out.print(time + text);
 		}
+	}
+	
+	public void threadSleep(long millis) {
+		try {
+			Thread.sleep(millis);
+		} catch(Exception e) {
+			Util.get().out(e.toString(), Util.VERBOSITY_WARNING);
+		}
+	}
+	
+	public String wordWrap(String input, int width) {
+	    String[] inputLines = input.split("\n");
+	    StringBuffer output = new StringBuffer();
+	    for (int i = 0; i < inputLines.length; i++) {
+	        if (i != 0)
+	            output.append("\n");
+	        output.append(wordWrapOneLine(inputLines[i], width));
+	    }
+	    return output.toString();
+	}
+	
+	private String wordWrapOneLine(String input, int width) {
+	    input = input.trim();
+	    if (input.length() <= width) {
+	        return input;
+	    } else {
+	        int lastSpaceIndex = input.lastIndexOf(" ", width);
+	        if (lastSpaceIndex == -1)
+	            lastSpaceIndex = width;
+	        
+	        String output1 = input.substring(0, lastSpaceIndex).trim() + "\n";
+	        String output2 = input.substring(lastSpaceIndex).trim();
+	        input = null;
+	        return output1 + wordWrapOneLine(output2, width);
+	    }
 	}
 }
