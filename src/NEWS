@@ -9,6 +9,11 @@ Major:
 Minor:
 - Long output lines are now automatically wrapped, so no need to put line ends in
   translation files, other than forced ones.
+- Locale selection list (in preferences window) now doesn't contain "system default"
+  setting. If the user hasn't chosen a locale before, the system default will still
+  be used (if supported, otherwise English). Should make things less confusing for
+  users (only real options to choose from), and we don't have to keep two translation
+  files with the same content (English and program default, which is also English).
 
 Changes between 0.1.1 and 0.2
 =============================

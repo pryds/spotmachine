@@ -28,7 +28,7 @@ public class PreferencesDialogue extends JFrame implements ActionListener {
 		setTitle(Util.get().string("prefs-headline"));
 		
 		JPanel panel = new JPanel();
-		setContentPane(panel);  
+		setContentPane(panel);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 		
 		panel.add(createLanguageSelectionPanel());
@@ -50,17 +50,13 @@ public class PreferencesDialogue extends JFrame implements ActionListener {
 		panel.add(new JLabel(Util.get().string("prefs-language-label")));
 		
 		langSelect = new JComboBox();
-		Locale[] locales = Util.get().getAvailableLocales();
-		langSelect.addItem(Util.get().string("prefs-language-sysdefault-comboboxitem"));
-		int selectedIndex = 0;
+		Locale[] locales = Util.get().getSupportedLocales();
 		for (int i = 0; i < locales.length; i++) {
 			langSelect.addItem(locales[i].getDisplayName());
-			if (Util.get().getSavedLocale() != null
-					&& locales[i].toString().equals(Util.get().getSavedLocale().toString()) ) {
-				selectedIndex = i+1;
+			if (locales[i].toString().equals(Util.get().getCurrentLocale().toString()) ) {
+		        langSelect.setSelectedIndex(i);
 			}
 		}
-		langSelect.setSelectedIndex(selectedIndex);
 		panel.add(langSelect);
 		mainPanel.add(panel);
 		
@@ -70,7 +66,7 @@ public class PreferencesDialogue extends JFrame implements ActionListener {
 	}
 	
 	private JTextArea createLanguageNoteTextArea() {
-		JTextArea note = new JTextArea(Util.get().wordWrap(Util.get().string("prefs-language-note-text"), 75));
+		JTextArea note = new JTextArea(Util.get().wordWrap(Util.get().string("prefs-language-note-text"), 50));
 		note.setEditable(false);
 		
 		//Color textColour = new Color(255, 0, 0); // red text
@@ -133,14 +129,9 @@ public class PreferencesDialogue extends JFrame implements ActionListener {
 	
 	private void savePrefs() {
 		// Save language prefs
-		if (langSelect.getSelectedIndex() == 0) {
-			Util.get().out("Removing locale data from preferences file, if any.", Util.VERBOSITY_DEBUG_INFO);
-			Prefs.prefs.remove(Prefs.LOCALE_LANGUAGE);
-			Prefs.prefs.remove(Prefs.LOCALE_COUNTRY);
-		} else {
 			String userSelectedLocaleDisplayString = (String)langSelect.getSelectedItem();
 			Locale userSelectedLocale = null;
-			Locale[] allLocales = Util.get().getAvailableLocales();
+			Locale[] allLocales = Util.get().getSupportedLocales();
 			for (int i = 0; i < allLocales.length && userSelectedLocale == null; i++) {
 				if (userSelectedLocaleDisplayString.equals(allLocales[i].getDisplayName()))
 					userSelectedLocale = allLocales[i];
@@ -151,7 +142,6 @@ public class PreferencesDialogue extends JFrame implements ActionListener {
 					+ " to preferences file.", Util.VERBOSITY_DEBUG_INFO);
 			Prefs.prefs.put(Prefs.LOCALE_LANGUAGE, userSelectedLocale.getLanguage());
 			Prefs.prefs.put(Prefs.LOCALE_COUNTRY, userSelectedLocale.getCountry());
-		}
 		
 		// Save normalization prefs
 		Util.get().out("Saving normalization prefs: " +

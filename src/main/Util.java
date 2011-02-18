@@ -150,6 +150,8 @@ public class Util {
 	private Locale savedLocale;
 	
 	public Locale getSavedLocale() {
+	    // Returns the locale which is saved in the preferences file,
+	    // or null if none is saved.
 		String lang = Prefs.prefs.get(Prefs.LOCALE_LANGUAGE, Prefs.LOCALE_LANGUAGE_DEFAULT);
 		String coun = Prefs.prefs.get(Prefs.LOCALE_COUNTRY, Prefs.LOCALE_COUNTRY_DEFAULT);
 		
@@ -160,12 +162,35 @@ public class Util {
 		return savedLocale;
 	}
 	
+	private Locale currentLocale;
+	
 	public Locale getCurrentLocale() {
-		Locale locale = getSavedLocale();
-		if (locale == null) {
-			locale = Locale.getDefault();
+	    // Returns the currently used locale, i.e.:
+	    // - the one which is saved in the preferences file, if exists, otherwise:
+	    // - the system's default, if supported, otherwise:
+	    // - the first mentioned locale in the list of supported locales.
+	    if (currentLocale != null)
+	        return currentLocale;
+	    
+		currentLocale = getSavedLocale();
+		if (currentLocale == null) {
+			currentLocale = Locale.getDefault();
+            Util.get().out("No locale is saved. Getting system's default locale, " + currentLocale.getDisplayName(), Util.VERBOSITY_DEBUG_INFO);
+			if (!isLocaleSupported(currentLocale)) {
+	            currentLocale = getSupportedLocales()[0];
+                Util.get().out("The system's default locale is not supported. Getting program's default locale, " + currentLocale.getDisplayName(), Util.VERBOSITY_DEBUG_INFO);
+			}
 		}
-		return locale;
+		return currentLocale;
+	}
+	
+	public boolean isLocaleSupported(Locale candidate) {
+	    Locale[] supportedLocales = getSupportedLocales();
+	    for (int i = 0; i < supportedLocales.length; i++) {
+	        if (supportedLocales[i].equals(candidate))
+	            return true;
+	    }
+	    return false;
 	}
 	
 	public String string(String key) {
@@ -173,7 +198,15 @@ public class Util {
 		return bundle.getString(key);
 	}
 	
-	public Locale[] getAvailableLocales() {
+	private Locale[] supportedLocales;
+	
+	public Locale[] getSupportedLocales() {
+	    // If the file has already been read, no need to read it again
+	    // since this method is called at least twice for every string
+	    // in the program.
+	    if (supportedLocales != null)
+	        return supportedLocales;
+	    
 		File localeListFile = new File(MainFrame.class.getResource("../strings.list").getFile());
 		BufferedReader reader;
 		Vector<String> localeStrings = new Vector<String>();
@@ -181,8 +214,10 @@ public class Util {
 		try {
 			reader = new BufferedReader(new FileReader(localeListFile));
 			String readLine;
-			while ((readLine = reader.readLine()) != null && !readLine.trim().equals("")) {
-				localeStrings.add(readLine.trim());
+			while ((readLine = reader.readLine()) != null) {
+			    readLine = readLine.trim();
+			    if (!readLine.equals("") && readLine.charAt(0) != '#')
+			        localeStrings.add(readLine.trim());
 			}
 			reader.close();
 		} catch (IOException ioe) {
@@ -190,16 +225,16 @@ public class Util {
 			return new Locale[0];
 		}
 		
-		Locale[] locales = new Locale[localeStrings.size()];
-		for (int i = 0; i < locales.length; i++) {
+		supportedLocales = new Locale[localeStrings.size()];
+		for (int i = 0; i < supportedLocales.length; i++) {
 			String[] currentLocale = localeStrings.get(i).split("_");
 			if (currentLocale.length != 2) {
 				out("At least one line in the strings.list file is incorrect. The file must contain a list of locales, one locale per line, in the form ll_CC, where ll is a two-letter language code and CC is a two-letter country code. Ignoring all locales.", VERBOSITY_ERROR);
 				return new Locale[0];
 			}
-			locales[i] = new Locale(currentLocale[0], currentLocale[1]);
+			supportedLocales[i] = new Locale(currentLocale[0], currentLocale[1]);
 		}
-		return locales;
+		return supportedLocales;
 	}
 	
 	public void out(String text, int verbosityLevel) {

@@ -1,2 +1,10 @@
-da_DK
+# This list contains a list of supported locales, one locale per line.
+# The first locale in the list will be the default for systems
+# set to a non-supported locale.
+# For each locale listed here, there will have to be a corresponding
+# file called strings_ll_CC.properties, where ll_CC is the locale code
+# listed below, containing translations to all strings used in the
+# program.
+# Lines starting with a # will be disregarded.
 en_UK
+da_DK
