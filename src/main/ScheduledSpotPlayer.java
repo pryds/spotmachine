@@ -16,8 +16,12 @@ public class ScheduledSpotPlayer extends SpotPlayer implements Runnable {
 				sequentialPlayer.setPaused(true);
 			}
 			for (int i = 0; i < spotsToPlay.length; i++) {
-				spotsToPlay[i].getSchedule().setLastPlayIncidentNow();
-				play(spotsToPlay[i].getFile());
+			    if (SpotMachine.getMainFrame().getRecordDialogue() == null) { //only play if we're not currently recording
+			        spotsToPlay[i].getSchedule().setLastPlayIncidentNow();
+			        play(spotsToPlay[i].getFile());
+			    } else {
+			        Util.get().out("ScheduledPlayer warning: Did NOT play spot " + spotsToPlay[i].getName() + " since the recording window is open.", Util.VERBOSITY_WARNING);
+			    }
 				Util.get().threadSleep(1000);
 			}
 			if (spotsToPlay.length > 0 && sequentialSpotsAreInPlayLoop) {

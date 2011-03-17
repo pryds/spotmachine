@@ -14,6 +14,7 @@ Minor:
   be used (if supported, otherwise English). Should make things less confusing for
   users (only real options to choose from), and we don't have to keep two translation
   files with the same content (English and program default, which is also English).
+- Some Javadoc documentation added to class Util.
 
 Changes between 0.1.1 and 0.2
 =============================

@@ -111,6 +111,11 @@ public class AudioSamples {
 	public void removeDCOffset() {
 		int offset = 0;
 		
+		if (audioData.length == 0) {
+		    Util.get().out("Can't remove DC offset from sample of length 0. Ignoring", Util.VERBOSITY_WARNING);
+		    return;
+		}
+		
 		// Find DC offset
 		Util.get().outNoLN("Finding DC offset: ", Util.VERBOSITY_DEBUG_INFO);
 		for (int i = 0; i < audioData.length; i++) {
