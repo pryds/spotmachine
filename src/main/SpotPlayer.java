@@ -7,6 +7,7 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.Mixer;
 import javax.sound.sampled.SourceDataLine;
 import javax.swing.JOptionPane;
 
@@ -44,13 +45,30 @@ public class SpotPlayer extends SpotContainer {
 		int totalTries = 10;
 		do {
 		    try {
-    			line = (SourceDataLine)AudioSystem.getLine(info);
+		        int forceMixer = Prefs.prefs.getInt(Prefs.FORCE_PLAY_ON_MIXER_NUMBER, Prefs.FORCE_PLAY_ON_MIXER_NUMBER_DEFAULT);
+		        if (forceMixer >= 0) {
+		            javax.sound.sampled.Mixer.Info[] mixerInfo = AudioSystem.getMixerInfo();
+		            if (forceMixer < mixerInfo.length) {
+		                Util.get().out("Getting line for forced mixer #" + forceMixer, Util.VERBOSITY_DEBUG_INFO);
+		                Mixer mixer = AudioSystem.getMixer(mixerInfo[forceMixer]);
+		                line = (SourceDataLine)mixer.getLine(info);
+		            } else {
+		                String availableMixers = ""; int number = 0;
+		                for (javax.sound.sampled.Mixer.Info i : mixerInfo)
+		                    availableMixers += "[#" + (number++) + "] " + i.getName() + " - " + i.getDescription() + " - " + i.getVendor() + "\n";
+		                Util.get().out("Error: Output mixer #" + forceMixer + " was forced, yet only " + mixerInfo.length + " mixers exist:\n" + availableMixers, Util.VERBOSITY_ERROR);
+		                System.exit(1);
+		            }
+		        } else {
+                    Util.get().out("Getting line for default mixer", Util.VERBOSITY_DEBUG_INFO);
+		            line = (SourceDataLine)AudioSystem.getLine(info);
+		        }
     			line.open(audioFormat);
     			lineAvailable = true;
     		} catch(LineUnavailableException e) {
     			Util.get().out(e.toString(), Util.VERBOSITY_ERROR);
     			lineAvailable = false;
-                Util.get().out("Warning: Line unavailable. Tris is try " + (currentTry+2) + " of " + totalTries, Util.VERBOSITY_WARNING);
+                Util.get().out("Warning: Line unavailable. This is try " + (currentTry+2) + " of " + totalTries, Util.VERBOSITY_WARNING);
     			Util.get().threadSleep(2000);
     		} catch(Exception e) {
     			e.printStackTrace(); System.exit(1);

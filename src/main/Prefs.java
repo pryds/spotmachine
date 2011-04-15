@@ -8,6 +8,9 @@ public class Prefs {
 	public static final String MILLIS_BETWEEN_SPOTS = "MillisBetweenSpots";
 	public static final long   MILLIS_BETWEEN_SPOTS_DEFAULT = 300000; // 5 mins, i.e 300000 millis
 	
+	public static final String MILLIS_BETWEEN_PROBING_FOR_PLAYABLE_SCHEDULED_SPOTS = "MillisBetweenProbingForPlayableScheduledSpots";
+	public static final long   MILLIS_BETWEEN_PROBING_FOR_PLAYABLE_SCHEDULED_SPOTS_DEFAULT = 10000; // Should not be more than 60000, i.e. one minute
+	
 	public static final String SPOTLIST_SIZE = "SpotListSize";
 	public static final int    SPOTLIST_SIZE_DEFAULT = 0;
 	
@@ -43,5 +46,11 @@ public class Prefs {
 	
 	public static final String  RECORDING_DO_VOLUME_NORMALIZATION = "RecordingDoVolumeNormalization";
 	public static final boolean RECORDING_DO_VOLUME_NORMALIZATION_DEFAULT = true;
+	
+	public static final String FORCE_PLAY_ON_MIXER_NUMBER = "ForcePlayOnMixerNumber";
+	public static final int    FORCE_PLAY_ON_MIXER_NUMBER_DEFAULT = -1; // -1 = no force, use system default
+	
+	public static final String FORCE_RECORDING_ON_MIXER_NUMBER = "ForceRecordingOnMixerNumber";
+	public static final int    FORCE_RECORDING_ON_MIXER_NUMBER_DEFAULT = -1; // -1 = no force, use system default
 	
 }

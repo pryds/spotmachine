@@ -1,3 +1,12 @@
+Changes between 0.3 and 0.3.1
+=============================
+
+Minor:
+- Output and recording mixers can be forced through the Java prefs file for SpotMachine.
+  If a key called ForcePlayOnMixerNumber contains a value > 0 representing a valid mixer number,
+  that mixer will be used (if applicaple)for playing spots instead of the default one.
+  The same goes for recording spots, except here the key is called ForceRecordingOnMixerNumber.
+
 Changes between 0.2 and 0.3
 ===========================
 

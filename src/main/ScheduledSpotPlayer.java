@@ -27,7 +27,10 @@ public class ScheduledSpotPlayer extends SpotPlayer implements Runnable {
 			if (spotsToPlay.length > 0 && sequentialSpotsAreInPlayLoop) {
 				sequentialPlayer.setPaused(false);
 			}
-			Util.get().threadSleep(10000);
+			Util.get().threadSleep(Prefs.prefs.getLong(
+			        Prefs.MILLIS_BETWEEN_PROBING_FOR_PLAYABLE_SCHEDULED_SPOTS,
+			        Prefs.MILLIS_BETWEEN_PROBING_FOR_PLAYABLE_SCHEDULED_SPOTS_DEFAULT
+			        ));
 		}
 	}
 	
@@ -43,7 +46,7 @@ public class ScheduledSpotPlayer extends SpotPlayer implements Runnable {
 		SpotEntry[] out = new SpotEntry[spots.size()];
 		for (int i = 0; i < out.length; i++)
 			out[i] = spots.get(i);
-		Util.get().out("Scheduled player: Found " + out.length + " spots due for play now.", Util.VERBOSITY_DEBUG_INFO);
+		Util.get().out("Scheduled player: Found " + out.length + " spots due for play now.", (out.length > 0 ? Util.VERBOSITY_DEBUG_INFO : Util.VERBOSITY_DETAILED_DEBUG_INFO) );
 		return out;
 	}
 	

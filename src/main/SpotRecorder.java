@@ -8,6 +8,7 @@ import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.Mixer;
 import javax.sound.sampled.TargetDataLine;
 import javax.sound.sampled.AudioFileFormat.Type;
 import javax.sound.sampled.AudioFormat.Encoding;
@@ -37,7 +38,24 @@ public class SpotRecorder implements Runnable {
 		
 		Info info = new Info(TargetDataLine.class, audioFormat);
 		try {
-			targetDataLine = (TargetDataLine)AudioSystem.getLine(info);
+		    int forceMixer = Prefs.prefs.getInt(Prefs.FORCE_RECORDING_ON_MIXER_NUMBER, Prefs.FORCE_RECORDING_ON_MIXER_NUMBER_DEFAULT);
+            if (forceMixer >= 0) {
+                javax.sound.sampled.Mixer.Info[] mixerInfo = AudioSystem.getMixerInfo();
+                if (forceMixer < mixerInfo.length) {
+                    Util.get().out("Getting line for forced recording mixer #" + forceMixer, Util.VERBOSITY_DEBUG_INFO);
+                    Mixer mixer = AudioSystem.getMixer(mixerInfo[forceMixer]);
+                    targetDataLine = (TargetDataLine)mixer.getLine(info);
+                } else {
+                    String availableMixers = ""; int number = 0;
+                    for (javax.sound.sampled.Mixer.Info i : mixerInfo)
+                        availableMixers += "[#" + (number++) + "] " + i.getName() + " - " + i.getDescription() + " - " + i.getVendor() + "\n";
+                    Util.get().out("Error: Recording mixer #" + forceMixer + " was forced, yet only " + mixerInfo.length + " mixers exist:\n" + availableMixers, Util.VERBOSITY_ERROR);
+                    System.exit(1);
+                }
+            } else {
+                Util.get().out("Getting recording line for default mixer", Util.VERBOSITY_DEBUG_INFO);
+                targetDataLine = (TargetDataLine)AudioSystem.getLine(info);
+            }
 			targetDataLine.open(audioFormat);
 		} catch (LineUnavailableException e) {
 			Util.get().out("Unable to get recording line. Exiting.", Util.VERBOSITY_ERROR);
