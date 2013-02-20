@@ -1,0 +1,16 @@
+Package: spotmachine
+Version: 0.3
+Section: sound
+Priority: optional
+Architecture: all
+Maintainer: Thomas Pryds <thomas@pryds.eu>
+Description: Record and sequentially play audio spots in e.g. supermarkets.
+ SpotMachine is an all-in-one program that aims to handle all aspects of audio
+ spot management, in supermarkets, malls, and other places where you want to
+ play timed audio messages (commercials, public notices, etc.) to an audience.
+ .
+ With SpotMachine you can record spots of your own though your computer's
+ microphone. The very easy-to-use graphical user interface makes it
+ straight-forward to handle these spots, and arrange them into a timed playlist.
+Depends: openjdk-8-jre | openjdk-7-jre | openjdk-6-jre | oracle-java8-installer | oracle-java7-installer | oracle-java6-installer
+Homepage: http://pryds.eu/spotmachine/

@@ -1,12 +1,13 @@
 QUICK INSTALLATION INSTRUCTIONS FOR SPOTMACHINE
 ===============================================
 
-Unfortunately, this program doesn't yet supply any installation scripts or
-likewise. However, here is a brief guide to installing, which should work on
-both Linux, Windows, and probably other systems.
+This program is distritbuted with an installer for Windows and .deb package
+for Ubuntu and other Debian based systems. If you wish to install manually,
+here is a brief guide to installing, which should work on both Linux,
+Windows, and probably other systems.
 
 1. Make sure your system has the Java JRE or JDK installed. If not, get and
-   install the latest Java JRE from java.sun.com or through your system's
+   install the latest Java JRE from java.oracle.com or through your system's
    software management facility.
 2. If you downloaded the binary package (filename ends in "bin"), you can
    jump to the next step. On the other hand, if you downloaded the source

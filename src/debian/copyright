@@ -1,0 +1,30 @@
+This package was debianized by Thomas Pryds <thomas@pryds.eu> on
+2013-02-19.
+
+The current Debian maintainer is Thomas Pryds <thomas@pryds.eu>
+
+It was downloaded from: http://pryds.eu/spotmachine/
+
+Upstream Authors: Thomas Pryds
+
+Copyright: 2010 - 2013 Thomas Pryds
+
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 3 of the License.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License with
+ the Debian GNU/Linux distribution in file /usr/share/common-licenses/GPL-3;
+ if not, write to the Free Software Foundation, Inc., 51 Franklin St,
+ Fifth Floor, Boston, MA 02110-1301, USA.
+ 
+On Debian systems, the complete text of the GNU General Public
+License, version 3, can be found in /usr/share/common-licenses/GPL-3.
+
+The Debian packaging is (C) 2013, Thomas Pryds <thomas@pryds.eu> and
+is licensed under the GPL, see above.
