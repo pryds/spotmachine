@@ -282,13 +282,13 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 	    panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 	    
 	    JButton copyToScheduledButton = new JButton(Util.get().createImageIcon("../resources/Forward24.gif"));
-	    copyToScheduledButton.setToolTipText("main-copytoscheduled-tooltip");
+	    copyToScheduledButton.setToolTipText(Util.get().string("main-copytoscheduled-tooltip"));
 	    copyToScheduledButton.addActionListener(this);
 	    copyToScheduledButton.setActionCommand("copytoscheduled");
 	    panel.add(copyToScheduledButton);
 	    
 	    JButton removeFromScheduledButton = new JButton(Util.get().createImageIcon("../resources/Back24.gif"));
-	    removeFromScheduledButton.setToolTipText("main-removefromscheduled-tooltip");
+	    removeFromScheduledButton.setToolTipText(Util.get().string("main-removefromscheduled-tooltip"));
 	    removeFromScheduledButton.addActionListener(this);
 	    removeFromScheduledButton.setActionCommand("removefromscheduled");
 	    panel.add(removeFromScheduledButton);
