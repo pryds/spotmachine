@@ -1,15 +1,13 @@
 % USER MANUAL FOR SPOTMACHINE
 %
 % To compile, simply run:
-% $ latex usermanual.tex
-% or:
 % $ pdflatex usermanual.tex
 %
 % Nice overview of most basic LaTeX commands:
-% https://pangea.stanford.edu/computing/unix/formatting/latexexample.php
+% http://en.wikibooks.org/wiki/LaTeX/Document_Structure
 
 \documentclass[a4paper,12pt]{report}
-\usepackage{url}
+\usepackage{url,graphicx}
 \begin{document}
 \title{SpotMachine \\ Usermanual}
 \author{Thomas Pryds}
@@ -61,6 +59,11 @@ If you wish to compile SpotMachine yourself, you can download the source code pa
 \chapter{Daily Usage}
 All features of SpotMachine are, directly or indirectly, available from the main window. This is where you can see an overview of recorded spots, which spots are currently in rotation, when they are playing.
 
+\begin{figure}[h]
+\centering \includegraphics[width=130mm]{mainwindow.png}
+\caption{Main window.}
+\end{figure}
+
 The main window is split up in three parts:
 \begin{itemize}
 \item The top part containing the {\bf control buttons} Play, Pause, Previous and Next.
@@ -77,6 +80,11 @@ The left side of the main window shows a list of recorded spots. These spots are
 \subsection{Recording a New Spot}
 You can record a new spot through a connected microphone. All new spots will show up in the Available spots list. To do so, click the Record new button below the Available spots list, and a new window will pop up, from which you can control the recording itself.
 
+\begin{figure}[h]
+\centering \includegraphics[width=50mm]{recorddialogue.png}
+\caption{Record new spot window.}
+\end{figure}
+
 Here, you can give the spot a name, which will appear in spot lists. Be sure to give the spot a descriptive name, and note that you {\em are} able to give the exact same name to two different spots! You are able to type in a name either before, during or after recording a spot.
 
 In the middle of the window are two buttons. The left button will start the actual recording of the spot. The right one will stop recording. While recording, you can keep track of the length of the spot just above the record and stop buttons. Here, you can also see, whether SpotMachine is currently recording, or not.
@@ -86,6 +94,12 @@ When you click the Stop button, the recording is immediately played back once, t
 If you like what you hear, click the OK button, and the new spot is added to the Available spots list in the main window. If instead, you click the Cancel button, any newly recorded spot is discarded, and the recording window is closed.
 
 \subsection{Deleting a Spot}
+
+\begin{figure}[h]
+\centering \includegraphics[width=60mm]{deletespotdialogue.png}
+\caption{Delete spot window.}
+\end{figure}
+
 If you decide you will not need a certain spot ever again, you can delete it entirely from disk. You do so by selecting the spot in the Available spots list and click the Delete button. You will be met with a brief acknowledge window, just to make sure that you are not deleting something by accident. If you delete a spot that is currently also in the Interval spots and/or Scheduled spots lists, the spot will also be removed from these lists.
 
 Note, this function deletes the spot's audio file from disk, so it is non-reversible. If you are probably going to use a spot at some later point, but not now, you can just let it sit in the Available spots list for later use.
