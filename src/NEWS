@@ -1,3 +1,14 @@
+Changes between 0.3.2 and 0.3.1
+===============================
+
+Major:
+- Script for deb binary packaging added which means releases will now be accompanied by
+  a deb file for easy installing on Debian/Ubuntu systems.
+
+Minor:
+- Fixed bug that caused incorrect text to show in tool tip at copy and remove buttons for
+  scheduled spots.
+
 Changes between 0.3 and 0.3.1
 =============================
 
