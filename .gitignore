@@ -4,4 +4,5 @@ src/doc/*.aux
 src/doc/*.dvi
 src/doc/*.log
 src/doc/*.pdf
+src/doc/*.toc
 
