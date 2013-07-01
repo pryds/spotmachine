@@ -8,7 +8,7 @@
 % http://en.wikibooks.org/wiki/LaTeX/Document_Structure
 
 \documentclass[a4paper,12pt]{report}
-\usepackage{url,graphicx}
+\usepackage{url,graphicx,textcomp}
 
 \usepackage{parskip} % separate paragraphs by empty space
 \setlength{\parindent}{0pt} % Do not indent first line of paragraphs
@@ -100,7 +100,7 @@ currently in rotation, when they are playing.
 
 \begin{figure}[h]
 \centering \includegraphics[width=130mm]{mainwindow.png}
-\caption{Main window.}
+\caption{Main window}
 \end{figure}
 
 The main window is split up in three parts:
@@ -135,7 +135,7 @@ control the recording itself.
 
 \begin{figure}[h]
 \centering \includegraphics[width=50mm]{recorddialogue.png}
-\caption{Record new spot window.}
+\caption{Record new spot window}
 \end{figure}
 
 Here, you can give the spot a name, which will appear in spot lists. Be sure to
@@ -166,7 +166,7 @@ closed.
 
 \begin{figure}[h]
 \centering \includegraphics[width=60mm]{deletespotdialogue.png}
-\caption{Delete spot window.}
+\caption{Delete spot window}
 \end{figure}
 
 If you decide you will not need a certain spot ever again, you can delete it
@@ -181,6 +181,12 @@ non-reversible. If you are probably going to use a spot at some later point, but
 not now, you can just let it sit in the Available spots list for later use.
 
 \subsection{Renaming a Spot}
+
+\begin{figure}[h]
+\centering \includegraphics[width=40mm]{renamespotdialogue.png}
+\caption{Rename spot window}
+\end{figure}
+
 Changing the name of a spot after it has been recorded is possible through the
 Rename button. By clicking it you will be presented with a small popup window
 that allows you to do so. Bear in mind, that spots are not recognized by the
@@ -199,12 +205,31 @@ either list.
 sequentially with a given interval between them, e.g. five minutes. In a
 commercial setting like a supermarket, this would be used for promoting special
 offers (``Half price on milk today''), service announcements (``Extended opening
-hours tomorrow''), etc.
+hours tomorrow''), etc. In figure~\ref{intervalspotslist} you see an example of
+a list of interval spots. They are presented in the order they will be played,
+and the asterisk (*) on one of the lines tells you which spot will be played
+next.
+
+\begin{figure}[h]
+\centering \includegraphics[width=70mm]{intervalspotslist.png}
+\caption{Interval spots list}
+\label{intervalspotslist}
+\end{figure}
 
 \paragraph{Scheduled spots:} The second list contains spots which are played at
 a given point in time, e.g. at 7:45~PM every Monday to Friday. This might be
 used for time based service announcements (like in our supermarket example: ``15
-minutes till closing time'', etc.).
+minutes till closing time'', etc.). Figure~\ref{scheduledspotslist} shows an
+example of a scheduled spots list. Some lines may show a ``\textcurrency''
+symbol. This means that the spot has been configured to run only on certain,
+defined days. This will be explained in more detail in
+section~\ref{sec:addscheduledspot}.
+
+\begin{figure}[h]
+\centering \includegraphics[width=70mm]{scheduledspotslist.png}
+\caption{Scheduled spots list}
+\label{scheduledspotslist}
+\end{figure}
 
 \subsection{Adding a Spot as an Interval Spot}
 Between the Available spots list and the Interval spots list, you see two arrow
@@ -216,14 +241,59 @@ certain spot that you want to play more often than the others.
 The play order is given in the list, and by selecting a spot and clicking the
 Move up and Move down buttons, you can change this to your linking.
 
-Below the list you can choose whether to start over when the end of the list is
-reached (by checking the Repeat all checkbox). Also, you can set the amount of
-minutes between playing each spot.
+Below the list you can choose whether to start over when the end of the list has
+been reached (by checking the Repeat all checkbox). Also, you can set the amount
+of minutes between playing each spot.
 
 \subsection{Adding a Spot as a Scheduled Spot}
+\label{sec:addscheduledspot}
+Like for interval spots, there are two arrow buttons for scheduled spots. The
+right-pointing arrow copies a spot to the Scheduled spots list, while the
+left-pointing arrow removes it.
+
+\begin{figure}[h]
+\centering \includegraphics[width=70mm]{scheduledspotdialogue.png}
+\caption{Adding a scheduled spot}
+\end{figure}
+
+When you add a spot to the Scheduled spots list, you are presented with a
+properties window which mighy look confusing at first. Actually, it is quite
+simple, though. The first part sets the time of day (always in 24 hour system)
+for the spot to start playing. Then come weekdays, day of the month, and month.
+
+For a group (for instance ``weekdays'') either of your selections may be true in
+order for the spot to play. In figure~\ref{scheduledspotexample1}, the spot will
+play if today is either Monday or Tuesday. It should be quite clear that this
+works as ``OR'', and not as ``AND'', since it will never be both Monday and
+Tuesday on the same day.
+
+\begin{figure}[h]
+\centering \includegraphics[width=70mm]{scheduledspotexample1.png}
+\caption{Weekdays example}
+\label{scheduledspotexample1}
+\end{figure}
+
+What is important to notice is that between groups, the relation is ``AND''.
+This means that in figure~\ref{scheduledspotexample2}, the spot will play if
+today is either Monday or Tuesday, AND at the same time it is the 15th of the
+month. Or put the other way around: The spot will play on the 15th, but only if
+the 15th is a Monday or a Tuesday. This means that if you want the spot to play
+on all Mondays and Tuesdays, but also on all of the 15th, you will have to add
+the spot twice.
+
+\begin{figure}[h]
+\centering \includegraphics[width=70mm]{scheduledspotexample2.png}
+\caption{Weekdays and day of the month example}
+\label{scheduledspotexample2}
+\end{figure}
 
 \subsection{Changing the Properties of Scheduled Spots}
-%editing an existing scheduled spot
+Once a scheduled spot has been added, it is possible to bring back the
+properties window. This is done by selecting the spot that you want to change,
+and then clicking the Edit button next to the spot list. Here you will be able
+to edit all the details as described in the above section.
+
+\section{Preferences}
 
 \end{document}
 
