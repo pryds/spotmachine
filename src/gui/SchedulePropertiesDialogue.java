@@ -18,6 +18,8 @@ import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.SpinnerNumberModel;
 
+import org.xnap.commons.i18n.I18n;
+
 import main.PlaySchedule;
 import main.Util;
 
@@ -27,6 +29,8 @@ public class SchedulePropertiesDialogue extends JFrame implements ActionListener
     private PlaySchedule schedule;
     private boolean okClicked;
     
+	private I18n i18n;
+    
     public SchedulePropertiesDialogue() {
         // For copying new spot to scheduled spot list
         this(null);
@@ -35,9 +39,12 @@ public class SchedulePropertiesDialogue extends JFrame implements ActionListener
     public SchedulePropertiesDialogue(PlaySchedule schedule) {
         // For editing existing scheduled spot's details
         this.schedule = schedule;
+        
+        i18n = Util.get().i18n();
+        
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         setResizable(false);
-        setTitle(Util.get().string("scheduleprops-headline"));
+        setTitle(i18n.tr("Properties for Scheduled Spot"));
         
         okClicked = false;
         
@@ -59,7 +66,7 @@ public class SchedulePropertiesDialogue extends JFrame implements ActionListener
     
     private JPanel createTimePanel() {
         JPanel panel = new JPanel();
-        panel.setBorder(BorderFactory.createTitledBorder(Util.get().string("scheduleprops-time-headline")));
+        panel.setBorder(BorderFactory.createTitledBorder(i18n.tr("Play spot at (24 hours format)")));
         
         int defaultHour, defaultMinute;
         if (schedule != null) {
@@ -88,7 +95,7 @@ public class SchedulePropertiesDialogue extends JFrame implements ActionListener
     
     private JPanel createWeekdayPanel() {
         JPanel panel = new JPanel();
-        panel.setBorder(BorderFactory.createTitledBorder(Util.get().string("scheduleprops-weekday-headline")));
+        panel.setBorder(BorderFactory.createTitledBorder(i18n.tr("On these weekdays")));
         panel.setLayout(new GridLayout(2, 4));
         String[] weekdayStrings = new DateFormatSymbols(Util.get().getCurrentLocale()).getWeekdays();
         weekdayCheckBox = new JCheckBox[7];
@@ -107,7 +114,7 @@ public class SchedulePropertiesDialogue extends JFrame implements ActionListener
     
     private JPanel createDayOfMonthPanel() {
         JPanel panel = new JPanel();
-        panel.setBorder(BorderFactory.createTitledBorder(Util.get().string("scheduleprops-dayofmonth-headline")));
+        panel.setBorder(BorderFactory.createTitledBorder(i18n.tr("On these days of the month")));
         panel.setLayout(new GridLayout(5, 7));
         dayOfMonthCheckBox = new JCheckBox[31];
         
@@ -124,7 +131,7 @@ public class SchedulePropertiesDialogue extends JFrame implements ActionListener
 
     private JPanel createMonthsPanel() {
         JPanel panel = new JPanel();
-        panel.setBorder(BorderFactory.createTitledBorder(Util.get().string("scheduleprops-month-headline")));
+        panel.setBorder(BorderFactory.createTitledBorder(i18n.tr("On these months")));
         panel.setLayout(new GridLayout(3, 4));
         String[] monthStrings = new DateFormatSymbols(Util.get().getCurrentLocale()).getMonths();
         monthCheckBox = new JCheckBox[12];
@@ -139,7 +146,9 @@ public class SchedulePropertiesDialogue extends JFrame implements ActionListener
     }
     
     private JTextArea createNoteTextArea() {
-        JTextArea note = new JTextArea(Util.get().wordWrap(Util.get().string("scheduleprops-note-text"), 70));
+        JTextArea note = new JTextArea(Util.get().wordWrap(i18n.tr("Note, that the spot is only played if ALL " +
+        		"conditions above are met. If, for instance, only 'Wednesday' and '20' (plus all months) are " +
+        		"selected, the spot is only played if today is BOTH Wednesday AND the 20th of the month."), 70));
         note.setEditable(false);
         
         Color textColour = new Color(0, 0, 0); // black text
@@ -154,12 +163,12 @@ public class SchedulePropertiesDialogue extends JFrame implements ActionListener
     private JPanel createOkCancelPanel() {
         JPanel panel = new JPanel();
         
-        JButton okButton = new JButton(Util.get().string("scheduleprops-ok-button"));
+        JButton okButton = new JButton(i18n.tr("OK"));
         okButton.addActionListener(this);
         okButton.setActionCommand("ok");
         panel.add(okButton);
         
-        JButton cancelButton = new JButton(Util.get().string("scheduleprops-cancel-button"));
+        JButton cancelButton = new JButton(i18n.tr("Cancel"));
         cancelButton.addActionListener(this);
         cancelButton.setActionCommand("cancel");
         panel.add(cancelButton);

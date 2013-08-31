@@ -31,6 +31,8 @@ import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import org.xnap.commons.i18n.I18n;
+
 import main.IntervalledSpotPlayer;
 import main.ScheduledSpotPlayer;
 import main.Util;
@@ -45,9 +47,11 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 	// Icons from http://java.sun.com/developer/techDocs/hi/repository/
 	
 	private RecordDialogue recordDialogue = null;
+	private I18n i18n;
 	
 	public MainFrame(String title) {
 		super(title);
+		i18n = Util.get().i18n();
 		//setResizable(false);
 		setContentPane(new JPanel());
 		getContentPane().setLayout(new BorderLayout());
@@ -68,7 +72,7 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 	
 	private JPanel createCountdownPanel() {
 		JPanel panel = new JPanel();
-		panel.add(new JLabel(Util.get().string("main-timenextspot-label") + ":"));
+		panel.add(new JLabel(i18n.tr("Time until next spot:")));
 		countdownTextField = new JTextField(
 				Util.get().millisToMinsSecsString(Prefs.prefs.getLong(Prefs.MILLIS_BETWEEN_SPOTS, Prefs.MILLIS_BETWEEN_SPOTS_DEFAULT))
 				);
@@ -81,7 +85,7 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 	}
 	
 	private void setNextSpotLabel(int index, String name) {
-		nextSpotLabel.setText("(" + Util.get().string("main-timenextspot-numberabbrev-label") + " " + (index+1) + ", \"" + name + "\")");
+		nextSpotLabel.setText("(" + i18n.tr("#") + " " + (index+1) + ", \"" + name + "\")");
 	}
 	
 	public void setNextSpotLabel(int index, SpotEntry spot) {
@@ -101,14 +105,14 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 	private JPanel createUpperMainPanel() {
 		JPanel panel = new JPanel();
 		
-		playButton = new JButton(Util.get().string("main-play-button"), Util.get().createImageIcon("../resources/Play24.gif"));
+		playButton = new JButton(i18n.tr("Play"), Util.get().createImageIcon("../resources/Play24.gif"));
 		playButton.setVerticalTextPosition(AbstractButton.BOTTOM);
 	    playButton.setHorizontalTextPosition(AbstractButton.CENTER);
 		playButton.addActionListener(this);
 		playButton.setActionCommand("play");
 		panel.add(playButton);
 		
-		pauseButton = new JButton(Util.get().string("main-pause-button"), Util.get().createImageIcon("../resources/Pause24.gif"));
+		pauseButton = new JButton(i18n.tr("Pause"), Util.get().createImageIcon("../resources/Pause24.gif"));
 		pauseButton.setVerticalTextPosition(AbstractButton.BOTTOM);
 	    pauseButton.setHorizontalTextPosition(AbstractButton.CENTER);
 		pauseButton.addActionListener(this);
@@ -116,14 +120,14 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 		pauseButton.setEnabled(false);
 		panel.add(pauseButton);
 		
-		JButton previousButton = new JButton(Util.get().string("main-previous-button"), Util.get().createImageIcon("../resources/StepBack24.gif"));
+		JButton previousButton = new JButton(i18n.tr("Previous"), Util.get().createImageIcon("../resources/StepBack24.gif"));
 		previousButton.setVerticalTextPosition(AbstractButton.BOTTOM);
 	    previousButton.setHorizontalTextPosition(AbstractButton.CENTER);
 	    previousButton.addActionListener(this);
 		previousButton.setActionCommand("previous");
 		panel.add(previousButton);
 		
-		JButton nextButton = new JButton(Util.get().string("main-next-button"), Util.get().createImageIcon("../resources/StepForward24.gif"));
+		JButton nextButton = new JButton(i18n.tr("Next"), Util.get().createImageIcon("../resources/StepForward24.gif"));
 		nextButton.setVerticalTextPosition(AbstractButton.BOTTOM);
 	    nextButton.setHorizontalTextPosition(AbstractButton.CENTER);
 	    nextButton.addActionListener(this);
@@ -170,7 +174,7 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 	
 	private JPanel createAvailableSpotsPanel() {
 		JPanel panel = new JPanel();
-		panel.setBorder(BorderFactory.createTitledBorder(Util.get().string("main-availablespots-label")));
+		panel.setBorder(BorderFactory.createTitledBorder(i18n.tr("Available spots")));
 		
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 		
@@ -182,23 +186,23 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new GridLayout(2, 0));
 		
-		recordNewButton = new JButton(Util.get().string("main-recordnew-button"));
+		recordNewButton = new JButton(i18n.tr("Record new"));
 		recordNewButton.addActionListener(this);
 		recordNewButton.setActionCommand("record");
 		buttonPanel.add(recordNewButton);
 		
-		removeFromAvailableButton = new JButton(Util.get().string("main-delete-button"));
+		removeFromAvailableButton = new JButton(i18n.tr("Delete"));
 		removeFromAvailableButton.addActionListener(this);
 		removeFromAvailableButton.setActionCommand("removefromavailable");
 		buttonPanel.add(removeFromAvailableButton);
 		
-		JButton importButton = new JButton(""); //Util.get().string("main-import-button")
+		JButton importButton = new JButton(""); //i18n.tr("Import")
 		importButton.setEnabled(false);
 		importButton.addActionListener(this);
 		importButton.setActionCommand("importspot");
 		buttonPanel.add(importButton);
 		
-		JButton renameButton = new JButton(Util.get().string("main-rename-button"));
+		JButton renameButton = new JButton(i18n.tr("Rename"));
 		renameButton.addActionListener(this);
 		renameButton.setActionCommand("rename");
 		buttonPanel.add(renameButton);
@@ -213,13 +217,13 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 		
 		JButton copyToIntervalledButton = new JButton(Util.get().createImageIcon("../resources/Forward24.gif"));
-		copyToIntervalledButton.setToolTipText(Util.get().string("main-copytointervalled-tooltip"));
+		copyToIntervalledButton.setToolTipText(i18n.tr("Insert selected available spot into list of interval spots"));
 		copyToIntervalledButton.addActionListener(this);
 		copyToIntervalledButton.setActionCommand("copytointervalled");
 		panel.add(copyToIntervalledButton);
 	    
 		JButton removeFromIntervalledButton = new JButton(Util.get().createImageIcon("../resources/Back24.gif"));
-		removeFromIntervalledButton.setToolTipText(Util.get().string("main-removefromintervalled-tooltip"));
+		removeFromIntervalledButton.setToolTipText(i18n.tr("Remove spot from list of interval spots"));
 		removeFromIntervalledButton.addActionListener(this);
 		removeFromIntervalledButton.setActionCommand("removefromintervalled");
 		panel.add(removeFromIntervalledButton);
@@ -234,7 +238,7 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 	
 	private JPanel createIntervalledSpotsPanel() {
 		JPanel mainPanel = new JPanel();
-		mainPanel.setBorder(BorderFactory.createTitledBorder(Util.get().string("main-intervalledspots-label")));
+		mainPanel.setBorder(BorderFactory.createTitledBorder(i18n.tr("Interval spots")));
 		
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
@@ -255,8 +259,8 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 		else
 			setNextSpotLabel(0, "-");
 		panel.add(intervalledSpotList.getContainingScrollPane());
-		repeatAllCheckBox = new JCheckBox(Util.get().string("main-repeatall-checkbox"));
-		repeatAllCheckBox.setToolTipText(Util.get().string("main-repeatall-tooltip"));
+		repeatAllCheckBox = new JCheckBox(i18n.tr("Repeat all"));
+		repeatAllCheckBox.setToolTipText(i18n.tr("Repeat list of spots when last spot has been played"));
 		repeatAllCheckBox.setSelected(Prefs.prefs.getBoolean(Prefs.REPEAT_ALL, Prefs.REPEAT_ALL_DEFAULT));
 		repeatAllCheckBox.addItemListener(this);
 		panel.add(repeatAllCheckBox);
@@ -268,7 +272,7 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 				0, 1000, 1));
 		minBetweenSpotsSpinner.addChangeListener(this);
 		spinnerPanel.add(minBetweenSpotsSpinner);
-		spinnerPanel.add(new JLabel(Util.get().string("main-minsbetweenspots-label")));
+		spinnerPanel.add(new JLabel(i18n.tr("mins between spots")));
 		panel.add(spinnerPanel);
 		
 		mainPanel.add(panel);
@@ -282,13 +286,13 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 	    panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 	    
 	    JButton copyToScheduledButton = new JButton(Util.get().createImageIcon("../resources/Forward24.gif"));
-	    copyToScheduledButton.setToolTipText(Util.get().string("main-copytoscheduled-tooltip"));
+	    copyToScheduledButton.setToolTipText(i18n.tr("Insert selected available spot into list of scheduled spots"));
 	    copyToScheduledButton.addActionListener(this);
 	    copyToScheduledButton.setActionCommand("copytoscheduled");
 	    panel.add(copyToScheduledButton);
 	    
 	    JButton removeFromScheduledButton = new JButton(Util.get().createImageIcon("../resources/Back24.gif"));
-	    removeFromScheduledButton.setToolTipText(Util.get().string("main-removefromscheduled-tooltip"));
+	    removeFromScheduledButton.setToolTipText(i18n.tr("Remove spot from list of scheduled spots"));
 	    removeFromScheduledButton.addActionListener(this);
 	    removeFromScheduledButton.setActionCommand("removefromscheduled");
 	    panel.add(removeFromScheduledButton);
@@ -300,7 +304,7 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 	
 	private JPanel createScheduledSpotsPanel() {
 	    JPanel panel = new JPanel();
-	    panel.setBorder(BorderFactory.createTitledBorder(Util.get().string("main-scheduledspots-label")));
+	    panel.setBorder(BorderFactory.createTitledBorder(i18n.tr("Scheduled spots")));
 	    
 	    while(SpotMachine.getScheduledSpotPlayer() == null) {
 	        Util.get().out("GUI: ScheduledSpotPlayer not initialized yet. Waiting a bit and then retrying.", Util.VERBOSITY_WARNING);
@@ -342,12 +346,12 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 		
-		JButton upButton = new JButton(Util.get().string("main-moveup-button"), Util.get().createImageIcon("../resources/Up24.gif"));
+		JButton upButton = new JButton(i18n.tr("Move up"), Util.get().createImageIcon("../resources/Up24.gif"));
 		upButton.addActionListener(this);
 		upButton.setActionCommand("intervalledmoveup");
 		panel.add(upButton);
 		
-		JButton downButton = new JButton(Util.get().string("main-movedown-button"), Util.get().createImageIcon("../resources/Down24.gif"));
+		JButton downButton = new JButton(i18n.tr("Move down"), Util.get().createImageIcon("../resources/Down24.gif"));
 		downButton.addActionListener(this);
 		downButton.setActionCommand("intervalledmovedown");
 		panel.add(downButton);
@@ -359,7 +363,7 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 	    JPanel panel = new JPanel();
 	    panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 	    
-	    JButton editButton = new JButton(Util.get().string("main-editscheduled-button"), Util.get().createImageIcon("../resources/Edit24.gif"));
+	    JButton editButton = new JButton(i18n.tr("Edit"), Util.get().createImageIcon("../resources/Edit24.gif"));
 	    editButton.addActionListener(this);
 	    editButton.setActionCommand("editscheduled");
 	    panel.add(editButton);
@@ -370,17 +374,17 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 	private JMenuBar createMenuBar() {
 		JMenuBar menuBar = new JMenuBar();
 		
-		JMenu menu = new JMenu(Util.get().string("main-menu-file"));
+		JMenu menu = new JMenu(i18n.tr("File"));
 		menu.setMnemonic(KeyEvent.VK_F);
 		menuBar.add(menu);
 		
-		JMenuItem menuItem = new JMenuItem(Util.get().string("main-menu-file-prefs"));
+		JMenuItem menuItem = new JMenuItem(i18n.tr("Preferences"));
 		menuItem.setMnemonic(KeyEvent.VK_P);
 		menuItem.addActionListener(this);
 		menuItem.setActionCommand("prefs");
 		menu.add(menuItem);
 		
-		menuItem = new JMenuItem(Util.get().string("main-menu-file-about") + " " + SpotMachine.PROGRAM_NAME);
+		menuItem = new JMenuItem(i18n.tr("About {0}", SpotMachine.PROGRAM_NAME));
 		menuItem.setMnemonic(KeyEvent.VK_A);
 		menuItem.addActionListener(this);
 		menuItem.setActionCommand("aboutprogram");
@@ -460,11 +464,12 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 		} else if (action.equals("removefromavailable")) {
 			int selectedAvailable = availableSpotList.getSelectedRow();
 			if (selectedAvailable != -1 && availableSpotList.getModel().getRowCount() > 0) {
-				Object[] options = {Util.get().string("remove-yes"), Util.get().string("remove-no")};
+				Object[] options = {i18n.tr("Yes, delete spot!"), i18n.tr("No")};
 				int userChoise = JOptionPane.showOptionDialog(
 						this,
-						Util.get().string("remove-text"),
-						Util.get().string("remove-headline"),
+						i18n.tr("Are you sure you want to delete spot permanently?\n" +
+								"The spot will be removed from all lists.\nYou cannot undo this action."),
+						i18n.tr("Delete spot"),
 						JOptionPane.OK_CANCEL_OPTION,
 						JOptionPane.WARNING_MESSAGE,
 						null, // icon
@@ -500,8 +505,8 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
 				do {
 					newName = (String)JOptionPane.showInputDialog(
 							this,
-							Util.get().string("rename-text"),
-							Util.get().string("rename-headline"),
+							i18n.tr("Type new name for spot:"),
+							i18n.tr("Rename spot"),
 							JOptionPane.PLAIN_MESSAGE,
 							null, // icon
 							null, // options, null gives text field
@@ -582,13 +587,18 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
             }
 		} else if (action.equals("aboutprogram")) {
 			JOptionPane.showMessageDialog(this,
-				    SpotMachine.PROGRAM_NAME + " " + Util.get().string("about-version") + " " + SpotMachine.PROGRAM_VERSION + "\n" +
-				    Util.get().string("about-author") + "\n" +
-				    (Util.get().string("about-translator").trim().equals("") ? "" : Util.get().string("about-translator") + "\n") +
+					i18n.tr("{0} version {1}", SpotMachine.PROGRAM_NAME, SpotMachine.PROGRAM_VERSION) + "\n" +
+				    i18n.tr("By {0}", "Thomas Pryds") + "\n" +
+				    i18n.trc("Correct into your language and name", "Translated into English by Thomas Pryds") + "\n" +
 				    "http://pryds.eu/spotmachine\n" +
 				    "\n" +
-				    Util.get().wordWrap(Util.get().string("about-text"), 70),
-				    Util.get().string("about-headline") + " " + SpotMachine.PROGRAM_NAME,
+				    Util.get().wordWrap(i18n.tr("Released under the GPL license. This program can be " +
+				    		"used without restrictions. This includes redistribution, with or without own " +
+				    		"changes (e.g. additions and translations). However, redistribution (including " +
+				    		"changes) may only happen under the same license. The complete license text comes " +
+				    		"with this program. The complete source code for this program is available at the " +
+				    		"above mentioned web site."), 70),
+				    		i18n.tr("About {0}", SpotMachine.PROGRAM_NAME),
 				    JOptionPane.INFORMATION_MESSAGE);
 		} else if (action.equals("prefs")) {
 			PreferencesDialogue preferencesDialogue = new PreferencesDialogue();

@@ -4,6 +4,8 @@ import java.util.Vector;
 
 import javax.swing.table.AbstractTableModel;
 
+import org.xnap.commons.i18n.I18n;
+
 import main.PlaySchedule;
 import main.Util;
 import main.SpotContainer;
@@ -16,25 +18,29 @@ public class SpotListModel extends AbstractTableModel {
 	private Vector<Object[]> data = new Vector<Object[]>();
 	private int type; // j.f. SpotContainer.TYPE_*
 	
+	private I18n i18n;
+	
 	public SpotListModel(int type) {
 		this.type = type;
+		i18n = Util.get().i18n();
+		
 		if (type == SpotContainer.TYPE_INTERVALLED) {
 			columnNames = new String[] {
-					Util.get().string("main-list-itemnumber-label"),
-					Util.get().string("main-list-name-label"),
-					Util.get().string("main-list-duration-label"),
+					i18n.tr("#"),
+					i18n.tr("Name"),
+					i18n.tr("Duration"),
 					"*"
 			};
 		} else if (type == SpotContainer.TYPE_SCHEDULED) {
 		    columnNames = new String[] {
-		            Util.get().string("main-list-name-label"),
-		            Util.get().string("main-list-duration-label"),
-		            Util.get().string("main-list-playat-label")
+		            i18n.tr("Name"),
+		            i18n.tr("Duration"),
+		            i18n.trc("As in play at", "At")
 		    };
 		} else {
 			columnNames = new String[] {
-					Util.get().string("main-list-name-label"),
-					Util.get().string("main-list-duration-label")
+					i18n.tr("Name"),
+					i18n.tr("Duration")
 			};
 		}
 	}

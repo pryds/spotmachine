@@ -11,6 +11,7 @@ import javax.sound.sampled.Mixer;
 import javax.sound.sampled.SourceDataLine;
 import javax.swing.JOptionPane;
 
+
 public class SpotPlayer extends SpotContainer {
 	private AudioInputStream audioInputStream;
 	private AudioFormat audioFormat;
@@ -77,8 +78,9 @@ public class SpotPlayer extends SpotContainer {
 		} while (!lineAvailable && currentTry < totalTries);
 		if (!lineAvailable) {
 	        JOptionPane.showMessageDialog(SpotMachine.getMainFrame(),
-	                Util.get().string("main-soundboardbusy-errordialogue"),
-	                Util.get().string("main-soundboardbusy-errordialoguetitle"),
+	                Util.get().i18n().tr("The sound board is occupied by another program.\nIf other programs are " +
+	                		"running, e.g. a music or video player, internet browser, try closing these."),
+	                Util.get().i18n().tr("Audio Error"),
 	                JOptionPane.ERROR_MESSAGE);
 	        System.exit(1);
 		}

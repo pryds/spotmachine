@@ -9,12 +9,14 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.Random;
-import java.util.ResourceBundle;
 import java.util.Vector;
 
 import gui.MainFrame;
 
 import javax.swing.ImageIcon;
+
+import org.xnap.commons.i18n.I18n;
+import org.xnap.commons.i18n.I18nFactory;
 
 /**
  * A singleton class which holds various utility methods for purposes
@@ -27,18 +29,24 @@ import javax.swing.ImageIcon;
  * with some of the methods split out in own classes.
  */
 public class Util {
+	private static final Util INSTANCE = new Util();
 	private Util() {
 	}
-	private static class UtilSingletonHolder { 
+	/*private static class UtilSingletonHolder { 
 		public static final Util INSTANCE = new Util();
-	}
+	}*/
 	/**
 	 * If an instance of Util already exists, this method returns it.
 	 * Otherwise it constructs an instance of Util and returns it.
 	 * @return the singleton instance of the Util class.
 	 */
 	public static Util get() {
-		return UtilSingletonHolder.INSTANCE;
+		try {
+		return INSTANCE;
+		} catch(Throwable t) {
+			t.printStackTrace();
+			return null;
+		}
 	}
 	
 	public static final int VERBOSITY_ERROR = 0;
@@ -324,22 +332,19 @@ public class Util {
 	    }
 	    return false;
 	}
+		
+	private I18n i18n = null;
 	
 	/**
-	 * Gets a translated string for display to end users, from the
-	 * translation file of the currently used locale as returned by
-	 * {@link #getCurrentLocale()}.
-	 * <p>
-	 * The parametre key must be a string which is present in the
-	 * given translation file (as a general rule, all referenced keys
-	 * must be present in all translation files).
-	 * @param key the key string for which to look in the translation
-	 * file
-	 * @return a translated string for the given key
+	 * Gets the I18n object used for getting a translated string for
+	 * display to end users.
+	 * @return the I18n object for the current locale
 	 */
-	public String string(String key) {
-		ResourceBundle bundle = ResourceBundle.getBundle("strings", getCurrentLocale());
-		return bundle.getString(key);
+	public I18n i18n() {
+		// TODO: not thread safe! But maybe getI18n() is, so it doesn't matter?
+		if (i18n == null)
+			i18n = I18nFactory.getI18n(getClass(), "i18n.Messages", getCurrentLocale());
+		return i18n;
 	}
 	
 	private Locale[] supportedLocales;
@@ -376,7 +381,7 @@ public class Util {
 	    if (supportedLocales != null)
 	        return supportedLocales;
 	    
-		File localeListFile = new File(MainFrame.class.getResource("../strings.list").getFile());
+		File localeListFile = new File(MainFrame.class.getResource("../po/languages").getFile());
 		BufferedReader reader;
 		Vector<String> localeStrings = new Vector<String>();
 		
@@ -397,11 +402,19 @@ public class Util {
 		supportedLocales = new Locale[localeStrings.size()];
 		for (int i = 0; i < supportedLocales.length; i++) {
 			String[] currentLocale = localeStrings.get(i).split("_");
-			if (currentLocale.length != 2) {
-				out("At least one line in the strings.list file is incorrect. The file must contain a list of locales, one locale per line, in the form ll_CC, where ll is a two-letter language code and CC is a two-letter country code. Ignoring all locales.", VERBOSITY_ERROR);
+			if (currentLocale.length == 1) {
+				supportedLocales[i] = new Locale(currentLocale[0]);
+			} else if (currentLocale.length == 2) {
+				supportedLocales[i] = new Locale(currentLocale[0], currentLocale[1]);
+			} else if (currentLocale.length == 3) {
+				supportedLocales[i] = new Locale(currentLocale[0], currentLocale[1], currentLocale[2]);
+			} else {
+				out("At least one line in the 'po/languages' file is incorrect. The file must contain a list " +
+						"of locales, one locale per line, in the form 'll', 'll_CC', or 'll_CC_vv', where ll is " +
+						"a two-letter language code, CC is a two-letter country code, and vv is a variant. " +
+						"Ignoring all locales.", VERBOSITY_ERROR);
 				return new Locale[0];
 			}
-			supportedLocales[i] = new Locale(currentLocale[0], currentLocale[1]);
 		}
 		return supportedLocales;
 	}

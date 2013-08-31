@@ -1,0 +1,394 @@
+# SpotMachine.
+# Copyright (C) 2013 Thomas Pryds
+# This file is distributed under the same license as the SpotMachine package.
+#
+# Thomas Pryds <thomas@pryds.eu>, 2013.
+msgid ""
+msgstr ""
+"Project-Id-Version: SpotMachine\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-08-31 15:04+0200\n"
+"PO-Revision-Date: 2013-08-31 16:10+0200\n"
+"Last-Translator: Thomas Pryds <thomas@pryds.eu>\n"
+"Language-Team: Danish <da@li.org>\n"
+"Language: da\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 1.5\n"
+
+#: src/gui/SchedulePropertiesDialogue.java:47
+msgid "Properties for Scheduled Spot"
+msgstr "Egenskaber for tidsbestemt spot"
+
+#: src/gui/SchedulePropertiesDialogue.java:69
+msgid "Play spot at (24 hours format)"
+msgstr "Afspil spot kl."
+
+#: src/gui/SchedulePropertiesDialogue.java:98
+msgid "On these weekdays"
+msgstr "På disse ugedage"
+
+#: src/gui/SchedulePropertiesDialogue.java:117
+msgid "On these days of the month"
+msgstr "På disse dage på måneden"
+
+#: src/gui/SchedulePropertiesDialogue.java:134
+msgid "On these months"
+msgstr "I disse måneder"
+
+#: src/gui/SchedulePropertiesDialogue.java:149
+msgid ""
+"Note, that the spot is only played if ALL conditions above are met. If, for "
+"instance, only 'Wednesday' and '20' (plus all months) are selected, the spot "
+"is only played if today is BOTH Wednesday AND the 20th of the month."
+msgstr ""
+"Bemærk, at spotet kun afspilles, hvis ALLE betingelser herover opfyldes. Dvs. "
+"at hvis der fx kun er kryds i 'onsdag' og '20', afspilles spottet kun, hvis "
+"det BÅDE er onsdag OG den 20. i måneden."
+
+#: src/gui/SchedulePropertiesDialogue.java:166 src/gui/RecordDialogue.java:156
+#: src/gui/PreferencesDialogue.java:123
+msgid "OK"
+msgstr "OK"
+
+#: src/gui/SchedulePropertiesDialogue.java:171 src/gui/RecordDialogue.java:162
+#: src/gui/PreferencesDialogue.java:128
+msgid "Cancel"
+msgstr "Fortryd"
+
+#: src/gui/RecordDialogue.java:47
+msgid "Record New Spot"
+msgstr "Optag nyt spot"
+
+#: src/gui/RecordDialogue.java:53
+msgid "Name:"
+msgstr "Navn:"
+
+#: src/gui/RecordDialogue.java:74
+msgid "Current duration:"
+msgstr "Aktuel varighed:"
+
+#: src/gui/RecordDialogue.java:86 src/gui/RecordDialogue.java:279
+msgid "STOPPED"
+msgstr "STOPPET"
+
+#: src/gui/RecordDialogue.java:107
+msgctxt "Recording (noun)"
+msgid "Recording"
+msgstr "Optagelse"
+
+#: src/gui/RecordDialogue.java:109
+msgid "Re-record"
+msgstr "Optag forfra"
+
+#: src/gui/RecordDialogue.java:116 src/gui/MainFrame.java:115
+msgid "Pause"
+msgstr "Pause"
+
+#: src/gui/RecordDialogue.java:124
+msgid "Stop"
+msgstr "Stop"
+
+#: src/gui/RecordDialogue.java:136
+msgid ""
+"Remember to disconnect audio output, amplifier, or similar before recording "
+"starts, since the recorded spot will be played immediately after recording "
+"has finished."
+msgstr ""
+"Husk at afbryde lydudgang, tilsluttet forstærker eller lignende inden "
+"optagelse begyndes, da det optagede afspilles umiddelbart efter optagelse."
+
+#: src/gui/RecordDialogue.java:157
+msgid "Close the recording window and save the recorded spot"
+msgstr "Luk optagelsesvinduet og gem det optagede spot"
+
+#: src/gui/RecordDialogue.java:163
+msgid "Close the recording window without saving"
+msgstr "Luk optagelsesvinduet uden at gemme"
+
+#: src/gui/RecordDialogue.java:181
+msgid "No recording has been done yet."
+msgstr "Der er endnu ikke optaget et spot."
+
+#: src/gui/RecordDialogue.java:182
+msgid "No recording"
+msgstr "Ingen optagelse"
+
+#: src/gui/RecordDialogue.java:187
+msgid "Write a name for the recorded spot."
+msgstr "Skriv et navn for det optagede spot."
+
+#: src/gui/RecordDialogue.java:188
+msgid "No name for spot"
+msgstr "Intet navn for spot"
+
+#: src/gui/RecordDialogue.java:218
+msgid "RECORDING"
+msgstr "OPTAGER"
+
+#: src/gui/RecordDialogue.java:224
+msgid "PAUSED"
+msgstr "PAUSE"
+
+#: src/gui/RecordDialogue.java:228
+msgid "STOPPING RECORDING..."
+msgstr "STOPPER OPTAGELSE..."
+
+#: src/gui/RecordDialogue.java:240
+msgid "NORMALISING AUDIO"
+msgstr "NORMALISERER LYD"
+
+#: src/gui/RecordDialogue.java:261
+msgid "PLAYING"
+msgstr "AFSPILLER"
+
+#: src/gui/MainFrame.java:75
+msgid "Time until next spot:"
+msgstr "Tid til næste spot:"
+
+#: src/gui/MainFrame.java:88 src/gui/SpotListModel.java:29
+msgid "#"
+msgstr "Nr."
+
+#: src/gui/MainFrame.java:108
+msgid "Play"
+msgstr "Afspil"
+
+#: src/gui/MainFrame.java:123
+msgid "Previous"
+msgstr "Forrige"
+
+#: src/gui/MainFrame.java:130
+msgid "Next"
+msgstr "Næste"
+
+#: src/gui/MainFrame.java:177
+msgid "Available spots"
+msgstr "Tilgængelige spots"
+
+#: src/gui/MainFrame.java:189
+msgid "Record new"
+msgstr "Optag nyt"
+
+#: src/gui/MainFrame.java:194
+msgid "Delete"
+msgstr "Slet"
+
+#: src/gui/MainFrame.java:205
+msgid "Rename"
+msgstr "Omdøb"
+
+#: src/gui/MainFrame.java:220
+msgid "Insert selected available spot into list of interval spots"
+msgstr "Indsæt det valgte tilgængelige spot i listen over intervalspots"
+
+#: src/gui/MainFrame.java:226
+msgid "Remove spot from list of interval spots"
+msgstr "Fjern spot fra listen over intervalspots"
+
+#: src/gui/MainFrame.java:241
+msgid "Interval spots"
+msgstr "Interval-spots"
+
+#: src/gui/MainFrame.java:262
+msgid "Repeat all"
+msgstr "Gentag alle"
+
+#: src/gui/MainFrame.java:263
+msgid "Repeat list of spots when last spot has been played"
+msgstr "Start afspilningen af spots forfra, når sidste spot er afspillet"
+
+#: src/gui/MainFrame.java:275
+msgid "mins between spots"
+msgstr "min mellem spots"
+
+#: src/gui/MainFrame.java:289
+msgid "Insert selected available spot into list of scheduled spots"
+msgstr "Indsæt det valgte tilgængelige spot i listen over tidsbestemte spots"
+
+#: src/gui/MainFrame.java:295
+msgid "Remove spot from list of scheduled spots"
+msgstr "Fjern spot fra listen over tidsbestemte spots"
+
+#: src/gui/MainFrame.java:307
+msgid "Scheduled spots"
+msgstr "Tidsbestemte spots"
+
+#: src/gui/MainFrame.java:349
+msgid "Move up"
+msgstr "Flyt op"
+
+#: src/gui/MainFrame.java:354
+msgid "Move down"
+msgstr "Flyt ned"
+
+#: src/gui/MainFrame.java:366
+msgid "Edit"
+msgstr "Redigér"
+
+#: src/gui/MainFrame.java:377
+msgid "File"
+msgstr "Fil"
+
+#: src/gui/MainFrame.java:381 src/gui/PreferencesDialogue.java:34
+msgid "Preferences"
+msgstr "Indstillinger"
+
+#: src/gui/MainFrame.java:387 src/gui/MainFrame.java:601
+#, java-format
+msgid "About {0}"
+msgstr "Om {0}"
+
+#: src/gui/MainFrame.java:467
+msgid "Yes, delete spot!"
+msgstr "Ja, slet spot!"
+
+#: src/gui/MainFrame.java:467
+msgid "No"
+msgstr "Nej"
+
+#: src/gui/MainFrame.java:470
+msgid ""
+"Are you sure you want to delete spot permanently?\n"
+"The spot will be removed from all lists.\n"
+"You cannot undo this action."
+msgstr ""
+"Er du sikker på, at du vil slette spot permanent?\n"
+"Spottet vil blive slettet fra alle lister.\n"
+"Du kan ikke fortryde denne handling."
+
+#: src/gui/MainFrame.java:472
+msgid "Delete spot"
+msgstr "Slet spot"
+
+#: src/gui/MainFrame.java:508
+msgid "Type new name for spot:"
+msgstr "Skriv nyt navn for spot:"
+
+#: src/gui/MainFrame.java:509
+msgid "Rename spot"
+msgstr "Omdøb spot"
+
+#: src/gui/MainFrame.java:590
+#, java-format
+msgid "{0} version {1}"
+msgstr "{0} version {1}"
+
+#: src/gui/MainFrame.java:591
+#, java-format
+msgid "By {0}"
+msgstr "Af {0}"
+
+#: src/gui/MainFrame.java:592
+msgctxt "Correct into your language and name"
+msgid "Translated into English by Thomas Pryds"
+msgstr "Oversat til dansk af Thomas Pryds"
+
+#: src/gui/MainFrame.java:595
+msgid ""
+"Released under the GPL license. This program can be used without "
+"restrictions. This includes redistribution, with or without own changes (e."
+"g. additions and translations). However, redistribution (including changes) "
+"may only happen under the same license. The complete license text comes with "
+"this program. The complete source code for this program is available at the "
+"above mentioned web site."
+msgstr ""
+"Udgivet under GPL-licensen. Programmet kan bruges uden restriktioner. Dette "
+"inkluderer videredistribution, med eller uden egne ændringer (fx tilføjelser "
+"og oversættelser). Dog må videredistribution (inkl. ændringer) kun foregå "
+"under samme licens. Den komplette licenstekst følger med dette program. Den "
+"komplette kildekode til dette program kan findes på ovenstående webside."
+
+#: src/gui/PreferencesDialogue.java:52
+msgid "Program Language"
+msgstr "Programsprog"
+
+#: src/gui/PreferencesDialogue.java:56
+msgid "Choose language"
+msgstr "Vælg sprog"
+
+#: src/gui/PreferencesDialogue.java:75
+msgid "Changes will be applied after program restart."
+msgstr "Ændringer vil træde i kraft efter genstart af programmet."
+
+#: src/gui/PreferencesDialogue.java:95
+msgid "Audio Normalization"
+msgstr "Lydnormalisering"
+
+#: src/gui/PreferencesDialogue.java:97
+msgid "Perform on newly recorded spots:"
+msgstr "Udfør følgende på nyoptagede spots:"
+
+#: src/gui/PreferencesDialogue.java:99
+msgid "Remove DC offset"
+msgstr "Fjern DC-afvigelse"
+
+#: src/gui/PreferencesDialogue.java:100
+msgid "May remove certain 'click' noises in start/end of recording"
+msgstr ""
+"Kan fjerne visse former for 'klik'-lyde i starten/slutningen af en optagelse"
+
+#: src/gui/PreferencesDialogue.java:105
+msgid "Add fade-in/out"
+msgstr "Lav fade-in/out"
+
+#: src/gui/PreferencesDialogue.java:106
+msgid "Add short fade-in and fade-out"
+msgstr "Lav kort fade-in og fade-out"
+
+#: src/gui/PreferencesDialogue.java:111
+msgid "Normalise volume"
+msgstr "Normalisér lydniveau"
+
+#: src/gui/PreferencesDialogue.java:112
+msgid "Gives a uniform volume level of spots"
+msgstr "Giver ensartethed på lydniveauet af spots"
+
+#: src/gui/SpotListModel.java:30 src/gui/SpotListModel.java:36
+#: src/gui/SpotListModel.java:42
+msgid "Name"
+msgstr "Navn"
+
+#: src/gui/SpotListModel.java:31 src/gui/SpotListModel.java:37
+#: src/gui/SpotListModel.java:43
+msgid "Duration"
+msgstr "Varighed"
+
+#: src/gui/SpotListModel.java:38
+msgctxt "As in play at"
+msgid "At"
+msgstr "Kl."
+
+#: src/gui/SpotList.java:60
+msgid "Play item number"
+msgstr "Afspilningsnummer"
+
+#: src/gui/SpotList.java:62 src/gui/SpotList.java:74 src/gui/SpotList.java:83
+msgid "Duration in minutes and seconds"
+msgstr "Varighed i minutter og sekunder"
+
+#: src/gui/SpotList.java:63
+msgid "* means that this spot is the next to get played"
+msgstr "* betyder, at dette spot afspilles næste gang"
+
+#: src/gui/SpotList.java:75
+msgid "Played at (a ¤ means only on certain days)"
+msgstr "Afspilles klokken (en ¤ betyder kun enkelte dage)"
+
+#: src/main/SpotPlayer.java:81
+msgid ""
+"The sound board is occupied by another program.\n"
+"If other programs are running, e.g. a music or video player, internet "
+"browser, try closing these."
+msgstr ""
+"Lydkortet er optaget af et andet program.\n"
+"Hvis andre programmer kører, fx en musik/videoafspiller, internet browser, "
+"prøv da at lukke disse."
+
+#: src/main/SpotPlayer.java:83
+msgid "Audio Error"
+msgstr "Fejl ved lyd"
+
+
