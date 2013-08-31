@@ -8,15 +8,20 @@ Windows, and probably other systems.
 
 1. Make sure your system has the Java JRE or JDK installed. If not, get and
    install the latest Java JRE from java.oracle.com or through your system's
-   software management facility.
+   software management facility. Alternatives to the official Java, such as
+   OpenJRE should also work just fine.
 2. If you downloaded the binary package (filename ends in "bin"), you can
    jump to the next step. On the other hand, if you downloaded the source
    package (filename ends in "src"), you need the JDK above (JRE is not
-   enough), and you need to compile the program. To do this, open a command
-   line prompt, navigate to the directory that contains this file, and
-   execute the following command:
-   javac main/SpotMachine.java
-3. Copy or move this directory and all its files and subdirectories to a
+   enough), and you need to compile the program. To do this on a Linux system,
+   open a command line prompt, navigate to the src directory, and execute the
+   following command:
+   ./build.sh
+   (You may need to run 'chmod 755 build.sh' on it first)
+   A build script is not supplied for other systems like Windows and Mac, but
+   if you know how to make one, you're very welcome to contribute it. If not,
+   you're probably much better off by getting the pre-compiled "bin" package.
+3. Copy or move the "bin" directory and all its files and subdirectories to a
    suitable place on your system, either in your home directory (for one-user
    installation) or somewhere in the main directory tree (for all-users
    installation). On Windows systems, this would probably be under
