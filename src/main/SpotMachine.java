@@ -11,7 +11,7 @@ public class SpotMachine {
 	private static MainFrame frame;
 	
 	public static final String PROGRAM_NAME = "SpotMachine";
-	public static final String PROGRAM_VERSION = "0.3.1 git";
+	public static final String PROGRAM_VERSION = "0.3.2";
 	
 	public static int currentVerbosityLevel; // level of debug info
 	
