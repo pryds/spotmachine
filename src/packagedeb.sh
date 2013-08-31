@@ -3,7 +3,7 @@
 # Run as root!
 
 PACKAGE_NAME="spotmachine"
-PACKAGE_VERSION="0.3.2"
+PACKAGE_VERSION="0.3.2 git"
 SOURCE_DIR=$PWD
 TEMP_DIR="/tmp"
 GETTEXTCOMMONS_FILENAME="gettext-commons-0.9.6.jar"
