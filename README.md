@@ -22,5 +22,5 @@ More Information
 
 [How to build and install](http://github.com/pryds/spotmachine/blob/master/src/INSTALL)
 
-[How to contribute a translation](http://github.com/pryds/spotmachine/blob/master/src/po/README)
+[How to contribute a translation](http://github.com/pryds/spotmachine/blob/master/src/po/README.md)
 
