@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -381,7 +382,14 @@ public class Util {
 	    if (supportedLocales != null)
 	        return supportedLocales;
 	    
-		File localeListFile = new File(MainFrame.class.getResource("../po/languages").getFile());
+		File localeListFile = null;
+	    try {
+			localeListFile = new File(MainFrame.class.getResource("../po/languages").toURI());
+		} catch (URISyntaxException use) {
+			out(use.toString(), VERBOSITY_ERROR);
+		}
+		out("Reading supported languages from file: " + localeListFile.getAbsolutePath() +
+				" - file exists: " + localeListFile.exists(), VERBOSITY_DETAILED_DEBUG_INFO);
 		BufferedReader reader;
 		Vector<String> localeStrings = new Vector<String>();
 		
@@ -390,8 +398,10 @@ public class Util {
 			String readLine;
 			while ((readLine = reader.readLine()) != null) {
 			    readLine = readLine.trim();
-			    if (!readLine.equals("") && readLine.charAt(0) != '#')
+			    if (!readLine.equals("") && readLine.charAt(0) != '#') {
+			    	out("Read line: " + readLine, VERBOSITY_DETAILED_DEBUG_INFO);
 			        localeStrings.add(readLine.trim());
+			    }
 			}
 			reader.close();
 		} catch (IOException ioe) {
