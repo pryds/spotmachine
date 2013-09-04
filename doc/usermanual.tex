@@ -296,6 +296,45 @@ to edit all the details as described in the above section.
 \section{Preferences}
 
 
+\section{Less Obvious Options}
+
+\subsection{Editing of Spot Sound Files by Third-Party Programs}
+
+If you wish to do so, it is possible to edit the sound files that were recorded
+in SpotMachine, or even replace a spot altogether, through third-party software,
+such as Audacity. The edited/replacing spot doesn't have to be the same length
+or even format as the original. It does have to be an uncompressed WAV-file,
+though. You might wish to do this if you want to apply some more sofisticated
+effects or filters to a the sound file than what SpotMachine can deliver.
+
+This is a feature that is not yet implemented as such, so it is basically a
+question of closing down SpotMachine (important, as to not confuse it about
+changing spot lengths, audio formats, etc.), then locating the actual sound
+files on disk and opening them in your third-party sound editor of choice.
+
+On Linux and Mac, the sound files will be present in a directory
+\texttt{.spotmachine} in the user's home directory. On Windows, the directory
+will most likely be present in the system's default location for application
+data. This is a bit different on different versions and translations of Windows,
+so the easiest way to locate the directory on your system is probably to open
+the file explorer, type \texttt{\%programdata\%}, and hit enter.
+
+The files will have random names, but perhaps you can recognize the one you
+want on the file's creation date/time. Remember to save the file with the exact
+same file name (including the \texttt{.wav} extension).
+
+SpotMachine records spots in uncompressed PCM format (signed), with a sample
+rate of 44,100 Hz, in 16 bits mono, but is capable of playing PCM files with
+other sample rates, bits, mono/stereo, etc. It will not be able to play
+compressed files, such as MP3 files, though.
+
+\subsection{Forcing a Certain Sound Mixer}
+% From NEWS file:
+%- Output and recording mixers can be forced through the Java prefs file for SpotMachine.
+%  If a key called ForcePlayOnMixerNumber contains a value > 0 representing a valid mixer number,
+%  that mixer will be used (if applicaple)for playing spots instead of the default one.
+%  The same goes for recording spots, except here the key is called ForceRecordingOnMixerNumber.
+
 \chapter{Contributing}
 
 SpotMachine is open source software. That means, among other things, that at all
