@@ -3,6 +3,9 @@ package main;
 import gui.MainFrame;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
+import org.xnap.commons.i18n.I18n;
 
 public class SpotMachine {
 	private static IntervalledSpotPlayer intervalledSpotPlayer = null;
@@ -50,6 +53,39 @@ public class SpotMachine {
 		(new Thread(scheduledSpotPlayer = new ScheduledSpotPlayer(SpotPlayer.TYPE_SCHEDULED))).start();
 		scheduledSpotPlayer.initializeFromPrefs();
 		
+		(new Thread(new StatsCollector())).start();
+		
+		new Thread(new Runnable() {
+			public void run() {
+				Util.get().threadSleep(4000);
+				
+				//Check if user has already answered this question. Bail out, if so.
+				if (Prefs.prefs.getBoolean(Prefs.COLLECT_STATISTICS, Prefs.COLLECT_STATISTICS_DEFAULT)
+						!= Prefs.COLLECT_STATISTICS_DEFAULT)
+					return;
+					
+				I18n i18n = Util.get().i18n();
+				Object[] options = {i18n.tr("I accept!"),
+						i18n.tr("No, thanks!")
+						};
+				int answer = JOptionPane.showOptionDialog(SpotMachine.getMainFrame(),
+						Util.get().wordWrap(i18n.tr("You have the option to allow SpotMachine to " +
+								"collect some statistical data about your computer and your usage " +
+								"of SpotMachine from time to time, and send it to the developers " +
+								"of SpotMachine. The data is in no way personal, and it will not " +
+								"be possible to identify you from this data. Also, the data will " +
+								"not reach third party. You can always change your mind about this " +
+								"from the preferences window.\n\nDo you allow SpotMachine to do this?"), 60),
+					    i18n.tr("Collect Statistics?"),
+					    JOptionPane.YES_NO_OPTION,
+					    JOptionPane.QUESTION_MESSAGE,
+					    null, //icon
+					    options,
+					    options[0]
+					    		);
+				Prefs.prefs.putBoolean(Prefs.COLLECT_STATISTICS, answer == 0);
+			}
+		}).start();
 		
 		/*
 		PlaySchedule sch = new PlaySchedule();
