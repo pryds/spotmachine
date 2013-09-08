@@ -72,10 +72,11 @@ public class SpotMachine {
 						Util.get().wordWrap(i18n.tr("You have the option to allow SpotMachine to " +
 								"collect some statistical data about your computer and your usage " +
 								"of SpotMachine from time to time, and send it to the developers " +
-								"of SpotMachine. The data is in no way personal, and it will not " +
-								"be possible to identify you from this data. Also, the data will " +
-								"not reach third party. You can always change your mind about this " +
-								"from the preferences window.\n\nDo you allow SpotMachine to do this?"), 60),
+								"of SpotMachine for better development of the program. The data is " +
+								"in no way personal, and it will not be possible to identify you " +
+								"from this data. Also, the data will not reach third party. You can " +
+								"always change your mind about this from the preferences window.\n\n" +
+								"Do you allow SpotMachine to do this?"), 60),
 					    i18n.tr("Collect Statistics?"),
 					    JOptionPane.YES_NO_OPTION,
 					    JOptionPane.QUESTION_MESSAGE,

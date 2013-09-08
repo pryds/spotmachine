@@ -39,6 +39,7 @@ public class PreferencesDialogue extends JFrame implements ActionListener {
 		
 		panel.add(createLanguageSelectionPanel());
 		panel.add(createNormalizationPanel());
+		panel.add(createStatsPanel());
 		panel.add(createOKCancelButtonPanel());
 		
 		pack();
@@ -117,6 +118,25 @@ public class PreferencesDialogue extends JFrame implements ActionListener {
 		return panel;
 	}
 	
+	private JCheckBox statCheckbox;
+
+	private JPanel createStatsPanel() {
+		JPanel panel = new JPanel();
+		
+		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+		panel.setBorder(BorderFactory.createTitledBorder(i18n.tr("Statistical data")));
+		
+		statCheckbox = new JCheckBox(i18n.tr("Collect and send statistical data"));
+		statCheckbox.setToolTipText(i18n.tr("Allow SpotMachine to collect anonynous statistical data and send " +
+				"it to the developers for better development of SpotMachine"));
+		statCheckbox.setSelected(
+				Prefs.prefs.getBoolean(Prefs.COLLECT_STATISTICS, Prefs.COLLECT_STATISTICS_DEFAULT));
+		panel.add(statCheckbox);
+		
+		return panel;
+	}
+		
+	
 	private JPanel createOKCancelButtonPanel() {
 		JPanel panel = new JPanel();
 		
@@ -158,6 +178,10 @@ public class PreferencesDialogue extends JFrame implements ActionListener {
 		Prefs.prefs.putBoolean(Prefs.RECORDING_DO_DC_OFFSET_REMOVAL, dcCheckbox.isSelected());
 		Prefs.prefs.putBoolean(Prefs.RECORDING_DO_FADEIN_FADEOUT, fadeCheckbox.isSelected());
 		Prefs.prefs.putBoolean(Prefs.RECORDING_DO_VOLUME_NORMALIZATION, volumeCheckbox.isSelected());
+		
+		// Save statistics prefs
+		Util.get().out("Saving statistics prefs: " + statCheckbox.isSelected(), Util.VERBOSITY_DEBUG_INFO);
+		Prefs.prefs.putBoolean(Prefs.COLLECT_STATISTICS, statCheckbox.isSelected());
 	}
 
 	public void actionPerformed(ActionEvent ae) {

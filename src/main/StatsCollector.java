@@ -46,6 +46,7 @@ public class StatsCollector implements Runnable {
 			outData.append("System locale: " + Locale.getDefault().toString() + "\n");
 			outData.append("SpotMachine language: " + Util.get().getCurrentLocale() + "\n");
 			
+			outData.append("SpotMachine version: " + SpotMachine.PROGRAM_VERSION + "\n");
 			outData.append("OS name: " + System.getProperty("os.name") + "\n");
 			outData.append("OS version: " + System.getProperty("os.version") + "\n");
 			outData.append("OS architecture: " + System.getProperty("os.arch") + "\n");
