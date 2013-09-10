@@ -15,13 +15,13 @@ public class StatsCollector implements Runnable {
 	public void run() {
 		//Check here whether it's ok to collect stats:
 		while (!Prefs.prefs.getBoolean(Prefs.COLLECT_STATISTICS, Prefs.COLLECT_STATISTICS_DEFAULT)) {
-			Util.get().out("User opted not to allow collection of statistics, or did not " +
+			Util.get().out("StatsCollector: User opted not to allow collection of statistics, or did not " +
 					"yet decide so. Not collecting any stats for now.", Util.VERBOSITY_DEBUG_INFO);
 			Util.get().threadSleep(1000*60);
 		}
 		
 		String programInstallationId = getUniqueIdentifier();
-		long millisBetweenCollecting = 1000 * 60 * 60 * 24 * 7; // a week(!)
+		long millisBetweenCollecting = 10000; //TODO: Change to 1000 * 60 * 60 * 24 * 7; // a week(!)
 		
 		//wait if stats have been collected recently:
 		while (System.currentTimeMillis()
@@ -34,42 +34,67 @@ public class StatsCollector implements Runnable {
 		//Do the actual collection of stats after waiting a bit to make sure everything has started:
 		Util.get().threadSleep(1000*10); // 10 secs
 		while (true) {
+			//First re-check to make sure user hasn't disabled stats since last time
+			if (!Prefs.prefs.getBoolean(Prefs.COLLECT_STATISTICS, Prefs.COLLECT_STATISTICS_DEFAULT)) {
+				Util.get().out("User has disabled stats. Creating a new StatsCollector thread (that " +
+						"will wait until stats are reenabled), and ending this one.", Util.VERBOSITY_DEBUG_INFO);
+				
+				(new Thread(new StatsCollector())).start();
+				return;
+			}
+			
 			Util.get().out("Collecting stats.", Util.VERBOSITY_DEBUG_INFO);
 			StringBuffer outData = new StringBuffer();
 			
 			long now = System.currentTimeMillis();
-			outData.append("Unique Program Installation ID: " + programInstallationId + "\n");
-			outData.append("Report created: " + now + "\n");
-			outData.append("System uptime: " + getSystemUptime() + "\n");
-			outData.append("SpotMachine uptime: " + "\n");
-			outData.append("System time zone: " + TimeZone.getDefault().getID() + "\n");
-			outData.append("System locale: " + Locale.getDefault().toString() + "\n");
-			outData.append("SpotMachine language: " + Util.get().getCurrentLocale() + "\n");
+			outData.append("installationID: " + programInstallationId + "\n"); //Unique Program Installation ID
+			outData.append("reportCreated: " + now + "\n");
+			outData.append("systemUptime: " + getSystemUptime() + "\n");
+			//outData.append("spotmachineUptime: " + "\n");
+			//TODO: First run of SpotMachine
+			outData.append("systemTimeZone: " + TimeZone.getDefault().getID() + "\n");
+			outData.append("systemLocale: " + Locale.getDefault().toString() + "\n");
+			outData.append("spotmachineLanguage: " + Util.get().getCurrentLocale() + "\n");
 			
-			outData.append("SpotMachine version: " + SpotMachine.PROGRAM_VERSION + "\n");
-			outData.append("OS name: " + System.getProperty("os.name") + "\n");
-			outData.append("OS version: " + System.getProperty("os.version") + "\n");
-			outData.append("OS architecture: " + System.getProperty("os.arch") + "\n");
-			outData.append("JRE vendor: " + System.getProperty("java.vendor") + "\n");
-			outData.append("JRE verdion: " + System.getProperty("java.version") + "\n");
-			outData.append("JRE install dir: " + System.getProperty("java.home") + "\n");
-			outData.append("Working dir: " + System.getProperty("user.dir") + "\n");
-			outData.append("Class path: " + System.getProperty("java.class.path") + "\n");
+			outData.append("spotmachineVersion: " + SpotMachine.PROGRAM_VERSION + "\n");
+			outData.append("osName: " + System.getProperty("os.name") + "\n");
+			outData.append("osVersion: " + System.getProperty("os.version") + "\n");
+			outData.append("osArch: " + System.getProperty("os.arch") + "\n");
+			outData.append("jreVendor: " + System.getProperty("java.vendor") + "\n");
+			outData.append("jreVersion: " + System.getProperty("java.version") + "\n");
+			outData.append("jreInstallDir: " + System.getProperty("java.home") + "\n");
+			outData.append("workingDir: " + System.getProperty("user.dir") + "\n");
+			outData.append("classPath: " + System.getProperty("java.class.path") + "\n");
 			
-			outData.append("Available processor cores: " + Runtime.getRuntime().availableProcessors() + "\n");
-			outData.append("Total memory in bytes: " + Runtime.getRuntime().totalMemory() + "\n");
-			outData.append("Free memory in bytes: " + Runtime.getRuntime().freeMemory() + "\n");
+			outData.append("availableProcessorCores: " + Runtime.getRuntime().availableProcessors() + "\n");
+			outData.append("totalMemInBytes: " + Runtime.getRuntime().totalMemory() + "\n");
+			outData.append("freeMemInBytes: " + Runtime.getRuntime().freeMemory() + "\n");
 			long maxMemory = Runtime.getRuntime().maxMemory();
-			outData.append("Max memory to be used by JVM in bytes: " + (maxMemory == Long.MAX_VALUE ? "no limit" : maxMemory) + "\n");
+			outData.append("maxMemToBeUsedInBytes: " + (maxMemory == Long.MAX_VALUE ? "no limit" : maxMemory) + "\n");
 			File[] roots = File.listRoots();
-			for (int i = 0; i < roots.length; i++) {
-				outData.append("File root [" + i + "]: " + roots[i].getAbsolutePath() + "\n");
-				outData.append("File root total space in bytes [" + i + "]: " + roots[i].getTotalSpace() + "\n");
-				outData.append("File root free space in bytes [" + i + "]: " + roots[i].getFreeSpace() + "\n");
-				outData.append("File root usable space in bytes [" + i + "]: " + roots[i].getUsableSpace() + "\n");
-			}
+			
+			outData.append("fileRoot: ");
+			for (int i = 0; i < roots.length; i++)
+				outData.append("(" + i + ") " + roots[i].getAbsolutePath() + ", ");
+			outData.append("\n");
+			
+			outData.append("fileRootTotalSpaceInBytes: ");
+			for (int i = 0; i < roots.length; i++)
+				outData.append("(" + i + ") " + roots[i].getTotalSpace() + ", ");
+			outData.append("\n");
+			
+			outData.append("fileRootFreeSpaceInBytes: ");
+			for (int i = 0; i < roots.length; i++)
+				outData.append("(" + i + ") " + roots[i].getFreeSpace() + ", ");
+			outData.append("\n");
+			
+			outData.append("fileRootUsableSpaceInBytes: ");
+			for (int i = 0; i < roots.length; i++)
+				outData.append("(" + i + ") " + roots[i].getUsableSpace() + ", ");
+			outData.append("\n");
 			
 			Util.get().out("Collected stats:\n" + outData.toString(), Util.VERBOSITY_DETAILED_DEBUG_INFO);
+			Util.get().out("Report from webserver:\n" + StatsReporter.reportText(outData.toString()), Util.VERBOSITY_DEBUG_INFO); //TODO: save in file instead and send from StatsReporter thread.
 			//File outputfile = Util.get().createUniqueLowerCaseRandomStatsFileInStatsDir();
 			Prefs.prefs.putLong(Prefs.LAST_COLLECTION_OF_STATS, now);
 			
