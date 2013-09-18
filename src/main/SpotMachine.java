@@ -11,7 +11,12 @@ public class SpotMachine {
 	private static MainFrame frame;
 	
 	public static final String PROGRAM_NAME = "SpotMachine";
-	public static final String PROGRAM_VERSION = "0.3.2 git" + " $Id$";
+	public static String PROGRAM_VERSION;
+	
+	static {
+		String ver = Util.get().readLineFromFile("version"); //"0.3.2 git";
+		PROGRAM_VERSION = !ver.equals("") ? ver : "0.3.2 git";
+	}
 	
 	public static int currentVerbosityLevel; // level of debug info
 	

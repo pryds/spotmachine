@@ -30,24 +30,24 @@ import org.xnap.commons.i18n.I18nFactory;
  * with some of the methods split out in own classes.
  */
 public class Util {
-	private static final Util INSTANCE = new Util();
+	private static Util INSTANCE;
 	private Util() {
 	}
-	/*private static class UtilSingletonHolder { 
-		public static final Util INSTANCE = new Util();
-	}*/
 	/**
 	 * If an instance of Util already exists, this method returns it.
 	 * Otherwise it constructs an instance of Util and returns it.
+	 * Thread-safe DoubleCheckedLockingSingleton.
 	 * @return the singleton instance of the Util class.
 	 */
 	public static Util get() {
-		try {
-		return INSTANCE;
-		} catch(Throwable t) {
-			t.printStackTrace();
-			return null;
+		if (INSTANCE == null) {
+			synchronized (Util.class) {
+				if (INSTANCE == null) {
+					INSTANCE = new Util();
+				}
+			}
 		}
+		return INSTANCE;
 	}
 	
 	public static final int VERBOSITY_ERROR = 0;
@@ -580,5 +580,36 @@ public class Util {
 	        input = null;
 	        return output1 + wordWrapOneLine(output2, width);
 	    }
+	}
+	
+	public String readLineFromFile(String filename) {
+		File f = null;
+	    try {
+	    	URL u = MainFrame.class.getResource("../" + filename);
+	    	if (u == null) {
+	    		out("Error when opening file: " + filename, VERBOSITY_ERROR);
+	    		return "";
+	    	}
+			f = new File(u.toURI());
+		} catch (URISyntaxException use) {
+			out(use.toString(), VERBOSITY_ERROR);
+		}
+		out("Reading first line from file: " + f.getAbsolutePath() +
+				" - file exists: " + f.exists(), VERBOSITY_DETAILED_DEBUG_INFO);
+		
+		BufferedReader reader;
+		try {
+			reader = new BufferedReader(new FileReader(f));
+			String readLine;
+			if ((readLine = reader.readLine()) != null) {
+				return readLine.trim();
+			} else {
+				out("Failed reading file " + f.getAbsolutePath() + " - is it empty?", VERBOSITY_ERROR);
+				return "";
+			}
+		} catch(IOException ioe) {
+			out(ioe.toString(), VERBOSITY_ERROR);
+			return "";
+		}
 	}
 }

@@ -16,3 +16,6 @@ while read line; do
   fi
 done < po/languages
 
+echo "Getting git describe info"
+git describe > $OUTPUTDIR/version
+
