@@ -23,7 +23,7 @@ public class StatsCollector implements Runnable {
 		}
 		
 		String programInstallationId = getUniqueIdentifier();
-		long millisBetweenCollecting = 100000; //TODO: Change to 1000 * 60 * 60 * 24 * 7; // a week(!)
+		long millisBetweenCollecting = 1000 * 60 * 60 * 24 * 7; // a week(!)
 		
 		//wait if stats have been collected recently:
 		while (System.currentTimeMillis()

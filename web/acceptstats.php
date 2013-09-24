@@ -56,6 +56,9 @@ for ($i = 0; $i < count($lines); $i++) {
     $sql['extra'] = $sql['extra'] . $labelAndValue[0] . "=" . $labelAndValue[1] . ", ";
   }
 }
+// Extra on-server key/value pairs:
+$sql['ip'] = $_SERVER['REMOTE_ADDR'];
+$sql['host'] = $_SERVER['REMOTE_HOST'];
 
 // Build SQL string
 $sqlStrOne = "INSERT INTO spot_stats (reportReceived";
