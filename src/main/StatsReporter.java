@@ -2,6 +2,8 @@ package main;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -18,14 +20,42 @@ public class StatsReporter implements Runnable {
 			Util.get().threadSleep(1000*60);
 		}
 		
+		File statsDir = Util.get().getCollectedStatsDir();
 		while(true) {
-			Util.get().threadSleep(1000*60); // every minute
+			Util.get().threadSleep(5000); //TODO: Change to 1000*60); // every minute
 			
-			
+			File[] reports = statsDir.listFiles();
+			Util.get().out("Found " + reports.length + " unreported stat files." + (reports.length==0 ? "" : " Trying to report it/them."), Util.VERBOSITY_DEBUG_INFO);
+			for (int i = 0; i < reports.length; i++) {
+				try {
+					Util.get().out("Reporting contents of stats file " + reports[i].getName(), Util.VERBOSITY_DETAILED_DEBUG_INFO);
+					BufferedReader reader = new BufferedReader(new FileReader(reports[i]));
+					StringBuffer str = new StringBuffer();
+					String readLine;
+					while ((readLine = reader.readLine()) != null) {
+						str.append(readLine + "\n");
+					}
+					reader.close();
+					if (str.length() != 0) {
+						String reply = reportText(str.toString());
+						if (reply == null) {
+							throw new Exception("Error when reporting stats");
+						} else {
+							Util.get().out("Reply from webserver: " + reply, Util.VERBOSITY_DETAILED_DEBUG_INFO);
+						}
+					} else {
+						Util.get().out("Empty stats file found: " + reports[i].getAbsolutePath() + ". Deleting without reporting.", Util.VERBOSITY_WARNING);
+					}
+					Util.get().deleteFile(reports[i]);
+				} catch (Exception e) {
+					Util.get().out("Warning: Something went wrong when trying to report stats file: " + e.toString(), Util.VERBOSITY_WARNING);
+				}
+				Util.get().threadSleep(1000*60);
+			}
 		}
 	}
 		
-	public static String reportText(String text) {
+	private static String reportText(String text) {
 		URL url;
 		String urlStr = "", paramStr = "";
 		HttpURLConnection con = null;

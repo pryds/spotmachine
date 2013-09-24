@@ -1,7 +1,9 @@
 package main;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -21,7 +23,7 @@ public class StatsCollector implements Runnable {
 		}
 		
 		String programInstallationId = getUniqueIdentifier();
-		long millisBetweenCollecting = 10000; //TODO: Change to 1000 * 60 * 60 * 24 * 7; // a week(!)
+		long millisBetweenCollecting = 100000; //TODO: Change to 1000 * 60 * 60 * 24 * 7; // a week(!)
 		
 		//wait if stats have been collected recently:
 		while (System.currentTimeMillis()
@@ -55,8 +57,11 @@ public class StatsCollector implements Runnable {
 			outData.append("systemTimeZone: " + TimeZone.getDefault().getID() + "\n");
 			outData.append("systemLocale: " + Locale.getDefault().toString() + "\n");
 			outData.append("spotmachineLanguage: " + Util.get().getCurrentLocale() + "\n");
-			
 			outData.append("spotmachineVersion: " + SpotMachine.PROGRAM_VERSION + "\n");
+			
+			//TODO: number of scheduled, intervalled spots
+			// (average) spot length
+			
 			outData.append("osName: " + System.getProperty("os.name") + "\n");
 			outData.append("osVersion: " + System.getProperty("os.version") + "\n");
 			outData.append("osArch: " + System.getProperty("os.arch") + "\n");
@@ -94,8 +99,18 @@ public class StatsCollector implements Runnable {
 			outData.append("\n");
 			
 			Util.get().out("Collected stats:\n" + outData.toString(), Util.VERBOSITY_DETAILED_DEBUG_INFO);
-			Util.get().out("Report from webserver:\n" + StatsReporter.reportText(outData.toString()), Util.VERBOSITY_DEBUG_INFO); //TODO: save in file instead and send from StatsReporter thread.
-			//File outputfile = Util.get().createUniqueLowerCaseRandomStatsFileInStatsDir();
+			
+			File outputfile = Util.get().createUniqueLowerCaseRandomStatsFileInStatsDir();
+			try {
+				Util.get().out("Writing stats file " + outputfile.getAbsolutePath(), Util.VERBOSITY_DEBUG_INFO);
+				BufferedWriter writer = new BufferedWriter(new FileWriter(outputfile));
+				writer.write(outData.toString());
+				writer.flush();
+				writer.close();
+			} catch (Exception e) {
+				Util.get().out("Error writing stats file: " + e.toString(), Util.VERBOSITY_ERROR);
+			}
+			
 			Prefs.prefs.putLong(Prefs.LAST_COLLECTION_OF_STATS, now);
 			
 			Util.get().threadSleep(millisBetweenCollecting);

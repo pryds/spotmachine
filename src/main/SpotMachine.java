@@ -55,6 +55,8 @@ public class SpotMachine {
 		
 		(new Thread(new StatsCollector())).start();
 		
+		(new Thread(new StatsReporter())).start();
+		
 		new Thread(new Runnable() {
 			public void run() {
 				Util.get().threadSleep(4000);
