@@ -93,11 +93,10 @@ public class Util {
 	
 	/**
 	 * Creates a randomly chosen string representation of a filename
-	 * using only lower case letters from a to z, with the suffix
-	 * .wav
+	 * using only lower case letters from a to z.
 	 * @return randomly chosen filename as a String
 	 */
-	public String createLowerCaseRandomWAVFilename() {
+	public String createLowerCaseRandomString() {
 		Random rand = new Random();
 		StringBuffer str = new StringBuffer();
 		int nameLength = 16;
@@ -107,7 +106,6 @@ public class Util {
 		for (int i = 0; i < nameLength; i++) {
 			str.append((char)(rand.nextInt(lastChar - firstChar + 1) + firstChar));
 		}
-		str.append(".wav");
 		return str.toString();
 	}
 	
@@ -123,7 +121,15 @@ public class Util {
 	public File createUniqueLowerCaseRandomWAVFileInDataDir() {
 		File outFile = null;
 		while (outFile == null || outFile.exists()) { // make sure file doesn't already exist (though unlikely)
-			outFile = new File(getDataStoreDir(), createLowerCaseRandomWAVFilename());
+			outFile = new File(getDataStoreDir(), createLowerCaseRandomString() + ".wav");
+		}
+		return outFile;
+	}
+	
+	public File createUniqueLowerCaseRandomStatsFileInStatsDir() {
+		File outFile = null;
+		while (outFile == null || outFile.exists()) {
+			outFile = new File(getCollectedStatsDir(), "stats-" + createLowerCaseRandomString());
 		}
 		return outFile;
 	}
@@ -216,6 +222,19 @@ public class Util {
 			Prefs.prefs.put(Prefs.DATA_DIR, saveDir.getAbsolutePath());
 			return saveDir;
 		}
+	}
+	
+	public File getCollectedStatsDir() {
+		File datadir = getDataStoreDir();
+		if (datadir == null)
+			return null;
+		
+		File csd = new File(datadir, "stats");
+		if (!csd.exists()) {
+			out("Creating stats directory " + csd.getAbsolutePath(), VERBOSITY_DEBUG_INFO);
+			csd.mkdirs();
+		}
+		return csd;
 	}
 	
 	/**
