@@ -22,7 +22,7 @@ public class StatsReporter implements Runnable {
 		
 		File statsDir = Util.get().getCollectedStatsDir();
 		while(true) {
-			Util.get().threadSleep(5000); //TODO: Change to 1000*60); // every minute
+			Util.get().threadSleep(1000*60); // every minute
 			
 			File[] reports = statsDir.listFiles();
 			Util.get().out("Found " + reports.length + " unreported stat files." + (reports.length==0 ? "" : " Trying to report it/them."), Util.VERBOSITY_DEBUG_INFO);
