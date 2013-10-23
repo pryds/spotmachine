@@ -1,3 +1,14 @@
+Changes between 0.3.2 and 0.3.3
+===============================
+
+- Translations of SpotMachine are now handled through The Translation Project, which means
+  SpotMachine can be reached by a large number of established language teams.
+- New translations:
+  Brazilian Portuguese
+  German
+  Ukranian
+- New (optional) usage statistics reporting feature
+
 Changes between 0.3.1 and 0.3.2
 ===============================
 
