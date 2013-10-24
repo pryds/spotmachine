@@ -46,7 +46,7 @@ some of SpotMachine's features.
 \item Have the same spot multiple times in the same rotation
 \item No limit on number of spots or spot length
 \item Audio normalization for uniform spot messages
-\item Available in English and Danish (and easily extended into more languages)
+\item Available in multiple languages, including English, Danish, German, Ukrainian, and Brasilian Portuguese (and easily extended into more languages)
 %\item Upcoming: Import spot from audio file
 \end{itemize}
 
@@ -295,10 +295,17 @@ properties window. This is done by selecting the spot that you want to change,
 and then clicking the Edit button next to the spot list. Here you will be able
 to edit all the details as described in the above section.
 
+\chapter{Setting Up}
+
 \section{Preferences}
 
+%explaining the preferences window
 
 \section{Less Obvious Options}
+
+This chapter covers some slightly more advanced options and possibilities that
+are not necessarily available directly from the graphical user interface of
+SpotMachine.
 
 \subsection{Editing of Spot Sound Files by Third-Party Programs}
 
@@ -310,7 +317,7 @@ though. You might wish to do this if you want to apply some more sofisticated
 effects or filters to a the sound file than what SpotMachine can deliver.
 
 This is a feature that is not yet implemented as such, so it is basically a
-question of closing down SpotMachine (important, as to not confuse it about
+question of closing down SpotMachine (important, as to not confuse it with
 changing spot lengths, audio formats, etc.), then locating the actual sound
 files on disk and opening them in your third-party sound editor of choice.
 
@@ -319,7 +326,7 @@ On Linux and Mac, the sound files will be present in a directory
 will most likely be present in the system's default location for application
 data. This is a bit different on different versions and translations of Windows,
 so the easiest way to locate the directory on your system is probably to open
-the file explorer, type \texttt{\%programdata\%}, and hit enter.
+the file explorer, type \texttt{\%programdata\%} in the location bar, and hit enter.
 
 The files will have random names, but perhaps you can recognize the one you
 want on the file's creation date/time. Remember to save the file with the exact
@@ -330,12 +337,27 @@ rate of 44,100 Hz, in 16 bits mono, but is capable of playing PCM files with
 other sample rates, bits, mono/stereo, etc. It will not be able to play
 compressed files, such as MP3 files, though.
 
+If you want to convert an unsupported file format, such as MP3, you can do so with
+an application such as the Gnome Sound Converter on Linux and fre:ac for Windows,
+Mac and other platforms.
+
 \subsection{Forcing a Certain Sound Mixer}
-% From NEWS file:
-%- Output and recording mixers can be forced through the Java prefs file for SpotMachine.
-%  If a key called ForcePlayOnMixerNumber contains a value > 0 representing a valid mixer number,
-%  that mixer will be used (if applicaple)for playing spots instead of the default one.
-%  The same goes for recording spots, except here the key is called ForceRecordingOnMixerNumber.
+If your computer has several sound boards, or for any other reason you need to specify
+a certain sound output or recording mixer, you can do so directly through SpotMachine's
+preferences file/registry keys. At a later point, the possibility of changing this
+option will be added to the preferences window.
+
+On Linux, the preferences file will be placed in the \texttt{.java/.userPrefs/SpotMachine}
+subdirectory to your home directory. On Windows, the preferences will be saved in the
+registry database. The exact location will vary depending on your Windows version, but
+if you search for \texttt{JavaSoft\textbackslash{}Prefs}, you will find it.
+
+In order to set a specific mixer on which to play spots, add a new key called
+\texttt{ForcePlayOnMixerNumber} with a value of 1 or above. The value will denote the
+number of the mixer on which to play. If you set the value to 0, or remove the key,
+SpotMachine will play spots on the default mixer. To set a specific mixer for recording
+spots, you can add a key called \texttt{ForceRecordingOnMixerNumber} instead or in
+addition.
 
 \chapter{Contributing}
 
@@ -346,9 +368,44 @@ access to that, you may choose to contribute.
 There are several ways you can contribute. Also ways that don't require you to
 be a programmer, or even technically minded.
 
-% Reporting bugs if you find any
-% Translating
-% Code
+\section{Reporting Bugs if you find any}
+
+No piece of software is free of bugs, and although SpotMachine is known to run for months---if
+not more---without interruption, of course SpotMachine is no more bug-free than other
+applications. One of the advantages of open source software is that you can easily get in touch
+with the developers and tell them about any bugs you might discover, so that they may be corrected
+for a later release.
+
+To report bugs for SpotMachine, head to the issue
+tracker\footnote{\url{http://github.com/pryds/spotmachine/issues}}. Click the ``New Issue'' button
+and fill in the fields. Be sure to describe what you experience as thoroughly as at all possible,
+and include information on your SpotMachine version (you can find this in the ``About'' window),
+your operating system version (e.g. Windows 7, Ubuntu 13.10, etc.), your Java version (this is
+best obtained by running the command \texttt{java -version} command on your system).
+
+\section{Translating}
+
+SpotMachine is available in several languages, but there's always the need for more help. Just like
+the code, the translated text strings that make up the SpotMachine user interface are contributed
+by volunteers.
+
+The translations of SpotMachine are handled through the Translation
+Project\footnote{\url{http://translationproject.org}}, where a lot of very experienced
+language teams do the actual translations and handle submission of these translations back to projects
+like SpotMachine. Therefore, if you want to contribute, you should contact the language team for
+your language. Usually, these teams are even able to proofread your translation. There is a list of
+all language teams at the Translation Project's website, complete with contact information.
+
+Translating SpotMachine into your language (or improving on an existing translation) requires no
+programming skills at all. All the application's text strings and their translated counterparts are
+stored in a text file in a certain format, one file per language. Several text editors exist that are
+able to edit these so-called PO files in a very user friendly manner. Two recommended PO editors are
+Lokalize\footnote{\url{http://userbase.kde.org/Lokalize}} and
+Poedit\footnote{\url{http://www.poedit.net/}}.
+
+\section{Coding}
+
+
 
 \end{document}
 
