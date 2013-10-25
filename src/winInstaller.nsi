@@ -1,6 +1,7 @@
 !define PROGRAMNAME "SpotMachine"
-!define PROGRAMVERSION "0.3"
-!define PROGRAMPUB "Pryds Software"
+!define PROGRAMVERSION "0.3.2"
+!define PROGRAMPUB "Thomas Pryds"
+!define GETTEXT "gettext-commons-0.9.6.jar"
 
 Name "${PROGRAMNAME} ${PROGRAMVERSION}"
 OutFile "../spotmachine-${PROGRAMVERSION}-setup.exe"
@@ -22,8 +23,6 @@ Section
     file "NEWS"
     file "INSTALL"
     file "COPYING"
-    file "strings.list"
-    file "strings*.properties"
 
     SetOutPath "$INSTDIR\gui"
     file "gui\*.class"
@@ -34,9 +33,17 @@ Section
     SetOutPath "$INSTDIR\resources"
     file "resources\*"
 
+    SetOutPath "$INSTDIR\i18n"
+    file "i18n\*.class"
+
+    SetOutPath "$INSTDIR\po"
+    file "po\languages"
+
     SetOutPath "$INSTDIR"
     # CreateShortCut link.lnk target.file [parameters [icon.file [icon_index_number [start_options [keyboard_shortcut [description]]]]]]
-    CreateShortCut "$SMPROGRAMS\${PROGRAMNAME}.lnk" "java" "main.SpotMachine" "" "" SW_SHOWNORMAL "" "Audio spot handling"
+    CreateShortCut "$SMPROGRAMS\${PROGRAMNAME}.lnk" "java" '-classpath "$INSTDIR;$INSTDIR\resources\${GETTEXT}" main.SpotMachine' "$INSTDIR\resources\spotmachine.ico" "0" SW_SHOWNORMAL "" "Audio spot handling"
+
+    WriteRegStr HKLM "Software\Javasoft\Prefs" "" ""
 
     WriteUninstaller "$INSTDIR\uninstall.exe"
 

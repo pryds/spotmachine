@@ -4,17 +4,20 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.Random;
-import java.util.ResourceBundle;
 import java.util.Vector;
 
 import gui.MainFrame;
 
 import javax.swing.ImageIcon;
+
+import org.xnap.commons.i18n.I18n;
+import org.xnap.commons.i18n.I18nFactory;
 
 /**
  * A singleton class which holds various utility methods for purposes
@@ -27,18 +30,24 @@ import javax.swing.ImageIcon;
  * with some of the methods split out in own classes.
  */
 public class Util {
+	private static Util INSTANCE;
 	private Util() {
-	}
-	private static class UtilSingletonHolder { 
-		public static final Util INSTANCE = new Util();
 	}
 	/**
 	 * If an instance of Util already exists, this method returns it.
 	 * Otherwise it constructs an instance of Util and returns it.
+	 * Thread-safe DoubleCheckedLockingSingleton.
 	 * @return the singleton instance of the Util class.
 	 */
 	public static Util get() {
-		return UtilSingletonHolder.INSTANCE;
+		if (INSTANCE == null) {
+			synchronized (Util.class) {
+				if (INSTANCE == null) {
+					INSTANCE = new Util();
+				}
+			}
+		}
+		return INSTANCE;
 	}
 	
 	public static final int VERBOSITY_ERROR = 0;
@@ -84,11 +93,10 @@ public class Util {
 	
 	/**
 	 * Creates a randomly chosen string representation of a filename
-	 * using only lower case letters from a to z, with the suffix
-	 * .wav
+	 * using only lower case letters from a to z.
 	 * @return randomly chosen filename as a String
 	 */
-	public String createLowerCaseRandomWAVFilename() {
+	public String createLowerCaseRandomString() {
 		Random rand = new Random();
 		StringBuffer str = new StringBuffer();
 		int nameLength = 16;
@@ -98,7 +106,6 @@ public class Util {
 		for (int i = 0; i < nameLength; i++) {
 			str.append((char)(rand.nextInt(lastChar - firstChar + 1) + firstChar));
 		}
-		str.append(".wav");
 		return str.toString();
 	}
 	
@@ -114,7 +121,15 @@ public class Util {
 	public File createUniqueLowerCaseRandomWAVFileInDataDir() {
 		File outFile = null;
 		while (outFile == null || outFile.exists()) { // make sure file doesn't already exist (though unlikely)
-			outFile = new File(getDataStoreDir(), createLowerCaseRandomWAVFilename());
+			outFile = new File(getDataStoreDir(), createLowerCaseRandomString() + ".wav");
+		}
+		return outFile;
+	}
+	
+	public File createUniqueLowerCaseRandomStatsFileInStatsDir() {
+		File outFile = null;
+		while (outFile == null || outFile.exists()) {
+			outFile = new File(getCollectedStatsDir(), "stats-" + createLowerCaseRandomString());
 		}
 		return outFile;
 	}
@@ -207,6 +222,19 @@ public class Util {
 			Prefs.prefs.put(Prefs.DATA_DIR, saveDir.getAbsolutePath());
 			return saveDir;
 		}
+	}
+	
+	public File getCollectedStatsDir() {
+		File datadir = getDataStoreDir();
+		if (datadir == null)
+			return null;
+		
+		File csd = new File(datadir, "stats");
+		if (!csd.exists()) {
+			out("Creating stats directory " + csd.getAbsolutePath(), VERBOSITY_DEBUG_INFO);
+			csd.mkdirs();
+		}
+		return csd;
 	}
 	
 	/**
@@ -324,22 +352,19 @@ public class Util {
 	    }
 	    return false;
 	}
+		
+	private I18n i18n = null;
 	
 	/**
-	 * Gets a translated string for display to end users, from the
-	 * translation file of the currently used locale as returned by
-	 * {@link #getCurrentLocale()}.
-	 * <p>
-	 * The parametre key must be a string which is present in the
-	 * given translation file (as a general rule, all referenced keys
-	 * must be present in all translation files).
-	 * @param key the key string for which to look in the translation
-	 * file
-	 * @return a translated string for the given key
+	 * Gets the I18n object used for getting a translated string for
+	 * display to end users.
+	 * @return the I18n object for the current locale
 	 */
-	public String string(String key) {
-		ResourceBundle bundle = ResourceBundle.getBundle("strings", getCurrentLocale());
-		return bundle.getString(key);
+	public I18n i18n() {
+		// TODO: not thread safe! But maybe getI18n() is, so it doesn't matter?
+		if (i18n == null)
+			i18n = I18nFactory.getI18n(getClass(), "i18n.Messages", getCurrentLocale());
+		return i18n;
 	}
 	
 	private Locale[] supportedLocales;
@@ -376,7 +401,14 @@ public class Util {
 	    if (supportedLocales != null)
 	        return supportedLocales;
 	    
-		File localeListFile = new File(MainFrame.class.getResource("../strings.list").getFile());
+		File localeListFile = null;
+	    try {
+			localeListFile = new File(MainFrame.class.getResource("../po/languages").toURI());
+		} catch (URISyntaxException use) {
+			out(use.toString(), VERBOSITY_ERROR);
+		}
+		out("Reading supported languages from file: " + localeListFile.getAbsolutePath() +
+				" - file exists: " + localeListFile.exists(), VERBOSITY_DETAILED_DEBUG_INFO);
 		BufferedReader reader;
 		Vector<String> localeStrings = new Vector<String>();
 		
@@ -385,8 +417,10 @@ public class Util {
 			String readLine;
 			while ((readLine = reader.readLine()) != null) {
 			    readLine = readLine.trim();
-			    if (!readLine.equals("") && readLine.charAt(0) != '#')
+			    if (!readLine.equals("") && readLine.charAt(0) != '#') {
+			    	out("Read line: " + readLine, VERBOSITY_DETAILED_DEBUG_INFO);
 			        localeStrings.add(readLine.trim());
+			    }
 			}
 			reader.close();
 		} catch (IOException ioe) {
@@ -397,11 +431,19 @@ public class Util {
 		supportedLocales = new Locale[localeStrings.size()];
 		for (int i = 0; i < supportedLocales.length; i++) {
 			String[] currentLocale = localeStrings.get(i).split("_");
-			if (currentLocale.length != 2) {
-				out("At least one line in the strings.list file is incorrect. The file must contain a list of locales, one locale per line, in the form ll_CC, where ll is a two-letter language code and CC is a two-letter country code. Ignoring all locales.", VERBOSITY_ERROR);
+			if (currentLocale.length == 1) {
+				supportedLocales[i] = new Locale(currentLocale[0]);
+			} else if (currentLocale.length == 2) {
+				supportedLocales[i] = new Locale(currentLocale[0], currentLocale[1]);
+			} else if (currentLocale.length == 3) {
+				supportedLocales[i] = new Locale(currentLocale[0], currentLocale[1], currentLocale[2]);
+			} else {
+				out("At least one line in the 'po/languages' file is incorrect. The file must contain a list " +
+						"of locales, one locale per line, in the form 'll', 'll_CC', or 'll_CC_vv', where ll is " +
+						"a two-letter language code, CC is a two-letter country code, and vv is a variant. " +
+						"Ignoring all locales.", VERBOSITY_ERROR);
 				return new Locale[0];
 			}
-			supportedLocales[i] = new Locale(currentLocale[0], currentLocale[1]);
 		}
 		return supportedLocales;
 	}
@@ -557,5 +599,36 @@ public class Util {
 	        input = null;
 	        return output1 + wordWrapOneLine(output2, width);
 	    }
+	}
+	
+	public String readLineFromFile(String filename) {
+		File f = null;
+	    try {
+	    	URL u = MainFrame.class.getResource("../" + filename);
+	    	if (u == null) {
+	    		out("Error when opening file: " + filename, VERBOSITY_ERROR);
+	    		return "";
+	    	}
+			f = new File(u.toURI());
+		} catch (URISyntaxException use) {
+			out(use.toString(), VERBOSITY_ERROR);
+		}
+		out("Reading first line from file: " + f.getAbsolutePath() +
+				" - file exists: " + f.exists(), VERBOSITY_DETAILED_DEBUG_INFO);
+		
+		BufferedReader reader;
+		try {
+			reader = new BufferedReader(new FileReader(f));
+			String readLine;
+			if ((readLine = reader.readLine()) != null) {
+				return readLine.trim();
+			} else {
+				out("Failed reading file " + f.getAbsolutePath() + " - is it empty?", VERBOSITY_ERROR);
+				return "";
+			}
+		} catch(IOException ioe) {
+			out(ioe.toString(), VERBOSITY_ERROR);
+			return "";
+		}
 	}
 }

@@ -1,0 +1,374 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-08-31 15:04+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/gui/SchedulePropertiesDialogue.java:47
+msgid "Properties for Scheduled Spot"
+msgstr ""
+
+#: src/gui/SchedulePropertiesDialogue.java:69
+msgid "Play spot at (24 hours format)"
+msgstr ""
+
+#: src/gui/SchedulePropertiesDialogue.java:98
+msgid "On these weekdays"
+msgstr ""
+
+#: src/gui/SchedulePropertiesDialogue.java:117
+msgid "On these days of the month"
+msgstr ""
+
+#: src/gui/SchedulePropertiesDialogue.java:134
+msgid "On these months"
+msgstr ""
+
+#: src/gui/SchedulePropertiesDialogue.java:149
+msgid ""
+"Note, that the spot is only played if ALL conditions above are met. If, for "
+"instance, only 'Wednesday' and '20' (plus all months) are selected, the spot "
+"is only played if today is BOTH Wednesday AND the 20th of the month."
+msgstr ""
+
+#: src/gui/SchedulePropertiesDialogue.java:166 src/gui/RecordDialogue.java:156
+#: src/gui/PreferencesDialogue.java:123
+msgid "OK"
+msgstr ""
+
+#: src/gui/SchedulePropertiesDialogue.java:171 src/gui/RecordDialogue.java:162
+#: src/gui/PreferencesDialogue.java:128
+msgid "Cancel"
+msgstr ""
+
+#: src/gui/RecordDialogue.java:47
+msgid "Record New Spot"
+msgstr ""
+
+#: src/gui/RecordDialogue.java:53
+msgid "Name:"
+msgstr ""
+
+#: src/gui/RecordDialogue.java:74
+msgid "Current duration:"
+msgstr ""
+
+#: src/gui/RecordDialogue.java:86 src/gui/RecordDialogue.java:279
+msgid "STOPPED"
+msgstr ""
+
+#: src/gui/RecordDialogue.java:107
+msgctxt "Recording (noun)"
+msgid "Recording"
+msgstr ""
+
+#: src/gui/RecordDialogue.java:109
+msgid "Re-record"
+msgstr ""
+
+#: src/gui/RecordDialogue.java:116 src/gui/MainFrame.java:115
+msgid "Pause"
+msgstr ""
+
+#: src/gui/RecordDialogue.java:124
+msgid "Stop"
+msgstr ""
+
+#: src/gui/RecordDialogue.java:136
+msgid ""
+"Remember to disconnect audio output, amplifier, or similar before recording "
+"starts, since the recorded spot will be played immediately after recording "
+"has finished."
+msgstr ""
+
+#: src/gui/RecordDialogue.java:157
+msgid "Close the recording window and save the recorded spot"
+msgstr ""
+
+#: src/gui/RecordDialogue.java:163
+msgid "Close the recording window without saving"
+msgstr ""
+
+#: src/gui/RecordDialogue.java:181
+msgid "No recording has been done yet."
+msgstr ""
+
+#: src/gui/RecordDialogue.java:182
+msgid "No recording"
+msgstr ""
+
+#: src/gui/RecordDialogue.java:187
+msgid "Write a name for the recorded spot."
+msgstr ""
+
+#: src/gui/RecordDialogue.java:188
+msgid "No name for spot"
+msgstr ""
+
+#: src/gui/RecordDialogue.java:218
+msgid "RECORDING"
+msgstr ""
+
+#: src/gui/RecordDialogue.java:224
+msgid "PAUSED"
+msgstr ""
+
+#: src/gui/RecordDialogue.java:228
+msgid "STOPPING RECORDING..."
+msgstr ""
+
+#: src/gui/RecordDialogue.java:240
+msgid "NORMALISING AUDIO"
+msgstr ""
+
+#: src/gui/RecordDialogue.java:261
+msgid "PLAYING"
+msgstr ""
+
+#: src/gui/MainFrame.java:75
+msgid "Time until next spot:"
+msgstr ""
+
+#: src/gui/MainFrame.java:88 src/gui/SpotListModel.java:29
+msgid "#"
+msgstr ""
+
+#: src/gui/MainFrame.java:108
+msgid "Play"
+msgstr ""
+
+#: src/gui/MainFrame.java:123
+msgid "Previous"
+msgstr ""
+
+#: src/gui/MainFrame.java:130
+msgid "Next"
+msgstr ""
+
+#: src/gui/MainFrame.java:177
+msgid "Available spots"
+msgstr ""
+
+#: src/gui/MainFrame.java:189
+msgid "Record new"
+msgstr ""
+
+#: src/gui/MainFrame.java:194
+msgid "Delete"
+msgstr ""
+
+#: src/gui/MainFrame.java:205
+msgid "Rename"
+msgstr ""
+
+#: src/gui/MainFrame.java:220
+msgid "Insert selected available spot into list of interval spots"
+msgstr ""
+
+#: src/gui/MainFrame.java:226
+msgid "Remove spot from list of interval spots"
+msgstr ""
+
+#: src/gui/MainFrame.java:241
+msgid "Interval spots"
+msgstr ""
+
+#: src/gui/MainFrame.java:262
+msgid "Repeat all"
+msgstr ""
+
+#: src/gui/MainFrame.java:263
+msgid "Repeat list of spots when last spot has been played"
+msgstr ""
+
+#: src/gui/MainFrame.java:275
+msgid "mins between spots"
+msgstr ""
+
+#: src/gui/MainFrame.java:289
+msgid "Insert selected available spot into list of scheduled spots"
+msgstr ""
+
+#: src/gui/MainFrame.java:295
+msgid "Remove spot from list of scheduled spots"
+msgstr ""
+
+#: src/gui/MainFrame.java:307
+msgid "Scheduled spots"
+msgstr ""
+
+#: src/gui/MainFrame.java:349
+msgid "Move up"
+msgstr ""
+
+#: src/gui/MainFrame.java:354
+msgid "Move down"
+msgstr ""
+
+#: src/gui/MainFrame.java:366
+msgid "Edit"
+msgstr ""
+
+#: src/gui/MainFrame.java:377
+msgid "File"
+msgstr ""
+
+#: src/gui/MainFrame.java:381 src/gui/PreferencesDialogue.java:34
+msgid "Preferences"
+msgstr ""
+
+#: src/gui/MainFrame.java:387 src/gui/MainFrame.java:601
+#, java-format
+msgid "About {0}"
+msgstr ""
+
+#: src/gui/MainFrame.java:467
+msgid "Yes, delete spot!"
+msgstr ""
+
+#: src/gui/MainFrame.java:467
+msgid "No"
+msgstr ""
+
+#: src/gui/MainFrame.java:470
+msgid ""
+"Are you sure you want to delete spot permanently?\n"
+"The spot will be removed from all lists.\n"
+"You cannot undo this action."
+msgstr ""
+
+#: src/gui/MainFrame.java:472
+msgid "Delete spot"
+msgstr ""
+
+#: src/gui/MainFrame.java:508
+msgid "Type new name for spot:"
+msgstr ""
+
+#: src/gui/MainFrame.java:509
+msgid "Rename spot"
+msgstr ""
+
+#: src/gui/MainFrame.java:590
+#, java-format
+msgid "{0} version {1}"
+msgstr ""
+
+#: src/gui/MainFrame.java:591
+#, java-format
+msgid "By {0}"
+msgstr ""
+
+#: src/gui/MainFrame.java:592
+msgctxt "Correct into your language and name"
+msgid "Translated into English by Thomas Pryds"
+msgstr ""
+
+#: src/gui/MainFrame.java:595
+msgid ""
+"Released under the GPL license. This program can be used without "
+"restrictions. This includes redistribution, with or without own changes (e."
+"g. additions and translations). However, redistribution (including changes) "
+"may only happen under the same license. The complete license text comes with "
+"this program. The complete source code for this program is available at the "
+"above mentioned web site."
+msgstr ""
+
+#: src/gui/PreferencesDialogue.java:52
+msgid "Program Language"
+msgstr ""
+
+#: src/gui/PreferencesDialogue.java:56
+msgid "Choose language"
+msgstr ""
+
+#: src/gui/PreferencesDialogue.java:75
+msgid "Changes will be applied after program restart."
+msgstr ""
+
+#: src/gui/PreferencesDialogue.java:95
+msgid "Audio Normalization"
+msgstr ""
+
+#: src/gui/PreferencesDialogue.java:97
+msgid "Perform on newly recorded spots:"
+msgstr ""
+
+#: src/gui/PreferencesDialogue.java:99
+msgid "Remove DC offset"
+msgstr ""
+
+#: src/gui/PreferencesDialogue.java:100
+msgid "May remove certain 'click' noises in start/end of recording"
+msgstr ""
+
+#: src/gui/PreferencesDialogue.java:105
+msgid "Add fade-in/out"
+msgstr ""
+
+#: src/gui/PreferencesDialogue.java:106
+msgid "Add short fade-in and fade-out"
+msgstr ""
+
+#: src/gui/PreferencesDialogue.java:111
+msgid "Normalise volume"
+msgstr ""
+
+#: src/gui/PreferencesDialogue.java:112
+msgid "Gives a uniform volume level of spots"
+msgstr ""
+
+#: src/gui/SpotListModel.java:30 src/gui/SpotListModel.java:36
+#: src/gui/SpotListModel.java:42
+msgid "Name"
+msgstr ""
+
+#: src/gui/SpotListModel.java:31 src/gui/SpotListModel.java:37
+#: src/gui/SpotListModel.java:43
+msgid "Duration"
+msgstr ""
+
+#: src/gui/SpotListModel.java:38
+msgctxt "As in play at"
+msgid "At"
+msgstr ""
+
+#: src/gui/SpotList.java:60
+msgid "Play item number"
+msgstr ""
+
+#: src/gui/SpotList.java:62 src/gui/SpotList.java:74 src/gui/SpotList.java:83
+msgid "Duration in minutes and seconds"
+msgstr ""
+
+#: src/gui/SpotList.java:63
+msgid "* means that this spot is the next to get played"
+msgstr ""
+
+#: src/gui/SpotList.java:75
+msgid "Played at (a ¤ means only on certain days)"
+msgstr ""
+
+#: src/main/SpotPlayer.java:81
+msgid ""
+"The sound board is occupied by another program.\n"
+"If other programs are running, e.g. a music or video player, internet "
+"browser, try closing these."
+msgstr ""
+
+#: src/main/SpotPlayer.java:83
+msgid "Audio Error"
+msgstr ""

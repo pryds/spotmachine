@@ -53,4 +53,11 @@ public class Prefs {
 	public static final String FORCE_RECORDING_ON_MIXER_NUMBER = "ForceRecordingOnMixerNumber";
 	public static final int    FORCE_RECORDING_ON_MIXER_NUMBER_DEFAULT = -1; // -1 = no force, use system default
 	
+	public static final String UNIQUE_PROGRAM_INSTALLATION_IDENTIFIER = "UniqueProgramInstallationIdentifier";
+	
+	public static final String  COLLECT_STATISTICS = "CollectStatistics";
+	public static final boolean COLLECT_STATISTICS_DEFAULT = false;
+	
+	public static final String LAST_COLLECTION_OF_STATS = "LastCollectionOfStats";
+	public static final long   LAST_COLLECTION_OF_STATS_DEFAULT = -1;
 }

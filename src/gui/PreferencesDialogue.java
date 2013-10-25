@@ -15,17 +15,23 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
+import org.xnap.commons.i18n.I18n;
+
 import main.Prefs;
 import main.SpotMachine;
 import main.Util;
 
 public class PreferencesDialogue extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 3574893252942240648L;
+	
+	private I18n i18n;
 
 	public PreferencesDialogue() {
+		i18n = Util.get().i18n();
+		
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		setResizable(false);
-		setTitle(Util.get().string("prefs-headline"));
+		setTitle(i18n.tr("Preferences"));
 		
 		JPanel panel = new JPanel();
 		setContentPane(panel);
@@ -33,6 +39,7 @@ public class PreferencesDialogue extends JFrame implements ActionListener {
 		
 		panel.add(createLanguageSelectionPanel());
 		panel.add(createNormalizationPanel());
+		panel.add(createStatsPanel());
 		panel.add(createOKCancelButtonPanel());
 		
 		pack();
@@ -43,11 +50,11 @@ public class PreferencesDialogue extends JFrame implements ActionListener {
 	private JPanel createLanguageSelectionPanel() {
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
-		mainPanel.setBorder(BorderFactory.createTitledBorder(Util.get().string("prefs-language-bordertitle")));
+		mainPanel.setBorder(BorderFactory.createTitledBorder(i18n.tr("Program Language")));
 		
 		JPanel panel = new JPanel();
 		
-		panel.add(new JLabel(Util.get().string("prefs-language-label")));
+		panel.add(new JLabel(i18n.tr("Choose language")));
 		
 		langSelect = new JComboBox();
 		Locale[] locales = Util.get().getSupportedLocales();
@@ -66,7 +73,7 @@ public class PreferencesDialogue extends JFrame implements ActionListener {
 	}
 	
 	private JTextArea createLanguageNoteTextArea() {
-		JTextArea note = new JTextArea(Util.get().wordWrap(Util.get().string("prefs-language-note-text"), 50));
+		JTextArea note = new JTextArea(Util.get().wordWrap(i18n.tr("Changes will be applied after program restart."), 50));
 		note.setEditable(false);
 		
 		//Color textColour = new Color(255, 0, 0); // red text
@@ -86,24 +93,24 @@ public class PreferencesDialogue extends JFrame implements ActionListener {
 		JPanel panel = new JPanel();
 		
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-		panel.setBorder(BorderFactory.createTitledBorder(Util.get().string("prefs-normalization-bordertitle")));
+		panel.setBorder(BorderFactory.createTitledBorder(i18n.tr("Audio Normalization")));
 		
-		panel.add(new JLabel(Util.get().string("prefs-normalization-pretext")));
+		panel.add(new JLabel(i18n.tr("Perform on newly recorded spots:")));
 		
-		dcCheckbox = new JCheckBox(Util.get().string("prefs-normalization-dc-checkbox"));
-		dcCheckbox.setToolTipText(Util.get().string("prefs-normalization-dc-tooltip"));
+		dcCheckbox = new JCheckBox(i18n.tr("Remove DC offset"));
+		dcCheckbox.setToolTipText(i18n.tr("May remove certain 'click' noises in start/end of recording"));
 		dcCheckbox.setSelected(
 				Prefs.prefs.getBoolean(Prefs.RECORDING_DO_DC_OFFSET_REMOVAL, Prefs.RECORDING_DO_DC_OFFSET_REMOVAL_DEFAULT));
 		panel.add(dcCheckbox);
 		
-		fadeCheckbox = new JCheckBox(Util.get().string("prefs-normalization-fade-checkbox"));
-		fadeCheckbox.setToolTipText(Util.get().string("prefs-normalization-fade-tooltip"));
+		fadeCheckbox = new JCheckBox(i18n.tr("Add fade-in/out"));
+		fadeCheckbox.setToolTipText(i18n.tr("Add short fade-in and fade-out"));
 		fadeCheckbox.setSelected(
 				Prefs.prefs.getBoolean(Prefs.RECORDING_DO_FADEIN_FADEOUT, Prefs.RECORDING_DO_FADEIN_FADEOUT_DEFAULT));
 		panel.add(fadeCheckbox);
 		
-		volumeCheckbox = new JCheckBox(Util.get().string("prefs-normalization-volume-checkbox"));
-		volumeCheckbox.setToolTipText(Util.get().string("prefs-normalization-volume-tooltip"));
+		volumeCheckbox = new JCheckBox(i18n.tr("Normalise volume"));
+		volumeCheckbox.setToolTipText(i18n.tr("Gives a uniform volume level of spots"));
 		volumeCheckbox.setSelected(
 				Prefs.prefs.getBoolean(Prefs.RECORDING_DO_VOLUME_NORMALIZATION, Prefs.RECORDING_DO_VOLUME_NORMALIZATION_DEFAULT));
 		panel.add(volumeCheckbox);
@@ -111,15 +118,34 @@ public class PreferencesDialogue extends JFrame implements ActionListener {
 		return panel;
 	}
 	
+	private JCheckBox statCheckbox;
+
+	private JPanel createStatsPanel() {
+		JPanel panel = new JPanel();
+		
+		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+		panel.setBorder(BorderFactory.createTitledBorder(i18n.tr("Statistical data")));
+		
+		statCheckbox = new JCheckBox(i18n.tr("Collect and send statistical data"));
+		statCheckbox.setToolTipText(i18n.tr("Allow SpotMachine to collect anonynous statistical data and send " +
+				"it to the developers for better development of SpotMachine"));
+		statCheckbox.setSelected(
+				Prefs.prefs.getBoolean(Prefs.COLLECT_STATISTICS, Prefs.COLLECT_STATISTICS_DEFAULT));
+		panel.add(statCheckbox);
+		
+		return panel;
+	}
+		
+	
 	private JPanel createOKCancelButtonPanel() {
 		JPanel panel = new JPanel();
 		
-		JButton okButton = new JButton(Util.get().string("prefs-ok-button"));
+		JButton okButton = new JButton(i18n.tr("OK"));
 		okButton.addActionListener(this);
 		okButton.setActionCommand("ok");
 		panel.add(okButton);
 		
-		JButton cancelButton = new JButton(Util.get().string("prefs-cancel-button"));
+		JButton cancelButton = new JButton(i18n.tr("Cancel"));
 		cancelButton.addActionListener(this);
 		cancelButton.setActionCommand("cancel");
 		panel.add(cancelButton);
@@ -152,6 +178,10 @@ public class PreferencesDialogue extends JFrame implements ActionListener {
 		Prefs.prefs.putBoolean(Prefs.RECORDING_DO_DC_OFFSET_REMOVAL, dcCheckbox.isSelected());
 		Prefs.prefs.putBoolean(Prefs.RECORDING_DO_FADEIN_FADEOUT, fadeCheckbox.isSelected());
 		Prefs.prefs.putBoolean(Prefs.RECORDING_DO_VOLUME_NORMALIZATION, volumeCheckbox.isSelected());
+		
+		// Save statistics prefs
+		Util.get().out("Saving statistics prefs: " + statCheckbox.isSelected(), Util.VERBOSITY_DEBUG_INFO);
+		Prefs.prefs.putBoolean(Prefs.COLLECT_STATISTICS, statCheckbox.isSelected());
 	}
 
 	public void actionPerformed(ActionEvent ae) {

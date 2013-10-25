@@ -9,6 +9,8 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableModel;
 
+import org.xnap.commons.i18n.I18n;
+
 import main.SpotContainer;
 import main.SpotMachine;
 import main.Util;
@@ -19,7 +21,9 @@ public class SpotList extends JTable {
 	private JScrollPane containingScrollPane;
 	
 	protected String[] columnToolTips;
-
+	
+	private I18n i18n;
+	
 	
 	public SpotList(TableModel tm) {
 		super(tm);
@@ -27,6 +31,8 @@ public class SpotList extends JTable {
 	}
 	
 	private void initialize() {
+		i18n = Util.get().i18n();
+		
 		setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		//setPreferredSize(new Dimension(200, 0));
 		
@@ -51,10 +57,10 @@ public class SpotList extends JTable {
 			getColumnModel().getColumn(3).setResizable(false);
 			
 			columnToolTips = new String[] {
-					Util.get().string("main-list-itemnumber-tooltip"),
+					i18n.tr("Play item number"),
 				    null, // "Name" assumed obvious
-				    Util.get().string("main-list-duration-tooltip"),
-				    Util.get().string("main-list-nextspot-tooltip")
+				    i18n.tr("Duration in minutes and seconds"),
+				    i18n.tr("* means that this spot is the next to get played")
 			};
 		} else if (getModel().getType() == SpotContainer.TYPE_SCHEDULED) {
 			getColumnModel().getColumn(1).setMaxWidth(75); // length in min:sec
@@ -65,8 +71,8 @@ public class SpotList extends JTable {
             
 			columnToolTips = new String[] {
 					null, // "Name" assumed obvious
-					Util.get().string("main-list-duration-tooltip"),
-					Util.get().string("main-list-playat-tooltip")
+					i18n.tr("Duration in minutes and seconds"),
+					i18n.tr("Played at (a ¤ means only on certain days)")
 			};
 		} else {
 			getColumnModel().getColumn(1).setMaxWidth(75); // length in min:sec
@@ -74,7 +80,7 @@ public class SpotList extends JTable {
 
 			columnToolTips = new String[] {
 				    null, // "Name" assumed obvious
-				    Util.get().string("main-list-duration-tooltip")
+				    i18n.tr("Duration in minutes and seconds")
 			};
 		}
 	}
