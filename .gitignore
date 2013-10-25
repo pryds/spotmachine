@@ -1,10 +1,10 @@
 bin/
 *~
-doc/*.aux
-doc/*.dvi
-doc/*.log
-doc/*.pdf
-doc/*.toc
+src/doc/*.aux
+src/doc/*.dvi
+src/doc/*.log
+src/doc/*.pdf
+src/doc/*.toc
 web/db.php
 web/upload.sh
 
