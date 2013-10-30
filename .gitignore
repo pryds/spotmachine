@@ -2,5 +2,5 @@ bin/
 *~
 web/db.php
 web/upload.sh
-src/spotmachine.sh
+src/spotmachine
 

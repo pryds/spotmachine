@@ -27,19 +27,17 @@ Windows, and probably other systems.
    installation). On Windows systems, this would probably be under
    C:\Program Files\ or similar. On Linux systems this would probably be
    under /opt
-4. Add the complete path to the directory to your CLASSPATH.
-5. To start the program, execute the following command, either directly on a
-   command line prompt, or via a start menu icon, or similar:
-   java main.SpotMachine
-   (note, you need to use a forward slash (/) under all systems, including
-   Windows, which normally uses backslashes.
-6. On Linux, you can (alternatively to step 4 and 5) make a new executable
-   file in e.g. /usr/bin called spotmachine with the following two lines:
-   export CLASSPATH=$CLASSPATH:/opt/spotmachine-0.1.1
-   java main/SpotMachine $1
-   (Replace the version number in the first line with the one from the actual
-   directory you copied). This enables you to start the program just by
-   typing spotmachine in any command prompt, or to create a menu item.
+4. To start the program, execute the following command:
+   ./spotmachine
+5. On Linux, you can (alternatively to step 4) copy the spotmachine executable
+   shell script file mentioned in step 4 to e.g. /usr/bin.
+   Only, you need to load the file in a text editor and change the classpath
+   part from relative paths to absolute paths. This means, if you copied
+   SpotMachine to /opt/spotmachine-0.1.1, you need to change the "../bin" part
+   into "/opt/spotmachine-0.1.1/bin" and the "resources/gettext-commons-0.9.6.jar"
+   part into "/opt/spotmachine-0.1.1/bin/resources/gettext-commons-0.9.6.jar".
+   This enables you to start the program just by typing spotmachine in any
+   command prompt, or to create a menu item.
 
 
 MAKING A BACKUP OF PROGRAM DATA AND SETTINGS
