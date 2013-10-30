@@ -1,0 +1,8 @@
+# This is a list of languages for the user manual
+# For each locale listed here, there will have to be a corresponding
+# file called manual-ll.po, where ll is the locale code listed below,
+# containing translations to all strings used in the manual.
+# Lines starting with a # will be disregarded.
+da
+en
+

@@ -5,6 +5,7 @@ src/doc/*.dvi
 src/doc/*.log
 src/doc/*.pdf
 src/doc/*.toc
+src/doc/manual-*.tex
 web/db.php
 web/upload.sh
 

@@ -1,0 +1,798 @@
+# Copyright (C) 2013 Free Software Foundation, Inc.
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Thomas Pryds <thomas@pryds.eu>, 2013.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2013-10-25 09:38+0300\n"
+"PO-Revision-Date: 2013-10-25 09:33+0200\n"
+"Last-Translator: Thomas Pryds <thomas@pryds.eu>\n"
+"Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
+"Language: da\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 1.5\n"
+
+#. type: title{#1}
+#: ../doc/manual.tex:19
+msgid "SpotMachine"
+msgstr "SpotMachine"
+
+#. type: title{#1}
+#: ../doc/manual.tex:19
+msgid "Usermanual"
+msgstr "Brugermanual"
+
+#. type: author{#1}
+#: ../doc/manual.tex:19
+msgid "Thomas Pryds"
+msgstr "Thomas Pryds\\\\Oversat af Thomas Pryds"
+
+#. type: Plain text
+#: ../doc/manual.tex:19
+msgid "\\date{June 2013}"
+msgstr ""
+
+#. type: chapter{#2}
+#: ../doc/manual.tex:27
+msgid "Introduction"
+msgstr "Introduktion"
+
+#. type: document
+#: ../doc/manual.tex:32
+msgid ""
+"SpotMachine lets you record and sequentially play pieces of audio. It is "
+"intended for commercial audio spots running in shopping malls, supermarkets, "
+"amusement parks, and other places with the need of reaching out to masses "
+"through repetitive audio clips."
+msgstr ""
+"SpotMachine lader dig optage og afspille lydbidder sekventielt. Det er "
+"beregnet til kommercielle lydspots, der kører i storcentre, "
+"supermarkeder, forlystelsesparker og andre steder, der har behov for at nå "
+"større grupper mennesker gennem gentagne lydklip."
+
+#. type: section{#2}
+#: ../doc/manual.tex:38
+msgid "Features"
+msgstr ""
+
+#. type: document
+#: ../doc/manual.tex:38
+msgid ""
+"There are a lot of reasons to choose SpotMachine over a dedicated piece of "
+"spot hardware. Such devices are often very expensive, complicated to "
+"operate, and have a limit on amount or total length of recorded spots. "
+"Following is a list of some of SpotMachine's features."
+msgstr ""
+"Der er mange grunde til at vælge SpotMachine frem for en dedikeret "
+"spotmaskine. Sådanne enheder er ofte meget dyre, besværlige at betjene og "
+"har en begrænsning på antal af eller totallængde på spots. Her følger en "
+"liste over nogle af SpotMachines funktioner."
+
+#. \item Upcoming: Import spot from audio file
+#. type: itemize
+#: ../doc/manual.tex:52
+msgid "Arrange order of spots for rotation"
+msgstr "Arrangér rækkefølgen på spots til afspilning"
+
+#. type: itemize
+#: ../doc/manual.tex:52
+msgid "Play spots by interval (specify pause time)"
+msgstr "Afspil spots efter interval (angiv pausetid)"
+
+#. type: itemize
+#: ../doc/manual.tex:52
+msgid "Play spots by schedule (specify point in time)"
+msgstr "Afspil spots efter skema (angiv tidspunkt)"
+
+#. type: itemize
+#: ../doc/manual.tex:52
+msgid "Record your own audio spots"
+msgstr "Optag dine egne lydspots"
+
+#. type: itemize
+#: ../doc/manual.tex:52
+msgid "Easy and simple user interface"
+msgstr "Nemt og simpelt brugerflade"
+
+#. type: itemize
+#: ../doc/manual.tex:52
+#, fuzzy
+#| msgid "Keep spots for later use"
+msgid "Keep unused spots for later use"
+msgstr "Behold spots til senere afspilning"
+
+#. type: itemize
+#: ../doc/manual.tex:52
+msgid "Have the same spot multiple times in the same rotation"
+msgstr "Hav det samme spot flere gange i samme rotation"
+
+#. type: itemize
+#: ../doc/manual.tex:52
+msgid "No limit on number of spots or spot length"
+msgstr "Ingen begrænsning på antal spots eller spotlængde"
+
+#. type: itemize
+#: ../doc/manual.tex:52
+msgid "Audio normalization for uniform spot messages"
+msgstr "Lydnormalisering for ensartede spotbeskeder"
+
+#. type: itemize
+#: ../doc/manual.tex:52
+msgid ""
+"Available in multiple languages, including English, Danish, German, "
+"Ukrainian, and Brasilian Portuguese (and easily extended into more languages)"
+msgstr ""
+"Tilgængelig på adspillige sprog, inklusive engelsk, dansk, tysk, ukrainsk og "
+"brasiliansk portugisisk (og kan nemt udvides med flere sprog)"
+
+#. type: section{#2}
+#: ../doc/manual.tex:58
+msgid "Licensing"
+msgstr "Licens"
+
+#. type: document
+#: ../doc/manual.tex:58
+msgid ""
+"SpotMachine is released under the GPL license which means that you are "
+"allowed to use it for whatever purpose you want, be it commercial or non-"
+"commercial. You can even download the source code and change the behaviour "
+"of the program if you so desire."
+msgstr ""
+
+#. type: document
+#: ../doc/manual.tex:63
+msgid ""
+"You are also allowed to redistribute SpotMachine, with or without changes, "
+"as long as you do so under the same license, and provide the source code for "
+"whichever changes you have made. You can read the full details of the "
+"licence in the LICENSE text file which is distributed with SpotMachine."
+msgstr ""
+
+#. type: chapter{#2}
+#: ../doc/manual.tex:69
+msgid "Installation"
+msgstr ""
+
+#. type: document
+#: ../doc/manual.tex:69
+msgid ""
+"SpotMachine runs on all major operating systems, and its only requirement is "
+"a working, current install of Java. If you do not have Java on your system, "
+"you should download and install it from \\url{http://java.oracle.com} or "
+"through your operating system's package management system, prior to "
+"installing SpotMachine."
+msgstr ""
+
+#. type: document
+#: ../doc/manual.tex:72
+msgid ""
+"You should also be able to run SpotMachine on the open source OpenJDK "
+"instead of the official Java from Oracle. OpenJDK is the default Java on e."
+"g. Ubuntu Linux."
+msgstr ""
+
+#. type: section{#2}
+#: ../doc/manual.tex:78
+msgid "Windows"
+msgstr ""
+
+#. type: document
+#: ../doc/manual.tex:78
+msgid ""
+"An easy-to-use installer package is available for Windows. Just download it "
+"from the SpotMachine website, run it, and follow the instructions on-screen. "
+"The installer, of course, provides easy, Windows-integrated means of "
+"uninstalling SpotMachine."
+msgstr ""
+
+#. type: section{#2}
+#: ../doc/manual.tex:85
+msgid "Ubuntu and Debian"
+msgstr ""
+
+#. type: document
+#: ../doc/manual.tex:85
+msgid ""
+"On systems that use the Debian packaging system, you can make use of the "
+"precompiled deb package which is provided through the SpotMachine website. "
+"After downloading the file, just install it by either double clicking it, or "
+"by the following command: \\texttt{sudo dpkg -i spotmachine-X.X.deb}. This "
+"package assumes you have installed Java through the package system."
+msgstr ""
+
+#. type: section{#2}
+#: ../doc/manual.tex:92
+msgid "Other Linux, Mac, and Others"
+msgstr ""
+
+#. type: document
+#: ../doc/manual.tex:92
+msgid ""
+"Currently, no installer is provided for these systems, unfortunately. "
+"However, installation is not very complicated: Download the pre-compiled "
+"package spotmachine*.bin.tar.bz2 (where * is the newest version number), "
+"uncompress it to somewhere on your harddrive, and follow the instructions in "
+"the INSTALL text file."
+msgstr ""
+
+#. type: section{#2}
+#: ../doc/manual.tex:97
+msgid "Sources"
+msgstr ""
+
+#. type: document
+#: ../doc/manual.tex:97
+msgid ""
+"If you wish to compile SpotMachine yourself, you can download the source "
+"code package from the SpotMachine website. Uncompress the file to somewhere "
+"on your harddrive, and follow the instructions in the INSTALL text file."
+msgstr ""
+
+#. type: chapter{#2}
+#: ../doc/manual.tex:102
+msgid "Daily Usage"
+msgstr ""
+
+#. type: document
+#: ../doc/manual.tex:102
+msgid ""
+"All features of SpotMachine are, directly or indirectly, available from the "
+"main window. This is where you can see an overview of recorded spots, which "
+"spots are currently in rotation, when they are playing."
+msgstr ""
+
+#. type: caption{#2}
+#: ../doc/manual.tex:107
+msgid "Main window"
+msgstr ""
+
+#. type: document
+#: ../doc/manual.tex:116
+msgid "The main window is split up in three parts:"
+msgstr ""
+
+#. type: itemize
+#: ../doc/manual.tex:116
+msgid ""
+"The top part containing the {\\bf control buttons} Play, Pause, Previous and "
+"Next."
+msgstr ""
+
+#. type: itemize
+#: ../doc/manual.tex:116
+msgid "The left side containing all {\\bf available spots}."
+msgstr ""
+
+#. type: itemize
+#: ../doc/manual.tex:116
+msgid ""
+"The right side containing spots currently in {\\bf interval rotation} and "
+"spots currently in {\\bf scheduled rotation}."
+msgstr ""
+
+#. This behaviour might change
+#. type: section{#2}
+#: ../doc/manual.tex:124
+msgid "Control Buttons"
+msgstr ""
+
+#. type: document
+#: ../doc/manual.tex:124
+msgid ""
+"At the top you control whether the current rotation spots are to be played, "
+"or if they're on pause. For normal use, the SpotMachine would typically be "
+"set to ``Play'' and then left alone. Pause would typically be used while "
+"recording new spots -- in fact you cannot record new spots, unless pause in "
+"on. Note that pausing only affects spots that are on interval rotation (see "
+"further down for an explanation), not those set for scheduled play."
+msgstr ""
+
+#. type: section{#2}
+#: ../doc/manual.tex:131
+msgid "Available Spots"
+msgstr ""
+
+#. type: document
+#: ../doc/manual.tex:131
+msgid ""
+"The left side of the main window shows a list of recorded spots. These spots "
+"are not necessarily set up for interval or scheduled play (more about this "
+"later) -- this is a list of all spots available to you at any given moment. "
+"By selecting a spot in this list, you may rename it, delete it, or set it up "
+"for interval or scheduled play."
+msgstr ""
+
+#. type: subsection{#2}
+#: ../doc/manual.tex:137
+msgid "Recording a New Spot"
+msgstr ""
+
+#. type: document
+#: ../doc/manual.tex:137
+msgid ""
+"You can record a new spot through a connected microphone. All new spots will "
+"show up in the Available spots list. To do so, click the Record new button "
+"below the Available spots list, and a new window will pop up, from which you "
+"can control the recording itself."
+msgstr ""
+
+#. type: caption{#2}
+#: ../doc/manual.tex:142
+msgid "Record new spot window"
+msgstr ""
+
+#. type: document
+#: ../doc/manual.tex:147
+msgid ""
+"Here, you can give the spot a name, which will appear in spot lists. Be sure "
+"to give the spot a descriptive name, and note that you {\\em are} able to "
+"give the exact same name to two different spots! You are able to type in a "
+"name either before, during or after recording a spot."
+msgstr ""
+
+#. type: document
+#: ../doc/manual.tex:153
+msgid ""
+"In the middle of the window are two buttons. The left button will start the "
+"actual recording of the spot. The right one will stop recording. While "
+"recording, you can keep track of the length of the spot just above the "
+"record and stop buttons. Here, you can also see, whether SpotMachine is "
+"currently recording, or not."
+msgstr ""
+
+#. type: document
+#: ../doc/manual.tex:161
+msgid ""
+"When you click the Stop button, the recording is immediately played back "
+"once, to let you hear if everything is like you want it to be. For this "
+"reason, be sure to check that you are not connected to an amplifier or in "
+"some other way publicly transmitting before starting to record new spots. "
+"Connecting a set of headphones instead is recommended. If the recording does "
+"not sound ok, you can click the record button again, which discards the "
+"previous recording and starts a new one."
+msgstr ""
+
+#. type: document
+#: ../doc/manual.tex:166
+msgid ""
+"If you like what you hear, click the OK button, and the new spot is added to "
+"the Available spots list in the main window. If instead, you click the "
+"Cancel button, any newly recorded spot is discarded, and the recording "
+"window is closed."
+msgstr ""
+
+#. type: subsection{#2}
+#: ../doc/manual.tex:168
+msgid "Deleting a Spot"
+msgstr ""
+
+#. type: caption{#2}
+#: ../doc/manual.tex:173
+msgid "Delete spot window"
+msgstr ""
+
+#. type: document
+#: ../doc/manual.tex:180
+msgid ""
+"If you decide you will not need a certain spot ever again, you can delete it "
+"entirely from disk. You do so by selecting the spot in the Available spots "
+"list and click the Delete button. You will be met with a brief acknowledge "
+"window, just to make sure that you are not deleting something by accident. "
+"If you delete a spot that is currently also in the Interval spots and/or "
+"Scheduled spots lists, the spot will also be removed from these lists."
+msgstr ""
+
+#. type: document
+#: ../doc/manual.tex:184
+msgid ""
+"Note, this function deletes the spot's audio file from disk, so it is non-"
+"reversible. If you are probably going to use a spot at some later point, but "
+"not now, you can just let it sit in the Available spots list for later use."
+msgstr ""
+
+#. type: subsection{#2}
+#: ../doc/manual.tex:186
+msgid "Renaming a Spot"
+msgstr ""
+
+#. type: caption{#2}
+#: ../doc/manual.tex:191
+msgid "Rename spot window"
+msgstr ""
+
+#. type: document
+#: ../doc/manual.tex:198
+msgid ""
+"Changing the name of a spot after it has been recorded is possible through "
+"the Rename button. By clicking it you will be presented with a small popup "
+"window that allows you to do so. Bear in mind, that spots are not recognized "
+"by the program from their names, so it is perfectly possible to name two "
+"spots exactly the same, for whatever reason you might have to do so. In most "
+"cases, this is discouraged, though, as to not confuse spots with each other."
+msgstr ""
+
+#. type: section{#2}
+#: ../doc/manual.tex:205
+msgid "Interval and Scheduled Spots"
+msgstr ""
+
+#. type: document
+#: ../doc/manual.tex:205
+msgid ""
+"The right side of the main window is, in turn, divided into two lists of "
+"spots.  The spots shown in these two lists have the fact in common that they "
+"are set up for being played in one way or another; playlists, if you like. "
+"Note, that a spot can easily appear in both lists -- in fact, it can appear "
+"more than once in either list."
+msgstr ""
+
+#. type: paragraph{#2}
+#: ../doc/manual.tex:214
+msgid "Interval spots:"
+msgstr ""
+
+#. type: document
+#: ../doc/manual.tex:214
+msgid ""
+"The first one is a list of spots that are played sequentially with a given "
+"interval between them, e.g. five minutes. In a commercial setting like a "
+"supermarket, this would be used for promoting special offers (``Half price "
+"on milk today''), service announcements (``Extended opening hours "
+"tomorrow''), etc. In figure~\\ref{intervalspotslist} you see an example of a "
+"list of interval spots. They are presented in the order they will be played, "
+"and the asterisk (*) on one of the lines tells you which spot will be played "
+"next."
+msgstr ""
+
+#. type: caption{#2}
+#: ../doc/manual.tex:220
+msgid "Interval spots list"
+msgstr ""
+
+#. type: paragraph{#2}
+#: ../doc/manual.tex:229
+msgid "Scheduled spots:"
+msgstr ""
+
+#. type: document
+#: ../doc/manual.tex:229
+msgid ""
+"The second list contains spots which are played at a given point in time, e."
+"g. at 7:45~PM every Monday to Friday. This might be used for time based "
+"service announcements (like in our supermarket example: ``15 minutes till "
+"closing time'', etc.). Figure~\\ref{scheduledspotslist} shows an example of "
+"a scheduled spots list. Some lines may show a ``\\textcurrency'' symbol. "
+"This means that the spot has been configured to run only on certain, defined "
+"days. This will be explained in more detail in section~\\ref{sec:"
+"addscheduledspot}."
+msgstr ""
+
+#. type: caption{#2}
+#: ../doc/manual.tex:235
+msgid "Scheduled spots list"
+msgstr ""
+
+#. type: subsection{#2}
+#: ../doc/manual.tex:241
+msgid "Adding a Spot as an Interval Spot"
+msgstr ""
+
+#. type: document
+#: ../doc/manual.tex:241
+msgid ""
+"Between the Available spots list and the Interval spots list, you see two "
+"arrow buttons. The arrow point to the right copies a spot into the Interval "
+"spots list. You can copy the same spot into the list several times, if you "
+"have a certain spot that you want to play more often than the others."
+msgstr ""
+
+#. type: subsection{#2}
+#: ../doc/manual.tex:245
+msgid "Changing the Properties of Interval Spots"
+msgstr ""
+
+#. type: document
+#: ../doc/manual.tex:245
+msgid ""
+"The play order is given in the list, and by selecting a spot and clicking "
+"the Move up and Move down buttons, you can change this to your linking."
+msgstr ""
+
+#. type: document
+#: ../doc/manual.tex:249
+msgid ""
+"Below the list you can choose whether to start over when the end of the list "
+"has been reached (by checking the Repeat all checkbox). Also, you can set "
+"the amount of minutes between playing each spot."
+msgstr ""
+
+#. type: subsection{#2}
+#: ../doc/manual.tex:255
+msgid "Adding a Spot as a Scheduled Spot"
+msgstr ""
+
+#. type: document
+#: ../doc/manual.tex:255
+msgid ""
+"Like for interval spots, there are two arrow buttons for scheduled spots. "
+"The right-pointing arrow copies a spot to the Scheduled spots list, while "
+"the left-pointing arrow removes it."
+msgstr ""
+
+#. type: caption{#2}
+#: ../doc/manual.tex:260
+msgid "Adding a scheduled spot"
+msgstr ""
+
+#. type: document
+#: ../doc/manual.tex:265
+msgid ""
+"When you add a spot to the Scheduled spots list, you are presented with a "
+"properties window which mighy look confusing at first. Actually, it is quite "
+"simple, though. The first part sets the time of day (always in 24 hour "
+"system)  for the spot to start playing. Then come weekdays, day of the "
+"month, and month."
+msgstr ""
+
+#. type: document
+#: ../doc/manual.tex:271
+msgid ""
+"For a group (for instance ``weekdays'') either of your selections may be "
+"true in order for the spot to play. In figure~\\ref{scheduledspotexample1}, "
+"the spot will play if today is either Monday or Tuesday. It should be quite "
+"clear that this works as ``OR'', and not as ``AND'', since it will never be "
+"both Monday and Tuesday on the same day."
+msgstr ""
+
+#. type: caption{#2}
+#: ../doc/manual.tex:277
+msgid "Weekdays example"
+msgstr ""
+
+#. type: document
+#: ../doc/manual.tex:285
+msgid ""
+"What is important to notice is that between groups, the relation is "
+"``AND''.  This means that in figure~\\ref{scheduledspotexample2}, the spot "
+"will play if today is either Monday or Tuesday, AND at the same time it is "
+"the 15th of the month. Or put the other way around: The spot will play on "
+"the 15th, but only if the 15th is a Monday or a Tuesday. This means that if "
+"you want the spot to play on all Mondays and Tuesdays, but also on all of "
+"the 15th, you will have to add the spot twice."
+msgstr ""
+
+#. type: caption{#2}
+#: ../doc/manual.tex:291
+msgid "Weekdays and day of the month example"
+msgstr ""
+
+#. type: subsection{#2}
+#: ../doc/manual.tex:297
+msgid "Changing the Properties of Scheduled Spots"
+msgstr ""
+
+#. type: document
+#: ../doc/manual.tex:297
+msgid ""
+"Once a scheduled spot has been added, it is possible to bring back the "
+"properties window. This is done by selecting the spot that you want to "
+"change, and then clicking the Edit button next to the spot list. Here you "
+"will be able to edit all the details as described in the above section."
+msgstr ""
+
+#. type: chapter{#2}
+#: ../doc/manual.tex:299
+msgid "Setting Up"
+msgstr ""
+
+#. type: section{#2}
+#: ../doc/manual.tex:301
+msgid "Preferences"
+msgstr ""
+
+#. type: section{#2}
+#: ../doc/manual.tex:305
+msgid "Less Obvious Options"
+msgstr ""
+
+#. type: document
+#: ../doc/manual.tex:309
+msgid ""
+"This chapter covers some slightly more advanced options and possibilities "
+"that are not necessarily available directly from the graphical user "
+"interface of SpotMachine."
+msgstr ""
+
+#. type: subsection{#2}
+#: ../doc/manual.tex:311
+msgid "Editing of Spot Sound Files by Third-Party Programs"
+msgstr ""
+
+#. type: document
+#: ../doc/manual.tex:318
+msgid ""
+"If you wish to do so, it is possible to edit the sound files that were "
+"recorded in SpotMachine, or even replace a spot altogether, through third-"
+"party software, such as Audacity. The edited/replacing spot doesn't have to "
+"be the same length or even format as the original. It does have to be an "
+"uncompressed WAV-file, though. You might wish to do this if you want to "
+"apply some more sofisticated effects or filters to a the sound file than "
+"what SpotMachine can deliver."
+msgstr ""
+
+#. type: document
+#: ../doc/manual.tex:323
+msgid ""
+"This is a feature that is not yet implemented as such, so it is basically a "
+"question of closing down SpotMachine (important, as to not confuse it with "
+"changing spot lengths, audio formats, etc.), then locating the actual sound "
+"files on disk and opening them in your third-party sound editor of choice."
+msgstr ""
+
+#. type: document
+#: ../doc/manual.tex:330
+msgid ""
+"On Linux and Mac, the sound files will be present in a directory \\texttt{."
+"spotmachine} in the user's home directory. On Windows, the directory will "
+"most likely be present in the system's default location for application "
+"data. This is a bit different on different versions and translations of "
+"Windows, so the easiest way to locate the directory on your system is "
+"probably to open the file explorer, type \\texttt{\\%programdata\\%} in the "
+"location bar, and hit enter."
+msgstr ""
+
+#. type: document
+#: ../doc/manual.tex:334
+msgid ""
+"The files will have random names, but perhaps you can recognize the one you "
+"want on the file's creation date/time. Remember to save the file with the "
+"exact same file name (including the \\texttt{.wav} extension)."
+msgstr ""
+
+#. type: document
+#: ../doc/manual.tex:339
+msgid ""
+"SpotMachine records spots in uncompressed PCM format (signed), with a sample "
+"rate of 44,100 Hz, in 16 bits mono, but is capable of playing PCM files with "
+"other sample rates, bits, mono/stereo, etc. It will not be able to play "
+"compressed files, such as MP3 files, though."
+msgstr ""
+
+#. type: document
+#: ../doc/manual.tex:343
+msgid ""
+"If you want to convert an unsupported file format, such as MP3, you can do "
+"so with an application such as the Gnome Sound Converter on Linux and fre:ac "
+"for Windows, Mac and other platforms."
+msgstr ""
+
+#. type: subsection{#2}
+#: ../doc/manual.tex:349
+msgid "Forcing a Certain Sound Mixer"
+msgstr ""
+
+#. type: document
+#: ../doc/manual.tex:349
+msgid ""
+"If your computer has several sound boards, or for any other reason you need "
+"to specify a certain sound output or recording mixer, you can do so directly "
+"through SpotMachine's preferences file/registry keys. At a later point, the "
+"possibility of changing this option will be added to the preferences window."
+msgstr ""
+
+#. type: document
+#: ../doc/manual.tex:354
+msgid ""
+"On Linux, the preferences file will be placed in the \\texttt{.java/."
+"userPrefs/SpotMachine} subdirectory to your home directory. On Windows, the "
+"preferences will be saved in the registry database. The exact location will "
+"vary depending on your Windows version, but if you search for \\texttt"
+"{JavaSoft\\textbackslash{}Prefs}, you will find it."
+msgstr ""
+
+#. type: document
+#: ../doc/manual.tex:361
+msgid ""
+"In order to set a specific mixer on which to play spots, add a new key "
+"called \\texttt{ForcePlayOnMixerNumber} with a value of 1 or above. The "
+"value will denote the number of the mixer on which to play. If you set the "
+"value to 0, or remove the key, SpotMachine will play spots on the default "
+"mixer. To set a specific mixer for recording spots, you can add a key called "
+"\\texttt{ForceRecordingOnMixerNumber} instead or in addition."
+msgstr ""
+
+#. type: chapter{#2}
+#: ../doc/manual.tex:363
+msgid "Contributing"
+msgstr ""
+
+#. type: document
+#: ../doc/manual.tex:367
+msgid ""
+"SpotMachine is open source software. That means, among other things, that at "
+"all times you have access to the source code from SpotMachine's website. "
+"Having access to that, you may choose to contribute."
+msgstr ""
+
+#. type: document
+#: ../doc/manual.tex:370
+msgid ""
+"There are several ways you can contribute. Also ways that don't require you "
+"to be a programmer, or even technically minded."
+msgstr ""
+
+#. type: section{#2}
+#: ../doc/manual.tex:372
+msgid "Reporting Bugs if you find any"
+msgstr ""
+
+#. type: document
+#: ../doc/manual.tex:378
+msgid ""
+"No piece of software is free of bugs, and although SpotMachine is known to "
+"run for months---if not more---without interruption, of course SpotMachine "
+"is no more bug-free than other applications. One of the advantages of open "
+"source software is that you can easily get in touch with the developers and "
+"tell them about any bugs you might discover, so that they may be corrected "
+"for a later release."
+msgstr ""
+
+#. type: document
+#: ../doc/manual.tex:385
+msgid ""
+"To report bugs for SpotMachine, head to the issue tracker\\footnote{\\url"
+"{http://github.com/pryds/spotmachine/issues}}. Click the ``New Issue'' "
+"button and fill in the fields. Be sure to describe what you experience as "
+"thoroughly as at all possible, and include information on your SpotMachine "
+"version (you can find this in the ``About'' window), your operating system "
+"version (e.g. Windows 7, Ubuntu 13.10, etc.), your Java version (this is "
+"best obtained by running the command \\texttt{java -version} command on your "
+"system)."
+msgstr ""
+
+#. type: section{#2}
+#: ../doc/manual.tex:387
+msgid "Translating"
+msgstr ""
+
+#. type: document
+#: ../doc/manual.tex:391
+msgid ""
+"SpotMachine is available in several languages, but there's always the need "
+"for more help. Just like the code, the translated text strings that make up "
+"the SpotMachine user interface are contributed by volunteers."
+msgstr ""
+
+#. type: document
+#: ../doc/manual.tex:398
+msgid ""
+"The translations of SpotMachine are handled through the Translation Project"
+"\\footnote{\\url{http://translationproject.org}}, where a lot of very "
+"experienced language teams do the actual translations and handle submission "
+"of these translations back to projects like SpotMachine. Therefore, if you "
+"want to contribute, you should contact the language team for your language. "
+"Usually, these teams are even able to proofread your translation. There is a "
+"list of all language teams at the Translation Project's website, complete "
+"with contact information."
+msgstr ""
+
+#. type: document
+#: ../doc/manual.tex:405
+msgid ""
+"Translating SpotMachine into your language (or improving on an existing "
+"translation) requires no programming skills at all. All the application's "
+"text strings and their translated counterparts are stored in a text file in "
+"a certain format, one file per language. Several text editors exist that are "
+"able to edit these so-called PO files in a very user friendly manner. Two "
+"recommended PO editors are Lokalize\\footnote{\\url{http://userbase.kde.org/"
+"Lokalize}} and Poedit\\footnote{\\url{http://www.poedit.net/}}."
+msgstr ""
+
+#. type: section{#2}
+#: ../doc/manual.tex:407
+msgid "Coding"
+msgstr ""

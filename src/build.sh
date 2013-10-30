@@ -19,3 +19,15 @@ done < po/languages
 echo "Getting git describe info"
 git describe > $OUTPUTDIR/version
 
+#Build manuals
+cd doc
+./buildmanual.sh
+while read line; do
+  f=${line:0:1}
+  if [ "$f" != "#" ] && [ "$line" != "en" ] && [ "$line" != "" ]; then
+    ./buildmanual.sh $line
+  fi
+done < ../po/languages-manual
+./buildmanual.sh clean
+cd ..
+
