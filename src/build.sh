@@ -19,3 +19,8 @@ done < po/languages
 echo "Getting git describe info"
 git describe > $OUTPUTDIR/version
 
+echo "#!/bin/bash" > spotmachine.sh
+echo "java -classpath $CLASSPATH:../bin:resources/gettext-commons-0.9.6.jar main.SpotMachine $1" >> spotmachine.sh
+chmod +x spotmachine.sh
+echo "Start script written. Run ./spotmachine.sh to start without installing."
+
