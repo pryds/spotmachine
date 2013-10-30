@@ -215,7 +215,7 @@ public class RecordDialogue extends JFrame implements ActionListener {
 			cancelButton.setEnabled(false);
 			rec = new SpotRecorder();
 			new Thread(rec).start();
-			setStatusTextField(i18n.tr("RECORDING"));
+			setStatusTextField(i18n.trc("verb", "RECORDING"));
 		} else if (action.equals("pause")) {
 			// TODO: Detect if already paused and unpause instead if so
 			recordButton.setEnabled(true);
@@ -225,7 +225,7 @@ public class RecordDialogue extends JFrame implements ActionListener {
 		} else if (action.equals("stop")) {
 			stopButton.setEnabled(false);
 
-			setStatusTextField(i18n.tr("STOPPING RECORDING..."));
+			setStatusTextField(i18n.trc("I.e. stopping the process of recording", "STOPPING RECORDING..."));
 			if (rec != null) {
 				rec.stopRecoding();
 				lastFinishedRecording = rec.getOutFile();

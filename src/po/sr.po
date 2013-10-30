@@ -1,0 +1,365 @@
+# Serbian translation for spotmachine.
+# Copyright (C) 2013 Free Software Foundation, Inc.
+# This file is distributed under the same license as the spotmachine package.
+# Мирослав Николић <miroslavnikolic@rocketmail.com>, 2013.
+msgid ""
+msgstr ""
+"Project-Id-Version: spotmachine-0.3.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-08-31 15:04+0200\n"
+"PO-Revision-Date: 2013-10-27 21:22+0200\n"
+"Last-Translator: Мирослав Николић <miroslavnikolic@rocketmail.com>\n"
+"Language-Team: Serbian <(nothing)>\n"
+"Language: sr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#: src/gui/SchedulePropertiesDialogue.java:47
+msgid "Properties for Scheduled Spot"
+msgstr "Својства Заказаног спота"
+
+#: src/gui/SchedulePropertiesDialogue.java:69
+msgid "Play spot at (24 hours format)"
+msgstr "Пусти спот (24-часовни запис)"
+
+#: src/gui/SchedulePropertiesDialogue.java:98
+msgid "On these weekdays"
+msgstr "Овим данима"
+
+#: src/gui/SchedulePropertiesDialogue.java:117
+msgid "On these days of the month"
+msgstr "Овим данима у месецу"
+
+#: src/gui/SchedulePropertiesDialogue.java:134
+msgid "On these months"
+msgstr "Ових месеци"
+
+#: src/gui/SchedulePropertiesDialogue.java:149
+msgid "Note, that the spot is only played if ALL conditions above are met. If, for instance, only 'Wednesday' and '20' (plus all months) are selected, the spot is only played if today is BOTH Wednesday AND the 20th of the month."
+msgstr "Знајте, да ће спот бити пуштен само ако су СВИ горњи услови задовољени. Ако су, на пример, изабрани само „Среда“ и „20“ (плус сви месеци), спот ће бити пуштен само ако је данас И среда И 20-ти у месецу."
+
+#: src/gui/SchedulePropertiesDialogue.java:166 src/gui/RecordDialogue.java:156
+#: src/gui/PreferencesDialogue.java:123
+msgid "OK"
+msgstr "У реду"
+
+#: src/gui/SchedulePropertiesDialogue.java:171 src/gui/RecordDialogue.java:162
+#: src/gui/PreferencesDialogue.java:128
+msgid "Cancel"
+msgstr "Откажи"
+
+#: src/gui/RecordDialogue.java:47
+msgid "Record New Spot"
+msgstr "Снимите нови спот"
+
+#: src/gui/RecordDialogue.java:53
+msgid "Name:"
+msgstr "Назив:"
+
+#: src/gui/RecordDialogue.java:74
+msgid "Current duration:"
+msgstr "Тренутно трајање:"
+
+#: src/gui/RecordDialogue.java:86 src/gui/RecordDialogue.java:279
+msgid "STOPPED"
+msgstr "ЗАУСТАВЉЕН"
+
+#: src/gui/RecordDialogue.java:107
+msgctxt "Recording (noun)"
+msgid "Recording"
+msgstr "Снимање"
+
+#: src/gui/RecordDialogue.java:109
+msgid "Re-record"
+msgstr "Поново сними"
+
+#: src/gui/RecordDialogue.java:116 src/gui/MainFrame.java:115
+msgid "Pause"
+msgstr "Застани"
+
+#: src/gui/RecordDialogue.java:124
+msgid "Stop"
+msgstr "Стани"
+
+#: src/gui/RecordDialogue.java:136
+msgid "Remember to disconnect audio output, amplifier, or similar before recording starts, since the recorded spot will be played immediately after recording has finished."
+msgstr "Не заборавите да искључите аудио излаз, појачало, или слично пре почетка снимања, јер ће снимљени спот бити пуштен одмах након завршеног снимања."
+
+#: src/gui/RecordDialogue.java:157
+msgid "Close the recording window and save the recorded spot"
+msgstr "Затвори прозор снимања и сачувај снимљени спот"
+
+#: src/gui/RecordDialogue.java:163
+msgid "Close the recording window without saving"
+msgstr "Затвори прозор снимања без чувања"
+
+#: src/gui/RecordDialogue.java:181
+msgid "No recording has been done yet."
+msgstr "Никакво снимање за сада није обављено."
+
+#: src/gui/RecordDialogue.java:182
+msgid "No recording"
+msgstr "Нема снимака"
+
+#: src/gui/RecordDialogue.java:187
+msgid "Write a name for the recorded spot."
+msgstr "Запишите назив снимљеног спота."
+
+#: src/gui/RecordDialogue.java:188
+msgid "No name for spot"
+msgstr "Нема назива за спот"
+
+#: src/gui/RecordDialogue.java:218
+msgid "RECORDING"
+msgstr "СНИМАМ"
+
+#: src/gui/RecordDialogue.java:224
+msgid "PAUSED"
+msgstr "ПАУЗИРАНО"
+
+#: src/gui/RecordDialogue.java:228
+msgid "STOPPING RECORDING..."
+msgstr "ЗАУСТАВЉАМ СНИМАЊЕ..."
+
+#: src/gui/RecordDialogue.java:240
+msgid "NORMALISING AUDIO"
+msgstr "НОРМАЛИЗУЈЕМ ЗВУК"
+
+#: src/gui/RecordDialogue.java:261
+msgid "PLAYING"
+msgstr "ПУШТАМ"
+
+#: src/gui/MainFrame.java:75
+msgid "Time until next spot:"
+msgstr "Време до следећег спота:"
+
+#: src/gui/MainFrame.java:88 src/gui/SpotListModel.java:29
+msgid "#"
+msgstr "#"
+
+#: src/gui/MainFrame.java:108
+msgid "Play"
+msgstr "Пусти"
+
+#: src/gui/MainFrame.java:123
+msgid "Previous"
+msgstr "Претходно"
+
+#: src/gui/MainFrame.java:130
+msgid "Next"
+msgstr "Следеће"
+
+#: src/gui/MainFrame.java:177
+msgid "Available spots"
+msgstr "Доступни спотови"
+
+#: src/gui/MainFrame.java:189
+msgid "Record new"
+msgstr "Сними нови"
+
+#: src/gui/MainFrame.java:194
+msgid "Delete"
+msgstr "Обриши"
+
+#: src/gui/MainFrame.java:205
+msgid "Rename"
+msgstr "Преименуј"
+
+#: src/gui/MainFrame.java:220
+msgid "Insert selected available spot into list of interval spots"
+msgstr "Уметни изабрани доступни спот у списак спотова прекида"
+
+#: src/gui/MainFrame.java:226
+msgid "Remove spot from list of interval spots"
+msgstr "Уклони спот са списка спотова прекида"
+
+#: src/gui/MainFrame.java:241
+msgid "Interval spots"
+msgstr "Спотови прекида"
+
+#: src/gui/MainFrame.java:262
+msgid "Repeat all"
+msgstr "Понови све"
+
+#: src/gui/MainFrame.java:263
+msgid "Repeat list of spots when last spot has been played"
+msgstr "Понови списак спотова након последњег"
+
+#: src/gui/MainFrame.java:275
+msgid "mins between spots"
+msgstr "минута између спотова"
+
+#: src/gui/MainFrame.java:289
+msgid "Insert selected available spot into list of scheduled spots"
+msgstr "Уметни изабрани доступни спот у списак заказаних спотова"
+
+#: src/gui/MainFrame.java:295
+msgid "Remove spot from list of scheduled spots"
+msgstr "Уклони спот са списка заказаних спотова"
+
+#: src/gui/MainFrame.java:307
+msgid "Scheduled spots"
+msgstr "Заказани спотови"
+
+#: src/gui/MainFrame.java:349
+msgid "Move up"
+msgstr "Премести горе"
+
+#: src/gui/MainFrame.java:354
+msgid "Move down"
+msgstr "Премести доле"
+
+#: src/gui/MainFrame.java:366
+msgid "Edit"
+msgstr "Уреди"
+
+#: src/gui/MainFrame.java:377
+msgid "File"
+msgstr "Датотека"
+
+#: src/gui/MainFrame.java:381 src/gui/PreferencesDialogue.java:34
+msgid "Preferences"
+msgstr "Поставке"
+
+#: src/gui/MainFrame.java:387 src/gui/MainFrame.java:601
+#, java-format
+msgid "About {0}"
+msgstr "О програму „{0}“"
+
+#: src/gui/MainFrame.java:467
+msgid "Yes, delete spot!"
+msgstr "Да, обриши спот!"
+
+#: src/gui/MainFrame.java:467
+msgid "No"
+msgstr "Не"
+
+#: src/gui/MainFrame.java:470
+msgid ""
+"Are you sure you want to delete spot permanently?\n"
+"The spot will be removed from all lists.\n"
+"You cannot undo this action."
+msgstr ""
+"Да ли сте сигурни да желите трајно да обришете спот?\n"
+"Спот ће бити уклоњен са свих спискова.\n"
+"Не можете да опозовете ову радњу."
+
+#: src/gui/MainFrame.java:472
+msgid "Delete spot"
+msgstr "Обриши спот"
+
+#: src/gui/MainFrame.java:508
+msgid "Type new name for spot:"
+msgstr "Укуцајте нови назив за спот:"
+
+#: src/gui/MainFrame.java:509
+msgid "Rename spot"
+msgstr "Преименуј спот"
+
+#: src/gui/MainFrame.java:590
+#, java-format
+msgid "{0} version {1}"
+msgstr "{0} издање {1}"
+
+#: src/gui/MainFrame.java:591
+#, java-format
+msgid "By {0}"
+msgstr "Приредио је {0}"
+
+#: src/gui/MainFrame.java:592
+msgctxt "Correct into your language and name"
+msgid "Translated into English by Thomas Pryds"
+msgstr "Превод на српски: Мирослав Николић"
+
+#: src/gui/MainFrame.java:595
+msgid "Released under the GPL license. This program can be used without restrictions. This includes redistribution, with or without own changes (e.g. additions and translations). However, redistribution (including changes) may only happen under the same license. The complete license text comes with this program. The complete source code for this program is available at the above mentioned web site."
+msgstr "Издато под ОЈЛ дозволом. Овај програм може бити коришћен без ограничења. У која спадају расподела, са или без властитих измена (тј. додавањима и преводима). Међутим, расподела (укључујући измене) може да се обави само под истом дозволом. Читав текст дозволе иде уз овај програм. Читав изворни код овог програма је доступан на горе поменутој веб страници."
+
+#: src/gui/PreferencesDialogue.java:52
+msgid "Program Language"
+msgstr "Језик програма"
+
+#: src/gui/PreferencesDialogue.java:56
+msgid "Choose language"
+msgstr "Изаберите језик"
+
+#: src/gui/PreferencesDialogue.java:75
+msgid "Changes will be applied after program restart."
+msgstr "Измене ће бити примењене након поновног покретања програма."
+
+#: src/gui/PreferencesDialogue.java:95
+msgid "Audio Normalization"
+msgstr "Нормализација звука"
+
+#: src/gui/PreferencesDialogue.java:97
+msgid "Perform on newly recorded spots:"
+msgstr "Изврши на ново снимљеним спотовима:"
+
+#: src/gui/PreferencesDialogue.java:99
+msgid "Remove DC offset"
+msgstr "Уклони ДЦ померај"
+
+#: src/gui/PreferencesDialogue.java:100
+msgid "May remove certain 'click' noises in start/end of recording"
+msgstr "Може да уклони одређене шумове „клика“ на почетку/крају снимања"
+
+#: src/gui/PreferencesDialogue.java:105
+msgid "Add fade-in/out"
+msgstr "Додај постепено појачавање/утишавање"
+
+#: src/gui/PreferencesDialogue.java:106
+msgid "Add short fade-in and fade-out"
+msgstr "Додај кратко постепено појачавање и постепено утишавање"
+
+#: src/gui/PreferencesDialogue.java:111
+msgid "Normalise volume"
+msgstr "Нормализује јачину звука"
+
+#: src/gui/PreferencesDialogue.java:112
+msgid "Gives a uniform volume level of spots"
+msgstr "Даје уједначени ниво јачине звука спотова"
+
+#: src/gui/SpotListModel.java:30 src/gui/SpotListModel.java:36
+#: src/gui/SpotListModel.java:42
+msgid "Name"
+msgstr "Назив"
+
+#: src/gui/SpotListModel.java:31 src/gui/SpotListModel.java:37
+#: src/gui/SpotListModel.java:43
+msgid "Duration"
+msgstr "Трајање"
+
+#: src/gui/SpotListModel.java:38
+msgctxt "As in play at"
+msgid "At"
+msgstr "У"
+
+#: src/gui/SpotList.java:60
+msgid "Play item number"
+msgstr "Пусти ставку број"
+
+#: src/gui/SpotList.java:62 src/gui/SpotList.java:74 src/gui/SpotList.java:83
+msgid "Duration in minutes and seconds"
+msgstr "Трајање у минутима и секундама"
+
+#: src/gui/SpotList.java:63
+msgid "* means that this spot is the next to get played"
+msgstr "* значи да ће овај спот бити пуштен следећи"
+
+#: src/gui/SpotList.java:75
+msgid "Played at (a ¤ means only on certain days)"
+msgstr "Пуштан (¤ значи само одређеним данима)"
+
+#: src/main/SpotPlayer.java:81
+msgid ""
+"The sound board is occupied by another program.\n"
+"If other programs are running, e.g. a music or video player, internet browser, try closing these."
+msgstr ""
+"Звучна табла је заузета другим програмом.\n"
+"Ако су покренути други програми, тј. музички или видео програм, интернет прегледник, покушајте да их затворите."
+
+#: src/main/SpotPlayer.java:83
+msgid "Audio Error"
+msgstr "Грешка звука"

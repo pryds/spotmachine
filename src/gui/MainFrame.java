@@ -586,10 +586,11 @@ public class MainFrame extends JFrame implements ChangeListener, ActionListener,
                 }).start();
             }
 		} else if (action.equals("aboutprogram")) {
-			JOptionPane.showMessageDialog(this,
+                        JOptionPane.showMessageDialog(this,
 					i18n.tr("{0} version {1}", SpotMachine.PROGRAM_NAME, SpotMachine.PROGRAM_VERSION) + "\n" +
 				    i18n.tr("By {0}", "Thomas Pryds") + "\n" +
-				    i18n.trc("Correct into your language and name", "Translated into English by Thomas Pryds") + "\n" +
+				    ((Util.get().getCurrentLocale().toString().equals("en")) ? "" :
+                                    i18n.trc("Correct into your language and name", "Translated into English by Thomas Pryds") + "\n") +
 				    "http://pryds.eu/spotmachine\n" +
 				    "\n" +
 				    Util.get().wordWrap(i18n.tr("Released under the GPL license. This program can be " +
