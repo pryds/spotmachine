@@ -1,0 +1,370 @@
+# Vietnamese translations for spotmachine package
+# Bản dịch tiếng Việt cho gói spotmachine.
+# Copyright © 2013 Free Software Foundation, Inc.
+# This file is distributed under the same license as the spotmachine package.
+# Trần Ngọc Quân <vnwildman@gmail.com>, 2013.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: spotmachine-0.3.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-08-31 15:04+0200\n"
+"PO-Revision-Date: 2013-10-31 09:04+0700\n"
+"Last-Translator: Trần Ngọc Quân <vnwildman@gmail.com>\n"
+"Language-Team: Vietnamese <translation-team-vi@lists.sourceforge.net>\n"
+"Language: vi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Poedit-Language: Vietnamese\n"
+"X-Poedit-Country: VIET NAM\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: src/gui/SchedulePropertiesDialogue.java:47
+msgid "Properties for Scheduled Spot"
+msgstr "Thuộc tính của các spot đã lên lịch"
+
+#: src/gui/SchedulePropertiesDialogue.java:69
+msgid "Play spot at (24 hours format)"
+msgstr "Phát spot lúc (định dạng 24 giờ)"
+
+#: src/gui/SchedulePropertiesDialogue.java:98
+msgid "On these weekdays"
+msgstr "Trong những tuần này"
+
+#: src/gui/SchedulePropertiesDialogue.java:117
+msgid "On these days of the month"
+msgstr "Trong những ngày này của tháng"
+
+#: src/gui/SchedulePropertiesDialogue.java:134
+msgid "On these months"
+msgstr "Trong những tháng này"
+
+#: src/gui/SchedulePropertiesDialogue.java:149
+msgid "Note, that the spot is only played if ALL conditions above are met. If, for instance, only 'Wednesday' and '20' (plus all months) are selected, the spot is only played if today is BOTH Wednesday AND the 20th of the month."
+msgstr "Chú ý rằng spot thì chỉ được phát nếu mọi điều kiện mở trên đều thỏa. Nếu, giả sử, chỉ Thứ tư ngày 20 (với tháng bất kỳ) là được chọn, thế thì spot chỉ phát nếu đó là thứ tư ngày 20 của một tháng nào đó. "
+
+#: src/gui/SchedulePropertiesDialogue.java:166 src/gui/RecordDialogue.java:156
+#: src/gui/PreferencesDialogue.java:123
+msgid "OK"
+msgstr "Đồng ý"
+
+#: src/gui/SchedulePropertiesDialogue.java:171 src/gui/RecordDialogue.java:162
+#: src/gui/PreferencesDialogue.java:128
+msgid "Cancel"
+msgstr "Thôi"
+
+#: src/gui/RecordDialogue.java:47
+msgid "Record New Spot"
+msgstr "Thu âm spot mới"
+
+#: src/gui/RecordDialogue.java:53
+msgid "Name:"
+msgstr "Tên:"
+
+#: src/gui/RecordDialogue.java:74
+msgid "Current duration:"
+msgstr "Độ dài hiện tại:"
+
+#: src/gui/RecordDialogue.java:86 src/gui/RecordDialogue.java:279
+msgid "STOPPED"
+msgstr "ĐÃ DỪNG"
+
+#: src/gui/RecordDialogue.java:107
+msgctxt "Recording (noun)"
+msgid "Recording"
+msgstr "Đang thu"
+
+#: src/gui/RecordDialogue.java:109
+msgid "Re-record"
+msgstr "Thu âm lại"
+
+#: src/gui/RecordDialogue.java:116 src/gui/MainFrame.java:115
+msgid "Pause"
+msgstr "Tạm dừng"
+
+#: src/gui/RecordDialogue.java:124
+msgid "Stop"
+msgstr "Dừng"
+
+#: src/gui/RecordDialogue.java:136
+msgid "Remember to disconnect audio output, amplifier, or similar before recording starts, since the recorded spot will be played immediately after recording has finished."
+msgstr "Nhớ kênh xuất âm thanh bị ngắt, độ khuyếch đại, hay tương tự thế trước khi bắt đầu thu, sau này spot đã được thu sẽ được phát ngay lập tức sau khi bản thu âm hoàn tất."
+
+#: src/gui/RecordDialogue.java:157
+msgid "Close the recording window and save the recorded spot"
+msgstr "Đóng cửa sổ thu âm và ghi lại spot đã thu"
+
+#: src/gui/RecordDialogue.java:163
+msgid "Close the recording window without saving"
+msgstr "Đóng cửa sổ thu âm mà không ghi lại"
+
+#: src/gui/RecordDialogue.java:181
+msgid "No recording has been done yet."
+msgstr "Thậm chí còn chưa có bản thu nào được thực hiện."
+
+#: src/gui/RecordDialogue.java:182
+msgid "No recording"
+msgstr "Không có bản thu nào"
+
+#: src/gui/RecordDialogue.java:187
+msgid "Write a name for the recorded spot."
+msgstr "Ghi tên cho spot đã thu."
+
+#: src/gui/RecordDialogue.java:188
+msgid "No name for spot"
+msgstr "không có tên cho spot"
+
+#: src/gui/RecordDialogue.java:218
+msgid "RECORDING"
+msgstr "ĐANG THU"
+
+#: src/gui/RecordDialogue.java:224
+msgid "PAUSED"
+msgstr "ĐÃ TẠM DỪNG"
+
+#: src/gui/RecordDialogue.java:228
+msgid "STOPPING RECORDING..."
+msgstr "ĐANG DỪNG THU ÂM..."
+
+#: src/gui/RecordDialogue.java:240
+msgid "NORMALISING AUDIO"
+msgstr "THƯỜNG HÓA ÂM THANH"
+
+#: src/gui/RecordDialogue.java:261
+msgid "PLAYING"
+msgstr "ĐANG PHÁT"
+
+#: src/gui/MainFrame.java:75
+msgid "Time until next spot:"
+msgstr "Thời gian cho đến spot kế:"
+
+#: src/gui/MainFrame.java:88 src/gui/SpotListModel.java:29
+msgid "#"
+msgstr "#"
+
+#: src/gui/MainFrame.java:108
+msgid "Play"
+msgstr "Phát"
+
+#: src/gui/MainFrame.java:123
+msgid "Previous"
+msgstr "Trước"
+
+#: src/gui/MainFrame.java:130
+msgid "Next"
+msgstr "Kế tiếp"
+
+#: src/gui/MainFrame.java:177
+msgid "Available spots"
+msgstr "Các spot sẵn có"
+
+#: src/gui/MainFrame.java:189
+msgid "Record new"
+msgstr "Tạo thu âm mới"
+
+#: src/gui/MainFrame.java:194
+msgid "Delete"
+msgstr "Xóa bỏ"
+
+#: src/gui/MainFrame.java:205
+msgid "Rename"
+msgstr "Đổi tên"
+
+#: src/gui/MainFrame.java:220
+msgid "Insert selected available spot into list of interval spots"
+msgstr "Chèn thêm spot sẵn có đã chọn và trong danh sách spot chờ"
+
+#: src/gui/MainFrame.java:226
+msgid "Remove spot from list of interval spots"
+msgstr "Gõ bỏ spot từ danh sách spot chờ"
+
+#: src/gui/MainFrame.java:241
+msgid "Interval spots"
+msgstr "Khoảng nhịp các spot"
+
+#: src/gui/MainFrame.java:262
+msgid "Repeat all"
+msgstr "Lặp lại tất cả"
+
+#: src/gui/MainFrame.java:263
+msgid "Repeat list of spots when last spot has been played"
+msgstr "Lặp lại danh sách spot khi đã phát đến cuối"
+
+#: src/gui/MainFrame.java:275
+msgid "mins between spots"
+msgstr "phút giữa các spot"
+
+#: src/gui/MainFrame.java:289
+msgid "Insert selected available spot into list of scheduled spots"
+msgstr "Thêm spot sẵn có vào danh sách spot đã lên lịch"
+
+#: src/gui/MainFrame.java:295
+msgid "Remove spot from list of scheduled spots"
+msgstr "Xóa bỏ spot từ spot đã lên lịch"
+
+#: src/gui/MainFrame.java:307
+msgid "Scheduled spots"
+msgstr "Lên lịch các spot"
+
+#: src/gui/MainFrame.java:349
+msgid "Move up"
+msgstr "Di chuyển lên"
+
+#: src/gui/MainFrame.java:354
+msgid "Move down"
+msgstr "Di chuyển xuống"
+
+#: src/gui/MainFrame.java:366
+msgid "Edit"
+msgstr "Chỉnh sửa"
+
+#: src/gui/MainFrame.java:377
+msgid "File"
+msgstr "Chính"
+
+#: src/gui/MainFrame.java:381 src/gui/PreferencesDialogue.java:34
+msgid "Preferences"
+msgstr "Cá nhân hóa"
+
+#: src/gui/MainFrame.java:387 src/gui/MainFrame.java:601
+#, java-format
+msgid "About {0}"
+msgstr "Giới thiệu về {0}"
+
+#: src/gui/MainFrame.java:467
+msgid "Yes, delete spot!"
+msgstr "Có, xóa spot!"
+
+#: src/gui/MainFrame.java:467
+msgid "No"
+msgstr "Không"
+
+#: src/gui/MainFrame.java:470
+msgid ""
+"Are you sure you want to delete spot permanently?\n"
+"The spot will be removed from all lists.\n"
+"You cannot undo this action."
+msgstr ""
+"Bạn có thực sự muốn xóa vĩnh viễn spot?\n"
+"Spot sẽ bị xóa bỏ khỏi danh sách.\n"
+"Bạn không thể hồi lại thao tác này."
+
+#: src/gui/MainFrame.java:472
+msgid "Delete spot"
+msgstr "Xóa spot"
+
+#: src/gui/MainFrame.java:508
+msgid "Type new name for spot:"
+msgstr "Gõ vào tên mới cho spot:"
+
+#: src/gui/MainFrame.java:509
+msgid "Rename spot"
+msgstr "Đổi tên spot"
+
+#: src/gui/MainFrame.java:590
+#, java-format
+msgid "{0} version {1}"
+msgstr "{0} phiên bản {1}"
+
+#: src/gui/MainFrame.java:591
+#, java-format
+msgid "By {0}"
+msgstr "Bởi {0}"
+
+#: src/gui/MainFrame.java:592
+msgctxt "Correct into your language and name"
+msgid "Translated into English by Thomas Pryds"
+msgstr "Dịch sang tiếng Anh bởi Thomas Pryds"
+
+#: src/gui/MainFrame.java:595
+msgid "Released under the GPL license. This program can be used without restrictions. This includes redistribution, with or without own changes (e.g. additions and translations). However, redistribution (including changes) may only happen under the same license. The complete license text comes with this program. The complete source code for this program is available at the above mentioned web site."
+msgstr "Được phát hành dựa trên giấy phép công GPL. Chương trình được dùng mà không bị hạn chế gì. Bao gồm việc phân phối lại, có hoặc không thay đổi (vd thêm các bản dịch). Tuy nhiên, bản phân phối lại (có các thay đổi) sẽ chỉ được dưới cùng giấy phép. Toàn bộ các điều khoản của giấy phép được bao gồm trong chương trình này. Toàn bộ mã nguồn của chương trình này sẵn có ở địa chỉ trang web ở trên."
+
+#: src/gui/PreferencesDialogue.java:52
+msgid "Program Language"
+msgstr "Ngôn ngữ chương trình"
+
+#: src/gui/PreferencesDialogue.java:56
+msgid "Choose language"
+msgstr "Chọn ngôn ngữ"
+
+#: src/gui/PreferencesDialogue.java:75
+msgid "Changes will be applied after program restart."
+msgstr "Các thay đổi chỉ có hiệu lực sau khi bạn khởi động lại chương trình."
+
+#: src/gui/PreferencesDialogue.java:95
+msgid "Audio Normalization"
+msgstr "Bình thường hóa âm thanh"
+
+#: src/gui/PreferencesDialogue.java:97
+msgid "Perform on newly recorded spots:"
+msgstr "Thực hiện trên các spot mới thu âm:"
+
+#: src/gui/PreferencesDialogue.java:99
+msgid "Remove DC offset"
+msgstr "Gỡ bỏ khoảng bù DC"
+
+#: src/gui/PreferencesDialogue.java:100
+msgid "May remove certain 'click' noises in start/end of recording"
+msgstr "Có thể xóa bỏ nhiễu “click” tại điểm đầu/cuối của bản thu âm"
+
+#: src/gui/PreferencesDialogue.java:105
+msgid "Add fade-in/out"
+msgstr "Thêm fade vào/ra"
+
+#: src/gui/PreferencesDialogue.java:106
+msgid "Add short fade-in and fade-out"
+msgstr "Thêm fade-in và fade-out ngắn"
+
+#: src/gui/PreferencesDialogue.java:111
+msgid "Normalise volume"
+msgstr "Đưa âm lượng về bình thường"
+
+#: src/gui/PreferencesDialogue.java:112
+msgid "Gives a uniform volume level of spots"
+msgstr "Đưa ra mức âm lượng đồng nhất của các spot"
+
+#: src/gui/SpotListModel.java:30 src/gui/SpotListModel.java:36
+#: src/gui/SpotListModel.java:42
+msgid "Name"
+msgstr "Tên"
+
+#: src/gui/SpotListModel.java:31 src/gui/SpotListModel.java:37
+#: src/gui/SpotListModel.java:43
+msgid "Duration"
+msgstr "Thời lượng"
+
+#: src/gui/SpotListModel.java:38
+msgctxt "As in play at"
+msgid "At"
+msgstr "Lúc "
+
+#: src/gui/SpotList.java:60
+msgid "Play item number"
+msgstr "Phát mục số"
+
+#: src/gui/SpotList.java:62 src/gui/SpotList.java:74 src/gui/SpotList.java:83
+msgid "Duration in minutes and seconds"
+msgstr "Thời lượng tính theo đơn vị và phút và giây"
+
+#: src/gui/SpotList.java:63
+msgid "* means that this spot is the next to get played"
+msgstr "* nghĩa là spot này là cái sẽ được phát tiếp theo"
+
+#: src/gui/SpotList.java:75
+msgid "Played at (a ¤ means only on certain days)"
+msgstr "Phát lúc (¤ nghĩa là chỉ trong những ngày nhất định)"
+
+#: src/main/SpotPlayer.java:81
+msgid ""
+"The sound board is occupied by another program.\n"
+"If other programs are running, e.g. a music or video player, internet browser, try closing these."
+msgstr ""
+"Bảng mạch âm thanh đã được sử dụng bởi một ứng dụng khác.\n"
+"Nếu ứng dụng khác đang chạy, ví dụ như bộ phát phim hay nhạc, trình duyệt internet, hãy đóng chúng lại."
+
+#: src/main/SpotPlayer.java:83
+msgid "Audio Error"
+msgstr "Lỗi âm thanh"
