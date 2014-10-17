@@ -1,0 +1,393 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Spot Machine 0.3.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-08-31 15:04+0200\n"
+"PO-Revision-Date: 2014-10-08 19:59+0100\n"
+"Last-Translator: \n"
+"Language-Team: David ar Rouz <daroveajin@yahoo.fr>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.7\n"
+"Language: brezhoneg\n"
+
+#: src/gui/SchedulePropertiesDialogue.java:47
+msgid "Properties for Scheduled Spot"
+msgstr "Perzhioù ar bomm steuñvet"
+
+#: src/gui/SchedulePropertiesDialogue.java:69
+msgid "Play spot at (24 hours format)"
+msgstr "Lenn ar bomm da (diàr 24 eur)"
+
+#: src/gui/SchedulePropertiesDialogue.java:98
+msgid "On these weekdays"
+msgstr "D'an deizioù-se"
+
+#: src/gui/SchedulePropertiesDialogue.java:117
+msgid "On these days of the month"
+msgstr "D'an deizioù-se ag ar miz"
+
+#: src/gui/SchedulePropertiesDialogue.java:134
+msgid "On these months"
+msgstr "D'ar mizioù-se"
+
+#: src/gui/SchedulePropertiesDialogue.java:149
+msgid ""
+"Note, that the spot is only played if ALL conditions above are met. If, for "
+"instance, only 'Wednesday' and '20' (plus all months) are selected, the spot "
+"is only played if today is BOTH Wednesday AND the 20th of the month."
+msgstr ""
+"Diwallit : ar bomm ne vo lennet nemet ma kouch an deiz get RAZH an termenoù "
+"lakaet. Ma tiuzit « Merc'her » hag « 20 » hepken (mui razh ar mizioù), ne vo "
+"lennet ar bomm nemet pa vo an deiz ÀR UN DRO ur Merc'her HAG an 20 ag ar miz."
+
+#: src/gui/SchedulePropertiesDialogue.java:166 src/gui/RecordDialogue.java:156
+#: src/gui/PreferencesDialogue.java:123
+msgid "OK"
+msgstr "Mat"
+
+#: src/gui/SchedulePropertiesDialogue.java:171 src/gui/RecordDialogue.java:162
+#: src/gui/PreferencesDialogue.java:128
+msgid "Cancel"
+msgstr "Nulliñ"
+
+#: src/gui/RecordDialogue.java:47
+msgid "Record New Spot"
+msgstr "Enrolliñ ur bomm nevez"
+
+#: src/gui/RecordDialogue.java:53
+msgid "Name:"
+msgstr "Anv :"
+
+#: src/gui/RecordDialogue.java:74
+msgid "Current duration:"
+msgstr "Pad betek-henn :"
+
+#: src/gui/RecordDialogue.java:86 src/gui/RecordDialogue.java:279
+msgid "STOPPED"
+msgstr "ARRESTET"
+
+#: src/gui/RecordDialogue.java:107
+msgctxt "Recording (noun)"
+msgid "Recording"
+msgstr "Enrolladenn"
+
+#: src/gui/RecordDialogue.java:109
+msgid "Re-record"
+msgstr "Enrolliñ (en-dro)"
+
+#: src/gui/RecordDialogue.java:116 src/gui/MainFrame.java:115
+msgid "Pause"
+msgstr "Dihaniñ"
+
+#: src/gui/RecordDialogue.java:124
+msgid "Stop"
+msgstr "Arrestiñ"
+
+#: src/gui/RecordDialogue.java:136
+msgid ""
+"Remember to disconnect audio output, amplifier, or similar before recording "
+"starts, since the recorded spot will be played immediately after recording "
+"has finished."
+msgstr ""
+"N'ankouait ket da zilugiñ ho penvegoù son, amplaerioù pe traoù evel-se e-"
+"raok ma krogo an enrolladenn kar ar bomm enrollet a vo lennet doc'htu pa vo "
+"achuet."
+
+#: src/gui/RecordDialogue.java:157
+msgid "Close the recording window and save the recorded spot"
+msgstr "Serriñ ar fenestr enrolliñ é ouarn ar bomm enrollet"
+
+#: src/gui/RecordDialogue.java:163
+msgid "Close the recording window without saving"
+msgstr "Serriñ ar fenestr enrolliñ hep gouarn netra"
+
+#: src/gui/RecordDialogue.java:181
+msgid "No recording has been done yet."
+msgstr "N'eus ket bet graet enrolladenn erbet c'hoazh."
+
+#: src/gui/RecordDialogue.java:182
+msgid "No recording"
+msgstr "Enrolladenn erbet"
+
+#: src/gui/RecordDialogue.java:187
+msgid "Write a name for the recorded spot."
+msgstr "Roit un anv d'ar bomm enrollet."
+
+#: src/gui/RecordDialogue.java:188
+msgid "No name for spot"
+msgstr "Anv erbet d'ar bomm"
+
+#: src/gui/RecordDialogue.java:218
+msgid "RECORDING"
+msgstr "EC'H ENROLLIÑ"
+
+#: src/gui/RecordDialogue.java:224
+msgid "PAUSED"
+msgstr "DIHANET"
+
+#: src/gui/RecordDialogue.java:228
+msgid "STOPPING RECORDING..."
+msgstr "EC'H ARRESTIÑ AN ENROLLADENN..."
+
+#: src/gui/RecordDialogue.java:240
+msgid "NORMALISING AUDIO"
+msgstr "É REOLATA AR SON"
+
+#: src/gui/RecordDialogue.java:261
+msgid "PLAYING"
+msgstr "É LENN"
+
+#: src/gui/MainFrame.java:75
+msgid "Time until next spot:"
+msgstr "Amzer a-benn ar bomm kentañ :"
+
+#: src/gui/MainFrame.java:88 src/gui/SpotListModel.java:29
+msgid "#"
+msgstr "#"
+
+#: src/gui/MainFrame.java:108
+msgid "Play"
+msgstr "Lenn"
+
+#: src/gui/MainFrame.java:123
+msgid "Previous"
+msgstr "E-raok"
+
+#: src/gui/MainFrame.java:130
+msgid "Next"
+msgstr "Àr-lerc'h"
+
+#: src/gui/MainFrame.java:177
+msgid "Available spots"
+msgstr "Bommoù prest"
+
+#: src/gui/MainFrame.java:189
+msgid "Record new"
+msgstr "Enrolliñ nevez"
+
+#: src/gui/MainFrame.java:194
+msgid "Delete"
+msgstr "Lemel"
+
+#: src/gui/MainFrame.java:205
+msgid "Rename"
+msgstr "Adenvel"
+
+#: src/gui/MainFrame.java:220
+msgid "Insert selected available spot into list of interval spots"
+msgstr "Lakaat unan ag ar bommoù prest er listenn a vommoù ingal"
+
+#: src/gui/MainFrame.java:226
+msgid "Remove spot from list of interval spots"
+msgstr "Lemel ur bomm ag ar listenn a vommoù ingal"
+
+#: src/gui/MainFrame.java:241
+msgid "Interval spots"
+msgstr "Bommoù ingal"
+
+#: src/gui/MainFrame.java:262
+msgid "Repeat all"
+msgstr "Lenn razh en-dro"
+
+#: src/gui/MainFrame.java:263
+msgid "Repeat list of spots when last spot has been played"
+msgstr "Lenn ar listenn vommoù en-dro pa vez bet lennet ar bomm diwezhañ"
+
+#: src/gui/MainFrame.java:275
+msgid "mins between spots"
+msgstr "min. etre ar bommoù"
+
+#: src/gui/MainFrame.java:289
+msgid "Insert selected available spot into list of scheduled spots"
+msgstr "Lakaat unan ag ar bommoù er listenn a vommoù steuñvet"
+
+#: src/gui/MainFrame.java:295
+msgid "Remove spot from list of scheduled spots"
+msgstr "Lemel ur bomm ag ar listenn a vommoù steuñvet"
+
+#: src/gui/MainFrame.java:307
+msgid "Scheduled spots"
+msgstr "Bommoù steuñvet"
+
+#: src/gui/MainFrame.java:349
+msgid "Move up"
+msgstr "Uhelaat"
+
+#: src/gui/MainFrame.java:354
+msgid "Move down"
+msgstr "Diskenn"
+
+#: src/gui/MainFrame.java:366
+msgid "Edit"
+msgstr "Kemm"
+
+#: src/gui/MainFrame.java:377
+msgid "File"
+msgstr "Restr"
+
+#: src/gui/MainFrame.java:381 src/gui/PreferencesDialogue.java:34
+msgid "Preferences"
+msgstr "Dibaboù"
+
+#: src/gui/MainFrame.java:387 src/gui/MainFrame.java:601
+#, java-format
+msgid "About {0}"
+msgstr "A-ziàr {0}"
+
+#: src/gui/MainFrame.java:467
+msgid "Yes, delete spot!"
+msgstr "Ya, lemel ar bomm !"
+
+#: src/gui/MainFrame.java:467
+msgid "No"
+msgstr "Pas"
+
+#: src/gui/MainFrame.java:470
+msgid ""
+"Are you sure you want to delete spot permanently?\n"
+"The spot will be removed from all lists.\n"
+"You cannot undo this action."
+msgstr ""
+"Ha sur oc'h e faot deoc'h lemel ar bomm da viken ?\n"
+"Lamet e vo a razh ar listennoù.\n"
+"N'heller ket dizober an dra-se."
+
+#: src/gui/MainFrame.java:472
+msgid "Delete spot"
+msgstr "Lemel ur bomm"
+
+#: src/gui/MainFrame.java:508
+msgid "Type new name for spot:"
+msgstr "Bizskrivit un anv nevez evit ar bomm :"
+
+#: src/gui/MainFrame.java:509
+msgid "Rename spot"
+msgstr "Adenvel ur bomm"
+
+#: src/gui/MainFrame.java:590
+#, java-format
+msgid "{0} version {1}"
+msgstr "{0} version {1}"
+
+#: src/gui/MainFrame.java:591
+#, java-format
+msgid "By {0}"
+msgstr "Get {0}"
+
+#: src/gui/MainFrame.java:592
+msgctxt "Correct into your language and name"
+msgid "Translated into English by Thomas Pryds"
+msgstr "Troet e brezhoneg get David ar Rouz"
+
+#: src/gui/MainFrame.java:595
+msgid ""
+"Released under the GPL license. This program can be used without "
+"restrictions. This includes redistribution, with or without own changes (e."
+"g. additions and translations). However, redistribution (including changes) "
+"may only happen under the same license. The complete license text comes with "
+"this program. The complete source code for this program is available at the "
+"above mentioned web site."
+msgstr ""
+"Embannet get an aotre publik hollek (GPL). Ar programm-mañ a c'hell bout "
+"implijet hep strishadur erbet, da lâret eo e c'hell bout dasparzhet en-dro, "
+"get pe hep kemmoù (traoù oc'hpenn, da skouer, pe troidigezhioù). Ne c'hell "
+"bout dasparzhet, neoazh, nemet get ar mem aotre a dalvo evit ar c'hemmoù "
+"ivez. Testenn glok an aotre a za get ar programm-mañ. Kod mammennoù klok ar "
+"programm a gaver er lec'hiad meneget a-us."
+
+#: src/gui/PreferencesDialogue.java:52
+msgid "Program Language"
+msgstr "Yezh ar programm"
+
+#: src/gui/PreferencesDialogue.java:56
+msgid "Choose language"
+msgstr "Dibab ar yezh"
+
+#: src/gui/PreferencesDialogue.java:75
+msgid "Changes will be applied after program restart."
+msgstr "Ar chañchamantoù a dalvo pa vo loc'het ar programm en-dro."
+
+#: src/gui/PreferencesDialogue.java:95
+msgid "Audio Normalization"
+msgstr "Reolata ar son"
+
+#: src/gui/PreferencesDialogue.java:97
+msgid "Perform on newly recorded spots:"
+msgstr "D'ober àr vommoù nevez enrollet :"
+
+#: src/gui/PreferencesDialogue.java:99
+msgid "Remove DC offset"
+msgstr "Reizhiñ an dilec'hiadur untu"
+
+#: src/gui/PreferencesDialogue.java:100
+msgid "May remove certain 'click' noises in start/end of recording"
+msgstr ""
+"« Klikoù » a c'hello bout lamet er penn-kentañ pe e dibenn an enrolladenn"
+
+#: src/gui/PreferencesDialogue.java:105
+msgid "Add fade-in/out"
+msgstr "Digoriñ ha kloziñ en arveuz"
+
+#: src/gui/PreferencesDialogue.java:106
+msgid "Add short fade-in and fade-out"
+msgstr "Digoret ha klozet e vo an enrolladenn get un arveuz berr"
+
+#: src/gui/PreferencesDialogue.java:111
+msgid "Normalise volume"
+msgstr "Reolata ar ment"
+
+#: src/gui/PreferencesDialogue.java:112
+msgid "Gives a uniform volume level of spots"
+msgstr "Roet e vo ur ment ingal da son ar bommoù"
+
+#: src/gui/SpotListModel.java:30 src/gui/SpotListModel.java:36
+#: src/gui/SpotListModel.java:42
+msgid "Name"
+msgstr "Anv"
+
+#: src/gui/SpotListModel.java:31 src/gui/SpotListModel.java:37
+#: src/gui/SpotListModel.java:43
+msgid "Duration"
+msgstr "Pad"
+
+#: src/gui/SpotListModel.java:38
+msgctxt "As in play at"
+msgid "At"
+msgstr "Da"
+
+#: src/gui/SpotList.java:60
+msgid "Play item number"
+msgstr "Lenn ar bomm niverenn"
+
+#: src/gui/SpotList.java:62 src/gui/SpotList.java:74 src/gui/SpotList.java:83
+msgid "Duration in minutes and seconds"
+msgstr "Pad e munutoù hag eilennoù"
+
+#: src/gui/SpotList.java:63
+msgid "* means that this spot is the next to get played"
+msgstr "* a dalv ema ar bomm-se eo a vo lennet da-heul"
+
+#: src/gui/SpotList.java:75
+msgid "Played at (a ¤ means only on certain days)"
+msgstr "Lennet da (¤ a dalv da zeizioù zo hepken)"
+
+#: src/main/SpotPlayer.java:81
+msgid ""
+"The sound board is occupied by another program.\n"
+"If other programs are running, e.g. a music or video player, internet "
+"browser, try closing these."
+msgstr ""
+"Dalc'het eo ar gartenn son get ur programm arall.\n"
+"Ma 'h eus programmoù arall é vonet en-dro (ur lennour muzik  pe video, d. "
+"s., pe ur merdeour Internet), klaskit o serriñ."
+
+#: src/main/SpotPlayer.java:83
+msgid "Audio Error"
+msgstr "Fari son"
