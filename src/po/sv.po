@@ -1,0 +1,367 @@
+# Swedish translation for spotmachine
+# Copyright © 2015 Thomas Pryds (msgids)
+# This file is distributed under the same license as the spotmachine package.
+# Sebastian Rasmussen <sebras@gmail.com>, 2015.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: spotmachine 0.3.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-08-31 15:04+0200\n"
+"PO-Revision-Date: 2015-11-18 21:42+0100\n"
+"Last-Translator: Sebastian Rasmussen <sebras@gmail.com>\n"
+"Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
+"Language: sv\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.6\n"
+
+#: src/gui/SchedulePropertiesDialogue.java:47
+msgid "Properties for Scheduled Spot"
+msgstr "Egenskaper för schemalagd jingel"
+
+#: src/gui/SchedulePropertiesDialogue.java:69
+msgid "Play spot at (24 hours format)"
+msgstr "Spela upp jingel vid (24-timmarsformat)"
+
+#: src/gui/SchedulePropertiesDialogue.java:98
+msgid "On these weekdays"
+msgstr "Under dessa veckodagar"
+
+#: src/gui/SchedulePropertiesDialogue.java:117
+msgid "On these days of the month"
+msgstr "Under dessa dagar i månaden"
+
+#: src/gui/SchedulePropertiesDialogue.java:134
+msgid "On these months"
+msgstr "Under dessa månader"
+
+#: src/gui/SchedulePropertiesDialogue.java:149
+msgid "Note, that the spot is only played if ALL conditions above are met. If, for instance, only 'Wednesday' and '20' (plus all months) are selected, the spot is only played if today is BOTH Wednesday AND the 20th of the month."
+msgstr "Notera att jingeln bara spelas om ALLA villkor ovan är uppfyllda. Om t.ex. bara ”onsdag” och ”20” (samt alla månader) väljs, kommer jingeln bara att spelas om idag är BÅDE onsdag OCH den 20:e dagen i månaden."
+
+#: src/gui/SchedulePropertiesDialogue.java:166 src/gui/RecordDialogue.java:156
+#: src/gui/PreferencesDialogue.java:123
+msgid "OK"
+msgstr "OK"
+
+#: src/gui/SchedulePropertiesDialogue.java:171 src/gui/RecordDialogue.java:162
+#: src/gui/PreferencesDialogue.java:128
+msgid "Cancel"
+msgstr "Avbryt"
+
+#: src/gui/RecordDialogue.java:47
+msgid "Record New Spot"
+msgstr "Spela in ny jingel"
+
+#: src/gui/RecordDialogue.java:53
+msgid "Name:"
+msgstr "Namn:"
+
+#: src/gui/RecordDialogue.java:74
+msgid "Current duration:"
+msgstr "Aktuell varaktighet:"
+
+#: src/gui/RecordDialogue.java:86 src/gui/RecordDialogue.java:279
+msgid "STOPPED"
+msgstr "STOPPAD"
+
+#: src/gui/RecordDialogue.java:107
+msgctxt "Recording (noun)"
+msgid "Recording"
+msgstr "Spelar in"
+
+#: src/gui/RecordDialogue.java:109
+msgid "Re-record"
+msgstr "Spela in igen"
+
+#: src/gui/RecordDialogue.java:116 src/gui/MainFrame.java:115
+msgid "Pause"
+msgstr "Pausa"
+
+#: src/gui/RecordDialogue.java:124
+msgid "Stop"
+msgstr "Stoppa"
+
+#: src/gui/RecordDialogue.java:136
+msgid "Remember to disconnect audio output, amplifier, or similar before recording starts, since the recorded spot will be played immediately after recording has finished."
+msgstr "Kom ihåg att koppla ur ljudutgången, förstärkaren eller liknande innan inspelning påbörjas, eftersom den inspelade jingeln kommer att spelas upp omedelbart efter att inspelningen har avslutats."
+
+#: src/gui/RecordDialogue.java:157
+msgid "Close the recording window and save the recorded spot"
+msgstr "Stäng inspelningsfönstret och spara den inspelade jingeln"
+
+#: src/gui/RecordDialogue.java:163
+msgid "Close the recording window without saving"
+msgstr "Stäng inspelningsfönstret utan att spara"
+
+#: src/gui/RecordDialogue.java:181
+msgid "No recording has been done yet."
+msgstr "Ingen inspelning har gjorts än."
+
+#: src/gui/RecordDialogue.java:182
+msgid "No recording"
+msgstr "Ingen inspelning"
+
+#: src/gui/RecordDialogue.java:187
+msgid "Write a name for the recorded spot."
+msgstr "Skriv ett namn för den inspelade jingeln."
+
+#: src/gui/RecordDialogue.java:188
+msgid "No name for spot"
+msgstr "Inget namn för jingel"
+
+#: src/gui/RecordDialogue.java:218
+msgid "RECORDING"
+msgstr "SPELAR IN"
+
+#: src/gui/RecordDialogue.java:224
+msgid "PAUSED"
+msgstr "PAUSAD"
+
+#: src/gui/RecordDialogue.java:228
+msgid "STOPPING RECORDING..."
+msgstr "STOPPAR INSPELNING…"
+
+#: src/gui/RecordDialogue.java:240
+msgid "NORMALISING AUDIO"
+msgstr "NORMALISERAR LJUD"
+
+#: src/gui/RecordDialogue.java:261
+msgid "PLAYING"
+msgstr "SPELAR UPP"
+
+#: src/gui/MainFrame.java:75
+msgid "Time until next spot:"
+msgstr "Tid till nästa jingel:"
+
+#: src/gui/MainFrame.java:88 src/gui/SpotListModel.java:29
+msgid "#"
+msgstr "#"
+
+#: src/gui/MainFrame.java:108
+msgid "Play"
+msgstr "Spela upp"
+
+#: src/gui/MainFrame.java:123
+msgid "Previous"
+msgstr "Föregående"
+
+#: src/gui/MainFrame.java:130
+msgid "Next"
+msgstr "Nästa"
+
+#: src/gui/MainFrame.java:177
+msgid "Available spots"
+msgstr "Tillgängliga jinglar"
+
+#: src/gui/MainFrame.java:189
+msgid "Record new"
+msgstr "Spela in ny"
+
+#: src/gui/MainFrame.java:194
+msgid "Delete"
+msgstr "Ta bort"
+
+#: src/gui/MainFrame.java:205
+msgid "Rename"
+msgstr "Byta namn"
+
+#: src/gui/MainFrame.java:220
+msgid "Insert selected available spot into list of interval spots"
+msgstr "Infoga markerade tillgängliga jinglar i lista över intervalljinglar"
+
+#: src/gui/MainFrame.java:226
+msgid "Remove spot from list of interval spots"
+msgstr "Ta bort jingel från lista över intervalljinglar"
+
+#: src/gui/MainFrame.java:241
+msgid "Interval spots"
+msgstr "Intervalljinglar"
+
+#: src/gui/MainFrame.java:262
+msgid "Repeat all"
+msgstr "Repetera alla"
+
+#: src/gui/MainFrame.java:263
+msgid "Repeat list of spots when last spot has been played"
+msgstr "Repetera lista av jinglar när senaste jingel har spelats"
+
+#: src/gui/MainFrame.java:275
+msgid "mins between spots"
+msgstr "minuter mellan jinglar"
+
+#: src/gui/MainFrame.java:289
+msgid "Insert selected available spot into list of scheduled spots"
+msgstr "Foga in markerade tillgängliga jinglar i lista över schemalagda jinglar"
+
+#: src/gui/MainFrame.java:295
+msgid "Remove spot from list of scheduled spots"
+msgstr "Ta bort jingel från lista av schemalagda jinglar"
+
+#: src/gui/MainFrame.java:307
+msgid "Scheduled spots"
+msgstr "Schemalagda jinglar"
+
+#: src/gui/MainFrame.java:349
+msgid "Move up"
+msgstr "Flytta upp"
+
+#: src/gui/MainFrame.java:354
+msgid "Move down"
+msgstr "Flytta ned"
+
+#: src/gui/MainFrame.java:366
+msgid "Edit"
+msgstr "Redigera"
+
+#: src/gui/MainFrame.java:377
+msgid "File"
+msgstr "Arkiv"
+
+#: src/gui/MainFrame.java:381 src/gui/PreferencesDialogue.java:34
+msgid "Preferences"
+msgstr "Inställningar"
+
+#: src/gui/MainFrame.java:387 src/gui/MainFrame.java:601
+#, java-format
+msgid "About {0}"
+msgstr "Om {0}"
+
+#: src/gui/MainFrame.java:467
+msgid "Yes, delete spot!"
+msgstr "Ja, ta bort jingel!"
+
+#: src/gui/MainFrame.java:467
+msgid "No"
+msgstr "Nej"
+
+#: src/gui/MainFrame.java:470
+msgid ""
+"Are you sure you want to delete spot permanently?\n"
+"The spot will be removed from all lists.\n"
+"You cannot undo this action."
+msgstr ""
+"Är du säker på att du vill ta bort jingel permanent?\n"
+"Jingeln kommer att tas bort från alla listor.\n"
+"Du kan inte göra denna åtgärd ogjord."
+
+#: src/gui/MainFrame.java:472
+msgid "Delete spot"
+msgstr "Ta bort jingel"
+
+#: src/gui/MainFrame.java:508
+msgid "Type new name for spot:"
+msgstr "Mata in ett nytt namn för jingel:"
+
+#: src/gui/MainFrame.java:509
+msgid "Rename spot"
+msgstr "Byt namn på jingel"
+
+#: src/gui/MainFrame.java:590
+#, java-format
+msgid "{0} version {1}"
+msgstr "{0} version {1}"
+
+#: src/gui/MainFrame.java:591
+#, java-format
+msgid "By {0}"
+msgstr "Av {0}"
+
+#: src/gui/MainFrame.java:592
+msgctxt "Correct into your language and name"
+msgid "Translated into English by Thomas Pryds"
+msgstr "Översatt till svenska av Sebastian Rasmussen"
+
+#: src/gui/MainFrame.java:595
+msgid "Released under the GPL license. This program can be used without restrictions. This includes redistribution, with or without own changes (e.g. additions and translations). However, redistribution (including changes) may only happen under the same license. The complete license text comes with this program. The complete source code for this program is available at the above mentioned web site."
+msgstr "Publicerat under GPL-licensen. Detta program kan användas utan restriktioner. Dessa inkluderar återdistribution, med eller utan egna ändringar (t.ex. tillägg och översättningar). Återdistribution (inklusive ändringar) får dock bara ske under samma licens. Den fullständiga licenstexten följer med detta programmet. Den fullständiga källkoden för detta program finns tillgänglig på webbplatserna som nämns ovan."
+
+#: src/gui/PreferencesDialogue.java:52
+msgid "Program Language"
+msgstr "Programspråk"
+
+#: src/gui/PreferencesDialogue.java:56
+msgid "Choose language"
+msgstr "Välj språk"
+
+#: src/gui/PreferencesDialogue.java:75
+msgid "Changes will be applied after program restart."
+msgstr "Ändringar kommer att få effekt efter att programmet startas om."
+
+#: src/gui/PreferencesDialogue.java:95
+msgid "Audio Normalization"
+msgstr "Ljudnormalisering"
+
+#: src/gui/PreferencesDialogue.java:97
+msgid "Perform on newly recorded spots:"
+msgstr "Spela upp nyligen inspelade jinglar:"
+
+#: src/gui/PreferencesDialogue.java:99
+msgid "Remove DC offset"
+msgstr "Ta bort DC-kompensering"
+
+#: src/gui/PreferencesDialogue.java:100
+msgid "May remove certain 'click' noises in start/end of recording"
+msgstr "Kan ta bort vissa ”klick”-ljud i början/slutet av inspelning"
+
+#: src/gui/PreferencesDialogue.java:105
+msgid "Add fade-in/out"
+msgstr "Lägg till toning in/ut"
+
+#: src/gui/PreferencesDialogue.java:106
+msgid "Add short fade-in and fade-out"
+msgstr "Lägg till kort toning in och ut"
+
+#: src/gui/PreferencesDialogue.java:111
+msgid "Normalise volume"
+msgstr "Normalisera volym"
+
+#: src/gui/PreferencesDialogue.java:112
+msgid "Gives a uniform volume level of spots"
+msgstr "Ger en enhetlig volymnivå för jinglar"
+
+#: src/gui/SpotListModel.java:30 src/gui/SpotListModel.java:36
+#: src/gui/SpotListModel.java:42
+msgid "Name"
+msgstr "Namn"
+
+#: src/gui/SpotListModel.java:31 src/gui/SpotListModel.java:37
+#: src/gui/SpotListModel.java:43
+msgid "Duration"
+msgstr "Varaktighet"
+
+#: src/gui/SpotListModel.java:38
+msgctxt "As in play at"
+msgid "At"
+msgstr "Vid"
+
+#: src/gui/SpotList.java:60
+msgid "Play item number"
+msgstr "Spela objekt nummer"
+
+#: src/gui/SpotList.java:62 src/gui/SpotList.java:74 src/gui/SpotList.java:83
+msgid "Duration in minutes and seconds"
+msgstr "Varaktighet i minuter och sekunder"
+
+#: src/gui/SpotList.java:63
+msgid "* means that this spot is the next to get played"
+msgstr "* betyder att denna jingel är nästa som spelas upp"
+
+#: src/gui/SpotList.java:75
+msgid "Played at (a ¤ means only on certain days)"
+msgstr "Spelad vid (¤ betyder enbart under vissa dagar)"
+
+#: src/main/SpotPlayer.java:81
+msgid ""
+"The sound board is occupied by another program.\n"
+"If other programs are running, e.g. a music or video player, internet browser, try closing these."
+msgstr ""
+"Ljudkortet är upptaget av ett annat program.\n"
+"Om andra program körs, t.ex. en musik- eller videospelare, webbläsare, försök att stänga dessa."
+
+#: src/main/SpotPlayer.java:83
+msgid "Audio Error"
+msgstr "Ljudfel"
+

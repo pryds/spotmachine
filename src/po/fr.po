@@ -1,0 +1,367 @@
+# French translation of spotmachine
+# Copyright (C) 2015 Thomas Pryds (msgids)
+# This file is distributed under the same license as the spotmachine package.
+# Frédéric Marchal <fmarchal@perso.be>, 2015.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: spotmachine 0.3.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-08-31 15:04+0200\n"
+"PO-Revision-Date: 2015-12-30 13:59+0100\n"
+"Last-Translator: Frédéric Marchal <fmarchal@perso.be>\n"
+"Language-Team: French <traduc@traduc.org>\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms:  nplurals=2; plural=(n > 1);\n"
+
+#: src/gui/SchedulePropertiesDialogue.java:47
+msgid "Properties for Scheduled Spot"
+msgstr "Propriétés de l'annonce prévue"
+
+#: src/gui/SchedulePropertiesDialogue.java:69
+msgid "Play spot at (24 hours format)"
+msgstr "Jouer l'annonce à (format sur 24 heures)"
+
+#: src/gui/SchedulePropertiesDialogue.java:98
+msgid "On these weekdays"
+msgstr "Pendant ces jours de semaine"
+
+#: src/gui/SchedulePropertiesDialogue.java:117
+msgid "On these days of the month"
+msgstr "Pendant ces jours du mois"
+
+#: src/gui/SchedulePropertiesDialogue.java:134
+msgid "On these months"
+msgstr "Pendant ces mois"
+
+#: src/gui/SchedulePropertiesDialogue.java:149
+msgid "Note, that the spot is only played if ALL conditions above are met. If, for instance, only 'Wednesday' and '20' (plus all months) are selected, the spot is only played if today is BOTH Wednesday AND the 20th of the month."
+msgstr "Notez que l'annonce n'est jouée que si TOUTES les conditions ci-dessus sont remplies. Si, par exemple, seuls « Mercredi » et « 20 » (plus tous les mois) sont sélectionnés, l'annonce, ne sera jouée que si aujourd'hui est À LA FOIS un mercredi et le 20 du mois."
+
+#: src/gui/SchedulePropertiesDialogue.java:166 src/gui/RecordDialogue.java:156
+#: src/gui/PreferencesDialogue.java:123
+msgid "OK"
+msgstr "OK"
+
+#: src/gui/SchedulePropertiesDialogue.java:171 src/gui/RecordDialogue.java:162
+#: src/gui/PreferencesDialogue.java:128
+msgid "Cancel"
+msgstr "Annuler"
+
+#: src/gui/RecordDialogue.java:47
+msgid "Record New Spot"
+msgstr "Enregistrer une nouvelle annonce"
+
+#: src/gui/RecordDialogue.java:53
+msgid "Name:"
+msgstr "Nom:"
+
+#: src/gui/RecordDialogue.java:74
+msgid "Current duration:"
+msgstr "Durée actuelle:"
+
+#: src/gui/RecordDialogue.java:86 src/gui/RecordDialogue.java:279
+msgid "STOPPED"
+msgstr "ARRÊTÉ"
+
+#: src/gui/RecordDialogue.java:107
+msgctxt "Recording (noun)"
+msgid "Recording"
+msgstr "Enregistrement"
+
+#: src/gui/RecordDialogue.java:109
+msgid "Re-record"
+msgstr "Réenregistrer"
+
+#: src/gui/RecordDialogue.java:116 src/gui/MainFrame.java:115
+msgid "Pause"
+msgstr "Pause"
+
+#: src/gui/RecordDialogue.java:124
+msgid "Stop"
+msgstr "Stop"
+
+#: src/gui/RecordDialogue.java:136
+msgid "Remember to disconnect audio output, amplifier, or similar before recording starts, since the recorded spot will be played immediately after recording has finished."
+msgstr "N'oubliez pas de déconnecter la sortie audio, l'amplificateur ou équivalent avant que l'enregistrement débute car l'annonce enregistrée sera jouée immédiatement après la fin de l'enregistrement."
+
+#: src/gui/RecordDialogue.java:157
+msgid "Close the recording window and save the recorded spot"
+msgstr "Fermer la fenêtre d'enregistrement et sauver l'annonce enregistrée"
+
+#: src/gui/RecordDialogue.java:163
+msgid "Close the recording window without saving"
+msgstr "Fermer la fenêtre d'enregistrement sans sauver"
+
+#: src/gui/RecordDialogue.java:181
+msgid "No recording has been done yet."
+msgstr "Aucun enregistrement n'a été réalisé."
+
+#: src/gui/RecordDialogue.java:182
+msgid "No recording"
+msgstr "Pas d'enregistrement"
+
+#: src/gui/RecordDialogue.java:187
+msgid "Write a name for the recorded spot."
+msgstr "Écrivez un nom pour l'annonce enregistrée."
+
+#: src/gui/RecordDialogue.java:188
+msgid "No name for spot"
+msgstr "Pas de nom pour l'annonce"
+
+#: src/gui/RecordDialogue.java:218
+msgid "RECORDING"
+msgstr "ENREGISTREMENT"
+
+#: src/gui/RecordDialogue.java:224
+msgid "PAUSED"
+msgstr "EN PAUSE"
+
+#: src/gui/RecordDialogue.java:228
+msgid "STOPPING RECORDING..."
+msgstr "ARRÊT DE L'ENREGISTREMENT…"
+
+#: src/gui/RecordDialogue.java:240
+msgid "NORMALISING AUDIO"
+msgstr "NORMALISATION AUDIO"
+
+#: src/gui/RecordDialogue.java:261
+msgid "PLAYING"
+msgstr "JOUE"
+
+#: src/gui/MainFrame.java:75
+msgid "Time until next spot:"
+msgstr "Temps jusqu'à l'annonce suivante"
+
+#: src/gui/MainFrame.java:88 src/gui/SpotListModel.java:29
+msgid "#"
+msgstr "#"
+
+#: src/gui/MainFrame.java:108
+msgid "Play"
+msgstr "Joue"
+
+#: src/gui/MainFrame.java:123
+msgid "Previous"
+msgstr "Précédent"
+
+#: src/gui/MainFrame.java:130
+msgid "Next"
+msgstr "Suivant"
+
+#: src/gui/MainFrame.java:177
+msgid "Available spots"
+msgstr "Annonces disponibles"
+
+#: src/gui/MainFrame.java:189
+msgid "Record new"
+msgstr "Nouvel enregistrement"
+
+#: src/gui/MainFrame.java:194
+msgid "Delete"
+msgstr "Supprimer"
+
+#: src/gui/MainFrame.java:205
+msgid "Rename"
+msgstr "Renommer"
+
+#: src/gui/MainFrame.java:220
+msgid "Insert selected available spot into list of interval spots"
+msgstr "Insérer l'annonce disponible sélectionnée dans la liste des annonces d'intervalle"
+
+#: src/gui/MainFrame.java:226
+msgid "Remove spot from list of interval spots"
+msgstr "Retirer l'annonce de la liste des annonces d'intervalle"
+
+#: src/gui/MainFrame.java:241
+msgid "Interval spots"
+msgstr "Annonces d'intervalle"
+
+#: src/gui/MainFrame.java:262
+msgid "Repeat all"
+msgstr "Répéter tout"
+
+#: src/gui/MainFrame.java:263
+msgid "Repeat list of spots when last spot has been played"
+msgstr "Répéter la liste des annonces quand la dernière annonce a été diffusée"
+
+#: src/gui/MainFrame.java:275
+msgid "mins between spots"
+msgstr "minutes entre annonces"
+
+#: src/gui/MainFrame.java:289
+msgid "Insert selected available spot into list of scheduled spots"
+msgstr "Insérer l'annonce disponible sélectionnée dans la liste des annonces prévues"
+
+#: src/gui/MainFrame.java:295
+msgid "Remove spot from list of scheduled spots"
+msgstr "Retirer l'annonce de la liste des annonces prévues"
+
+#: src/gui/MainFrame.java:307
+msgid "Scheduled spots"
+msgstr "Annonces prévues"
+
+#: src/gui/MainFrame.java:349
+msgid "Move up"
+msgstr "Vers le haut"
+
+#: src/gui/MainFrame.java:354
+msgid "Move down"
+msgstr "Vers le bas"
+
+#: src/gui/MainFrame.java:366
+msgid "Edit"
+msgstr "Éditer"
+
+#: src/gui/MainFrame.java:377
+msgid "File"
+msgstr "Fichier"
+
+#: src/gui/MainFrame.java:381 src/gui/PreferencesDialogue.java:34
+msgid "Preferences"
+msgstr "Préférences"
+
+#: src/gui/MainFrame.java:387 src/gui/MainFrame.java:601
+#, java-format
+msgid "About {0}"
+msgstr "À propos {0}"
+
+#: src/gui/MainFrame.java:467
+msgid "Yes, delete spot!"
+msgstr "Oui, supprimer l'annonce !"
+
+#: src/gui/MainFrame.java:467
+msgid "No"
+msgstr "Non"
+
+#: src/gui/MainFrame.java:470
+msgid ""
+"Are you sure you want to delete spot permanently?\n"
+"The spot will be removed from all lists.\n"
+"You cannot undo this action."
+msgstr ""
+"Êtes-vous sûr de vouloir supprimer l'annonce de manière permanente ?\n"
+"L'annonce sera retirée de toutes les listes.\n"
+"Cette action ne peut pas être annulée."
+
+#: src/gui/MainFrame.java:472
+msgid "Delete spot"
+msgstr "Supprimer l'annonce"
+
+#: src/gui/MainFrame.java:508
+msgid "Type new name for spot:"
+msgstr "Tapez le nouveau nom de l'annonce:"
+
+#: src/gui/MainFrame.java:509
+msgid "Rename spot"
+msgstr "Renommer l'annonce"
+
+#: src/gui/MainFrame.java:590
+#, java-format
+msgid "{0} version {1}"
+msgstr "{0} version {1}"
+
+#: src/gui/MainFrame.java:591
+#, java-format
+msgid "By {0}"
+msgstr "Par {0}"
+
+#: src/gui/MainFrame.java:592
+msgctxt "Correct into your language and name"
+msgid "Translated into English by Thomas Pryds"
+msgstr "Traduit en français par Frédéric Marchal"
+
+#: src/gui/MainFrame.java:595
+msgid "Released under the GPL license. This program can be used without restrictions. This includes redistribution, with or without own changes (e.g. additions and translations). However, redistribution (including changes) may only happen under the same license. The complete license text comes with this program. The complete source code for this program is available at the above mentioned web site."
+msgstr "Distribué sous la licence GPL. Ce programme peut être utilisé sans restrictions. Ceci inclut la redistribution avec ou sans vos propres changements (par ex, ajouts ou traductions). Cependant, la redistribution (y compris les changements) doit avoir lieu sous la même licence. Le texte complet de la licence est distribué avec ce programme. Le code source complet de ce programme est disponible sur le site mentionné ci-dessus."
+
+#: src/gui/PreferencesDialogue.java:52
+msgid "Program Language"
+msgstr "Langue du programme"
+
+#: src/gui/PreferencesDialogue.java:56
+msgid "Choose language"
+msgstr "Choisissez la langue"
+
+#: src/gui/PreferencesDialogue.java:75
+msgid "Changes will be applied after program restart."
+msgstr "Les changements seront appliqués après le redémarrage du programme."
+
+#: src/gui/PreferencesDialogue.java:95
+msgid "Audio Normalization"
+msgstr "Normalisation Audio"
+
+#: src/gui/PreferencesDialogue.java:97
+msgid "Perform on newly recorded spots:"
+msgstr "À faire sur les annonces nouvellement enregistrées:"
+
+#: src/gui/PreferencesDialogue.java:99
+msgid "Remove DC offset"
+msgstr "Supprimer l'offset DC"
+
+#: src/gui/PreferencesDialogue.java:100
+msgid "May remove certain 'click' noises in start/end of recording"
+msgstr "Peut supprimer certains « clics » au début ou à la fin de l'enregistrement"
+
+#: src/gui/PreferencesDialogue.java:105
+msgid "Add fade-in/out"
+msgstr "Ajouter le fade-in/out"
+
+#: src/gui/PreferencesDialogue.java:106
+msgid "Add short fade-in and fade-out"
+msgstr "Ajoute un fade-in et un fade-out courts"
+
+#: src/gui/PreferencesDialogue.java:111
+msgid "Normalise volume"
+msgstr "Normaliser le volume"
+
+#: src/gui/PreferencesDialogue.java:112
+msgid "Gives a uniform volume level of spots"
+msgstr "Donne un niveau de son uniforme pour les annonces"
+
+#: src/gui/SpotListModel.java:30 src/gui/SpotListModel.java:36
+#: src/gui/SpotListModel.java:42
+msgid "Name"
+msgstr "Nom"
+
+#: src/gui/SpotListModel.java:31 src/gui/SpotListModel.java:37
+#: src/gui/SpotListModel.java:43
+msgid "Duration"
+msgstr "Durée"
+
+#: src/gui/SpotListModel.java:38
+msgctxt "As in play at"
+msgid "At"
+msgstr "À"
+
+#: src/gui/SpotList.java:60
+msgid "Play item number"
+msgstr "Jouer l'élément numéro"
+
+#: src/gui/SpotList.java:62 src/gui/SpotList.java:74 src/gui/SpotList.java:83
+msgid "Duration in minutes and seconds"
+msgstr "Durée en minutes et secondes"
+
+#: src/gui/SpotList.java:63
+msgid "* means that this spot is the next to get played"
+msgstr "* signifie que cette annonce est la suivante à jouer"
+
+#: src/gui/SpotList.java:75
+msgid "Played at (a ¤ means only on certain days)"
+msgstr "Joué à (un ¤ signifie uniquement à certains jours)"
+
+#: src/main/SpotPlayer.java:81
+msgid ""
+"The sound board is occupied by another program.\n"
+"If other programs are running, e.g. a music or video player, internet browser, try closing these."
+msgstr ""
+"La carte son est occupée par un autre programme.\n"
+"Si d'autres programmes tournent, par exemple, un programme de son, une vidéo ou un navigateur internet, essayez de les fermer."
+
+#: src/main/SpotPlayer.java:83
+msgid "Audio Error"
+msgstr "Erreur audio"
+
